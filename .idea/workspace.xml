@@ -4,15 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="373a2137-4396-4b92-80d4-a2dfcd9708c5" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-    </list>
+    <list default="true" id="373a2137-4396-4b92-80d4-a2dfcd9708c5" name="Changes" comment="Add reusable UI components: Accordion, Alert, AlertDialog, AspectRatio, Avatar, Badge, Breadcrumb, Button, ButtonGroup, Calendar, Card, and Carousel" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+      <option value="repository" />
+    </option>
   </component>
   <component name="EmbeddingIndexingInfo">
     <option name="cachedIndexableFilesCount" value="26" />
@@ -96,11 +98,42 @@
       <option name="presentableId" value="Default" />
       <updated>1768576235575</updated>
       <workItem from="1768576236718" duration="14000" />
-      <workItem from="1768576256938" duration="357000" />
+      <workItem from="1768576256938" duration="753000" />
     </task>
+    <task id="LOCAL-00001" summary="Configure IntelliJ IDEA project settings and enable ESLint inspection">
+      <option name="closed" value="true" />
+      <created>1768576723342</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1768576723342</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Add CLAUDE.md with project guidelines and architecture details">
+      <option name="closed" value="true" />
+      <created>1768576733333</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1768576733333</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add reusable UI components: Accordion, Alert, AlertDialog, AspectRatio, Avatar, Badge, Breadcrumb, Button, ButtonGroup, Calendar, Card, and Carousel">
+      <option name="closed" value="true" />
+      <created>1768576763514</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1768576763514</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Configure IntelliJ IDEA project settings and enable ESLint inspection" />
+    <MESSAGE value="Add CLAUDE.md with project guidelines and architecture details" />
+    <MESSAGE value="Add reusable UI components: Accordion, Alert, AlertDialog, AspectRatio, Avatar, Badge, Breadcrumb, Button, ButtonGroup, Calendar, Card, and Carousel" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add reusable UI components: Accordion, Alert, AlertDialog, AspectRatio, Avatar, Badge, Breadcrumb, Button, ButtonGroup, Calendar, Card, and Carousel" />
   </component>
 </project>
