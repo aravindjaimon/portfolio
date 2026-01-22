@@ -52,7 +52,7 @@ const SkillCard = ({ category, index }: SkillCardProps) => {
   return (
     <div
       ref={cardRef}
-      className="group bg-[#1A1A1A] border border-[#2D2D2D] p-6 hover:border-[#C41E3A]/50 transition-all duration-300"
+      className="group bg-[#1A1A1A] border border-[#2D2D2D] p-4 sm:p-6 hover:border-[#C41E3A]/50 transition-all duration-300"
     >
       <div className="flex items-center gap-3 mb-5">
         <div className="p-2 bg-[#0A0A0A] group-hover:bg-[#C41E3A]/10 transition-colors duration-300">
@@ -96,7 +96,7 @@ const Skills = () => {
   }, []);
 
   return (
-    <section className="bg-[#0A0A0A] py-24 md:py-32 px-6">
+    <section className="bg-[#0A0A0A] py-24 md:py-32 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         {/* Section Title */}
         <div ref={titleRef} className="text-center mb-16">

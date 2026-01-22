@@ -14,7 +14,7 @@ const Hero = () => {
       return (
         <span
           key={index}
-          className={`letter inline-block ${char === ' ' ? 'w-4 md:w-6' : ''} ${
+          className={`letter inline-block ${char === ' ' ? 'w-2 sm:w-4 md:w-6' : ''} ${
             isHighlighted ? 'text-[#C41E3A]' : ''
           }`}
         >
@@ -27,18 +27,18 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center overflow-hidden">
       {/* Subtle geometric background */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 border border-white/20 rotate-45" />
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 border border-white/20 rotate-12" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white/10 rounded-full" />
+      <div className="absolute inset-0 opacity-5 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 border border-white/20 rotate-45" />
+        <div className="absolute bottom-1/4 right-1/4 w-32 sm:w-48 md:w-64 h-32 sm:h-48 md:h-64 border border-white/20 rotate-12" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] sm:w-[400px] md:w-[600px] h-[280px] sm:h-[400px] md:h-[600px] border border-white/10 rounded-full" />
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 text-center px-6 max-w-5xl">
+      <div className="relative z-10 text-center px-4 sm:px-6 max-w-5xl">
         {/* Name */}
         <h1
           ref={nameRef}
-          className="font-bebas text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-white tracking-wider mb-4"
+          className="font-bebas text-[clamp(36px,11vw,60px)] sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-white tracking-wider mb-4 whitespace-nowrap"
         >
           {renderName()}
         </h1>

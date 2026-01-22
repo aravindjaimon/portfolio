@@ -7,7 +7,7 @@ const About = () => {
   const { sectionRef, titleRef, milestonesRef } = useTimelineAnimation(storyMilestones.length);
 
   return (
-    <section ref={sectionRef} className="bg-[#0A0A0A] py-24 md:py-32 px-6">
+    <section ref={sectionRef} className="bg-[#0A0A0A] py-24 md:py-32 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         {/* Section Title */}
         <div ref={titleRef} className="text-center mb-20">

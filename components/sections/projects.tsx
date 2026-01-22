@@ -39,7 +39,7 @@ const ProjectCard = ({ project, index, onSelect }: ProjectCardProps) => {
     <div
       ref={cardRef}
       onClick={() => onSelect(project)}
-      className="group relative bg-[#1A1A1A] border border-[#2D2D2D] p-6 cursor-pointer hover:border-[#C41E3A]/50 transition-all duration-300"
+      className="group relative bg-[#1A1A1A] border border-[#2D2D2D] p-4 sm:p-6 cursor-pointer hover:border-[#C41E3A]/50 transition-all duration-300"
     >
       {/* Industry tag */}
       <div className="absolute top-4 right-4">
@@ -107,7 +107,7 @@ const ProjectModal = ({ project, open, onClose }: ProjectModalProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="bg-[#1A1A1A] border-[#2D2D2D] text-white max-w-3xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="bg-[#1A1A1A] border-[#2D2D2D] text-white max-w-[95vw] sm:max-w-xl md:max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <div className="flex items-start justify-between">
             <div>
@@ -203,7 +203,7 @@ const Projects = () => {
   };
 
   return (
-    <section className="bg-[#0A0A0A] py-24 md:py-32 px-6">
+    <section className="bg-[#0A0A0A] py-24 md:py-32 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         {/* Section Title */}
         <div ref={titleRef} className="text-center mb-16">

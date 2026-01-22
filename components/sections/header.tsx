@@ -42,7 +42,7 @@ const Header = () => {
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <a href="#" className="font-bebas text-xl md:text-2xl text-white tracking-wider">
@@ -83,7 +83,7 @@ const Header = () => {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-[#0A0A0A] border-t border-[#2D2D2D]">
-          <nav className="flex flex-col px-6 py-4">
+          <nav className="flex flex-col px-4 sm:px-6 py-4">
             {navLinks.map((link) => (
               <button
                 key={link.label}

@@ -47,7 +47,7 @@ const Metrics = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-[#0A0A0A] py-24 md:py-32 px-6 relative overflow-hidden">
+    <section ref={sectionRef} className="bg-[#0A0A0A] py-24 md:py-32 px-4 sm:px-6 relative overflow-hidden">
       {/* Background accents */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 left-0 w-full h-full">
@@ -72,10 +72,10 @@ const Metrics = () => {
             <div
               key={index}
               ref={el => { metricsRef.current[index] = el; }}
-              className="group relative bg-[#1A1A1A] border border-[#2D2D2D] p-6 md:p-8 text-center hover:border-[#C41E3A]/50 transition-all duration-300"
+              className="group relative bg-[#1A1A1A] border border-[#2D2D2D] p-4 sm:p-6 md:p-8 text-center hover:border-[#C41E3A]/50 transition-all duration-300"
             >
               {/* Value */}
-              <div className="font-bebas text-3xl md:text-4xl lg:text-5xl text-white group-hover:text-[#C41E3A] transition-colors duration-300 mb-2">
+              <div className="font-bebas text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white group-hover:text-[#C41E3A] transition-colors duration-300 mb-2">
                 {metric.value}
               </div>
               {/* Label */}
