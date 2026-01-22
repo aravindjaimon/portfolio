@@ -1,15 +1,17 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { personalInfo } from '@/lib/data';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-const navLinks = [
+const navLinks: { label: string; href: string; isExternal?: boolean }[] = [
   { label: 'Story', href: '#story' },
   { label: 'Skills', href: '#skills' },
   { label: 'Work', href: '#work' },
   { label: 'Experience', href: '#experience' },
+  { label: 'Blog', href: '/blog', isExternal: true },
   { label: 'Contact', href: '#contact' }
 ];
 
@@ -52,13 +54,23 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <button
-                key={link.label}
-                onClick={() => scrollToSection(link.href)}
-                className="text-sm font-mono text-white/60 hover:text-[#C41E3A] transition-colors duration-300 tracking-wide"
-              >
-                {link.label}
-              </button>
+              link.isExternal ? (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className="text-sm font-mono text-white/60 hover:text-[#C41E3A] transition-colors duration-300 tracking-wide"
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <button
+                  key={link.label}
+                  onClick={() => scrollToSection(link.href)}
+                  className="text-sm font-mono text-white/60 hover:text-[#C41E3A] transition-colors duration-300 tracking-wide"
+                >
+                  {link.label}
+                </button>
+              )
             ))}
             <Button
               asChild
@@ -85,13 +97,24 @@ const Header = () => {
         <div className="md:hidden bg-[#0A0A0A] border-t border-[#2D2D2D]">
           <nav className="flex flex-col px-4 sm:px-6 py-4">
             {navLinks.map((link) => (
-              <button
-                key={link.label}
-                onClick={() => scrollToSection(link.href)}
-                className="text-left py-3 text-sm font-mono text-white/60 hover:text-[#C41E3A] transition-colors duration-300 tracking-wide border-b border-[#2D2D2D]/50 last:border-b-0"
-              >
-                {link.label}
-              </button>
+              link.isExternal ? (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-left py-3 text-sm font-mono text-white/60 hover:text-[#C41E3A] transition-colors duration-300 tracking-wide border-b border-[#2D2D2D]/50 last:border-b-0"
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <button
+                  key={link.label}
+                  onClick={() => scrollToSection(link.href)}
+                  className="text-left py-3 text-sm font-mono text-white/60 hover:text-[#C41E3A] transition-colors duration-300 tracking-wide border-b border-[#2D2D2D]/50 last:border-b-0"
+                >
+                  {link.label}
+                </button>
+              )
             ))}
             <Button
               asChild

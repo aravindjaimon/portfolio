@@ -85,10 +85,10 @@
   </component>
   <component name="RecapSpentCounter">
     <option name="endsOfQuotaMs" value="1771473781045" />
-    <option name="spentUsd" value="0.011316351" />
+    <option name="spentUsd" value="0.019702101" />
   </component>
   <component name="RecapUselessUpdatesCounter">
-    <option name="suspendCountdown" value="5" />
+    <option name="suspendCountdown" value="2" />
   </component>
   <component name="RunManager" selected="JavaScript Debug.localhost:3000">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
@@ -133,7 +133,7 @@
       <workItem from="1768631889740" duration="23000" />
       <workItem from="1768631918667" duration="3419000" />
       <workItem from="1769065337257" duration="3724000" />
-      <workItem from="1769070248956" duration="4913000" />
+      <workItem from="1769070248956" duration="9520000" />
     </task>
     <task id="LOCAL-00001" summary="Configure IntelliJ IDEA project settings and enable ESLint inspection">
       <option name="closed" value="true" />
@@ -183,7 +183,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768755368572</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Update IntelliJ IDEA workspace with new tasks, counters, and logging configurations">
+      <option name="closed" value="true" />
+      <created>1769077748071</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1769077748071</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -207,6 +215,7 @@
     <MESSAGE value="Enable GitToolBox settings and adjust IntelliJ IDEA workspace configuration." />
     <MESSAGE value="Update IntelliJ IDEA workspace configuration and enable GitToolBox settings" />
     <MESSAGE value="Add portfolio enhancements: new UI components, dark theme, improved SEO, and project data restructuring" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add portfolio enhancements: new UI components, dark theme, improved SEO, and project data restructuring" />
+    <MESSAGE value="Update IntelliJ IDEA workspace with new tasks, counters, and logging configurations" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update IntelliJ IDEA workspace with new tasks, counters, and logging configurations" />
   </component>
 </project>
