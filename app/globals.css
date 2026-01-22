@@ -91,3 +91,8 @@
     overflow-x: hidden;
   }
 }
+
+/* Giscus comments styling - official component handles iframe sizing */
+.giscus {
+  width: 100%;
+}

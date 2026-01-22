@@ -134,7 +134,7 @@
       <workItem from="1768631889740" duration="23000" />
       <workItem from="1768631918667" duration="3419000" />
       <workItem from="1769065337257" duration="3724000" />
-      <workItem from="1769070248956" duration="12711000" />
+      <workItem from="1769070248956" duration="16710000" />
     </task>
     <task id="LOCAL-00001" summary="Configure IntelliJ IDEA project settings and enable ESLint inspection">
       <option name="closed" value="true" />
@@ -208,7 +208,23 @@
       <option name="project" value="LOCAL" />
       <updated>1769087595386</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="first blog">
+      <option name="closed" value="true" />
+      <created>1769088867035</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1769088867035</updated>
+    </task>
+    <task id="LOCAL-00011" summary="improved blog">
+      <option name="closed" value="true" />
+      <created>1769089225596</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1769089225596</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -234,6 +250,8 @@
     <MESSAGE value="Add portfolio enhancements: new UI components, dark theme, improved SEO, and project data restructuring" />
     <MESSAGE value="Update IntelliJ IDEA workspace with new tasks, counters, and logging configurations" />
     <MESSAGE value="Expand sitemap generation to include dynamic blog posts and tag pages, add external blog link to header navigation, and integrate Velite for build optimization." />
-    <option name="LAST_COMMIT_MESSAGE" value="Expand sitemap generation to include dynamic blog posts and tag pages, add external blog link to header navigation, and integrate Velite for build optimization." />
+    <MESSAGE value="first blog" />
+    <MESSAGE value="improved blog" />
+    <option name="LAST_COMMIT_MESSAGE" value="improved blog" />
   </component>
 </project>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { projects, Project } from '@/lib/data';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -17,9 +18,12 @@ interface ProjectCardProps {
 
 const ProjectCard = ({ project, index, onSelect }: ProjectCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
+  const linkRef = useRef<HTMLAnchorElement>(null);
+  const hasExtendedContent = project.overview || project.problemDetails || project.technicalApproach;
+  const animationRef = hasExtendedContent ? linkRef : cardRef;
 
   useEffect(() => {
-    gsap.fromTo(cardRef.current,
+    gsap.fromTo(animationRef.current,
       { opacity: 0, y: 50 },
       {
         opacity: 1,
@@ -27,20 +31,16 @@ const ProjectCard = ({ project, index, onSelect }: ProjectCardProps) => {
         duration: 0.7,
         delay: index * 0.15,
         scrollTrigger: {
-          trigger: cardRef.current,
+          trigger: animationRef.current,
           start: 'top 85%',
           toggleActions: 'play none none reverse'
         }
       }
     );
-  }, [index]);
+  }, [index, animationRef]);
 
-  return (
-    <div
-      ref={cardRef}
-      onClick={() => onSelect(project)}
-      className="group relative bg-[#1A1A1A] border border-[#2D2D2D] p-4 sm:p-6 cursor-pointer hover:border-[#C41E3A]/50 transition-all duration-300"
-    >
+  const CardContent = (
+    <>
       {/* Industry tag */}
       <div className="absolute top-4 right-4">
         <span className="text-xs font-mono text-[#C41E3A] bg-[#C41E3A]/10 px-2 py-1">
@@ -92,6 +92,29 @@ const ProjectCard = ({ project, index, onSelect }: ProjectCardProps) => {
         <span className="text-xs font-mono tracking-wide">VIEW CASE STUDY</span>
         <ArrowUpRight size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
       </div>
+    </>
+  );
+
+  // Link to case study page if extended content exists, otherwise use modal
+  if (hasExtendedContent) {
+    return (
+      <Link
+        href={`/projects/${project.slug}`}
+        ref={linkRef}
+        className="group relative bg-[#1A1A1A] border border-[#2D2D2D] p-4 sm:p-6 cursor-pointer hover:border-[#C41E3A]/50 transition-all duration-300 block"
+      >
+        {CardContent}
+      </Link>
+    );
+  }
+
+  return (
+    <div
+      ref={cardRef}
+      onClick={() => onSelect(project)}
+      className="group relative bg-[#1A1A1A] border border-[#2D2D2D] p-4 sm:p-6 cursor-pointer hover:border-[#C41E3A]/50 transition-all duration-300"
+    >
+      {CardContent}
     </div>
   );
 };

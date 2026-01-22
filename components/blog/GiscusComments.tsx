@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import Giscus from '@giscus/react';
 
 interface GiscusCommentsProps {
   /** The GitHub repository in owner/repo format */
-  repo?: string;
+  repo?: `${string}/${string}`;
   /** The repository ID from Giscus setup */
   repoId?: string;
   /** The category name for discussions */
@@ -15,7 +15,7 @@ interface GiscusCommentsProps {
 
 // Giscus configuration - configured via https://giscus.app
 const DEFAULTS = {
-  repo: 'aravindjaimon/portfolio',
+  repo: 'aravindjaimon/portfolio' as const,
   repoId: 'R_kgDOPWNd2w',
   category: 'Blog Comments',
   categoryId: 'DIC_kwDOPWNd284C1SKj',
@@ -27,44 +27,6 @@ export function GiscusComments({
   category = DEFAULTS.category,
   categoryId = DEFAULTS.categoryId,
 }: GiscusCommentsProps) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!ref.current || !repoId || !categoryId) return;
-
-    // Check if script is already loaded
-    const existingScript = ref.current.querySelector('script.giscus');
-    if (existingScript) return;
-
-    const script = document.createElement('script');
-    script.src = 'https://giscus.app/client.js';
-    script.className = 'giscus';
-    script.setAttribute('data-repo', repo);
-    script.setAttribute('data-repo-id', repoId);
-    script.setAttribute('data-category', category);
-    script.setAttribute('data-category-id', categoryId);
-    script.setAttribute('data-mapping', 'pathname');
-    script.setAttribute('data-strict', '0');
-    script.setAttribute('data-reactions-enabled', '1');
-    script.setAttribute('data-emit-metadata', '0');
-    script.setAttribute('data-input-position', 'top');
-    script.setAttribute('data-theme', 'dark_dimmed');
-    script.setAttribute('data-lang', 'en');
-    script.setAttribute('data-loading', 'lazy');
-    script.crossOrigin = 'anonymous';
-    script.async = true;
-
-    ref.current.appendChild(script);
-
-    return () => {
-      // Cleanup on unmount
-      const giscusFrame = ref.current?.querySelector('iframe.giscus-frame');
-      if (giscusFrame) {
-        giscusFrame.remove();
-      }
-    };
-  }, [repo, repoId, category, categoryId]);
-
   // Show setup instructions if not configured
   if (!repoId || !categoryId) {
     return (
@@ -97,7 +59,20 @@ export function GiscusComments({
   return (
     <div className="mt-16 pt-8 border-t border-[#2D2D2D]">
       <h3 className="font-bebas text-2xl text-white tracking-wide mb-6">Comments</h3>
-      <div ref={ref} className="giscus-container min-h-[300px]" />
+      <Giscus
+        repo={repo}
+        repoId={repoId}
+        category={category}
+        categoryId={categoryId}
+        mapping="pathname"
+        strict="0"
+        reactionsEnabled="1"
+        emitMetadata="0"
+        inputPosition="top"
+        theme="dark_dimmed"
+        lang="en"
+        loading="lazy"
+      />
     </div>
   );
 }
