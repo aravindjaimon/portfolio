@@ -80,6 +80,7 @@ export interface ProjectMetric {
 
 export interface Project {
   id: number;
+  slug: string;
   title: string;
   subtitle: string;
   industry: string;
@@ -88,11 +89,21 @@ export interface Project {
   solution: string[];
   metrics: ProjectMetric[];
   stack: string[];
+  // Extended case study fields
+  overview?: string;
+  problemDetails?: string[];
+  technicalApproach?: string[];
+  keyDecisions?: { decision: string; reasoning: string }[];
+  results?: string[];
+  lessons?: string[];
+  timeline?: string;
+  teamSize?: string;
 }
 
 export const projects: Project[] = [
   {
     id: 1,
+    slug: "enterprise-affiliate-platform",
     title: "Enterprise Affiliate Platform",
     subtitle: "High-Scale Affiliate Tracking System",
     industry: "iGaming",
@@ -110,10 +121,43 @@ export const projects: Project[] = [
       { value: "99.9%", label: "Data Accuracy" },
       { value: "40%", label: "Performance Boost" }
     ],
-    stack: ["React", "TypeScript", "Node.js", "AWS Lambda", "Serverless", "Hasura", "PostgreSQL", "AWS CDK", "Docker"]
+    stack: ["React", "TypeScript", "Node.js", "AWS Lambda", "Serverless", "Hasura", "PostgreSQL", "AWS CDK", "Docker"],
+    // Extended case study details
+    overview: "Led the architecture and development of a comprehensive affiliate tracking platform for a major iGaming company. The system needed to handle millions of players, track complex referral chains, and calculate commissions with financial-grade accuracy.",
+    problemDetails: [
+      "Legacy system couldn't scale beyond 1000 events/minute",
+      "Manual commission calculations led to disputes and delays",
+      "No real-time visibility into affiliate performance",
+      "Data inconsistencies between tracking and payment systems"
+    ],
+    technicalApproach: [
+      "Designed event-driven architecture using AWS Lambda and SQS for decoupled processing",
+      "Implemented CQRS pattern to separate read and write workloads",
+      "Built real-time dashboards using Hasura GraphQL subscriptions",
+      "Created idempotent event handlers to ensure exactly-once processing"
+    ],
+    keyDecisions: [
+      { decision: "Chose Serverless over Kubernetes", reasoning: "Auto-scaling requirements and cost optimization for bursty traffic patterns" },
+      { decision: "PostgreSQL with Hasura over custom GraphQL", reasoning: "Rapid development with built-in subscriptions while maintaining flexibility" },
+      { decision: "Event sourcing for financial transactions", reasoning: "Complete audit trail and ability to replay events for reconciliation" }
+    ],
+    results: [
+      "10x improvement in event processing capacity",
+      "Reduced commission calculation time from hours to real-time",
+      "99.9% accuracy in tracking attribution",
+      "Zero data loss during peak traffic periods"
+    ],
+    lessons: [
+      "Event-driven architectures require robust dead-letter queue handling",
+      "Financial systems need idempotency at every layer",
+      "Real-time doesn't always mean instant - define acceptable latency"
+    ],
+    timeline: "8 months",
+    teamSize: "4 engineers"
   },
   {
     id: 2,
+    slug: "rag-ai-assistant",
     title: "RAG-Powered AI Assistant",
     subtitle: "Context-Aware AI Chat Platform",
     industry: "AI/SaaS",
@@ -135,6 +179,7 @@ export const projects: Project[] = [
   },
   {
     id: 3,
+    slug: "desktop-retail-management",
     title: "Desktop Retail Management System",
     subtitle: "High-Performance Point-of-Sale Client",
     industry: "Retail",
@@ -156,6 +201,7 @@ export const projects: Project[] = [
   },
   {
     id: 4,
+    slug: "cross-platform-productivity-suite",
     title: "Cross-Platform Productivity Suite",
     subtitle: "Virtual Workspace & Collaboration Platform",
     industry: "Enterprise SaaS",
@@ -177,6 +223,7 @@ export const projects: Project[] = [
   },
   {
     id: 5,
+    slug: "multi-game-platform",
     title: "Multi-Game Platform",
     subtitle: "High-Performance Gaming Portal",
     industry: "Gaming",
@@ -198,6 +245,7 @@ export const projects: Project[] = [
   },
   {
     id: 6,
+    slug: "educational-management-platform",
     title: "Educational Management Platform",
     subtitle: "Multi-Tenant Institution System",
     industry: "EdTech",
@@ -317,6 +365,15 @@ export const education: Education[] = [
     note: "Transferred from College of Engineering, Poonjar - KTU"
   }
 ];
+
+// Project helper functions
+export function getProjectBySlug(slug: string): Project | undefined {
+  return projects.find((p) => p.slug === slug);
+}
+
+export function getAllProjectSlugs(): string[] {
+  return projects.map((p) => p.slug);
+}
 
 export const certifications: string[] = [
   "GCP Fundamentals: Core Infrastructure",

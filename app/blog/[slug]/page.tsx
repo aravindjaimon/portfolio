@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-import { BlogHeader, BlogContent, RelatedPosts } from '@/components/blog';
+import { BlogHeader, BlogContent, RelatedPosts, TableOfContents, SocialShare, GiscusComments } from '@/components/blog';
 import { getPostBySlug, getPublishedPosts } from '@/lib/blog';
 import type { Metadata } from 'next';
 
@@ -130,12 +130,35 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         {/* Blog Header */}
         <BlogHeader post={post} />
 
-        {/* Content */}
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
-          <BlogContent code={post.content} />
+        {/* Content with TOC */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+          <div className="lg:grid lg:grid-cols-[1fr_250px] lg:gap-8">
+            {/* Main Content */}
+            <div className="max-w-4xl">
+              {/* Mobile TOC */}
+              <TableOfContents items={post.toc} />
 
-          {/* Related Posts */}
-          <RelatedPosts currentSlug={post.slug} />
+              <BlogContent code={post.content} />
+
+              {/* Share Section */}
+              <div className="mt-12 pt-8 border-t border-[#2D2D2D]">
+                <SocialShare
+                  title={post.title}
+                  url={`${baseUrl}${post.permalink}`}
+                  description={post.description}
+                />
+              </div>
+
+              {/* Comments */}
+              <GiscusComments />
+
+              {/* Related Posts */}
+              <RelatedPosts currentSlug={post.slug} />
+            </div>
+
+            {/* Desktop TOC Sidebar */}
+            <TableOfContents items={post.toc} />
+          </div>
         </div>
       </main>
     </>

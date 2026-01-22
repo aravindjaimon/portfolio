@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { getPublishedPosts, getAllTags } from '@/lib/blog';
+import { projects } from '@/lib/data';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://aravindjaimon.com';
@@ -38,5 +39,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...blogPosts, ...tagPages];
+  // Project case study pages (only for projects with extended content)
+  const projectPages: MetadataRoute.Sitemap = projects
+    .filter((p) => p.overview || p.problemDetails || p.technicalApproach)
+    .map((project) => ({
+      url: `${baseUrl}/projects/${project.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    }));
+
+  return [...staticPages, ...blogPosts, ...tagPages, ...projectPages];
 }

@@ -9,6 +9,22 @@ const computeReadingTime = (content: string): string => {
   return `${minutes} min read`;
 };
 
+// Extract table of contents from MDX content
+function extractTOC(content: string): Array<{ id: string; text: string; level: number }> {
+  const headingRegex = /^(#{2,3})\s+(.+)$/gm;
+  const items: Array<{ id: string; text: string; level: number }> = [];
+  let match;
+
+  while ((match = headingRegex.exec(content)) !== null) {
+    const level = match[1].length;
+    const text = match[2].trim();
+    const id = text.toLowerCase().replace(/\s+/g, '-');
+    items.push({ id, text, level });
+  }
+
+  return items;
+}
+
 const posts = defineCollection({
   name: 'Post',
   pattern: 'blog/**/*.mdx',
@@ -26,6 +42,7 @@ const posts = defineCollection({
       difficulty: s.enum(['beginner', 'intermediate', 'advanced']).default('intermediate'),
       // Auto-computed fields from file path
       content: s.mdx(),
+      raw: s.raw(),
       metadata: s.metadata(),
     })
     .transform((data, { meta }) => {
@@ -36,6 +53,7 @@ const posts = defineCollection({
         slug,
         readingTime: computeReadingTime(data.content),
         permalink: `/blog/${slug}`,
+        toc: extractTOC(data.raw),
       };
     }),
 });

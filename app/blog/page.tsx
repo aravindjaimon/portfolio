@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback } from 'react';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Rss } from 'lucide-react';
 import { BlogCard, BlogSearch, TagFilter } from '@/components/blog';
 import { getPublishedPosts, getFeaturedPosts, getAllTags } from '@/lib/blog';
 
@@ -53,7 +53,7 @@ export default function BlogPage() {
     <main className="min-h-screen bg-[#0A0A0A]">
       {/* Header */}
       <div className="border-b border-[#2D2D2D]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <Link
             href="/"
             className="inline-flex items-center gap-2 text-white/60 hover:text-[#C41E3A] font-mono text-sm transition-colors"
@@ -61,6 +61,16 @@ export default function BlogPage() {
             <ArrowLeft size={16} />
             Back to Portfolio
           </Link>
+          <a
+            href="/feed.xml"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-white/60 hover:text-[#C41E3A] font-mono text-sm transition-colors"
+            title="RSS Feed"
+          >
+            <Rss size={16} />
+            <span className="hidden sm:inline">RSS</span>
+          </a>
         </div>
       </div>
 

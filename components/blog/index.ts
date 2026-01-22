@@ -7,4 +7,8 @@ export { TagFilter } from './TagFilter';
 export { DifficultyBadge } from './DifficultyBadge';
 export { ReadingTime } from './ReadingTime';
 export { RelatedPosts } from './RelatedPosts';
+export { TableOfContents } from './TableOfContents';
+export { SocialShare } from './SocialShare';
+export { GiscusComments } from './GiscusComments';
+export { NewsletterSignup } from './NewsletterSignup';
 export { mdxComponents } from './mdx-components';

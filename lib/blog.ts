@@ -62,3 +62,25 @@ export function formatDate(dateString: string): string {
     day: 'numeric',
   });
 }
+
+// Extract table of contents from raw MDX content
+export interface TOCItem {
+  id: string;
+  text: string;
+  level: number;
+}
+
+export function extractTableOfContents(rawContent: string): TOCItem[] {
+  const headingRegex = /^(#{2,3})\s+(.+)$/gm;
+  const items: TOCItem[] = [];
+  let match;
+
+  while ((match = headingRegex.exec(rawContent)) !== null) {
+    const level = match[1].length;
+    const text = match[2].trim();
+    const id = text.toLowerCase().replace(/\s+/g, '-');
+    items.push({ id, text, level });
+  }
+
+  return items;
+}
