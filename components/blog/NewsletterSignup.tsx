@@ -28,20 +28,22 @@ export function NewsletterSignup({ variant = 'card', className = '' }: Newslette
 
     setState('loading');
 
-    // Simulate API call - replace with actual newsletter service integration
-    // Examples: ConvertKit, Buttondown, Mailchimp, Resend
     try {
-      // TODO: Integrate with newsletter service
-      // await fetch('/api/newsletter', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email }),
-      // });
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
 
-      // Simulate success for now
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setState('success');
-      setEmail('');
+      const data = await response.json();
+
+      if (response.ok) {
+        setState('success');
+        setEmail('');
+      } else {
+        setState('error');
+        setErrorMessage(data.error || 'Something went wrong. Please try again.');
+      }
     } catch {
       setState('error');
       setErrorMessage('Something went wrong. Please try again.');

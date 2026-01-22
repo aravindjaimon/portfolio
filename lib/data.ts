@@ -175,7 +175,38 @@ export const projects: Project[] = [
       { value: "SDK", label: "Embeddable" },
       { value: "Real-time", label: "Streaming" }
     ],
-    stack: ["React", "TypeScript", "Node.js", "AWS Lambda", "Serverless", "Hasura", "PostgreSQL", "OpenAI", "Gemini"]
+    stack: ["React", "TypeScript", "Node.js", "AWS Lambda", "Serverless", "Hasura", "PostgreSQL", "OpenAI", "Gemini"],
+    overview: "Built a production-ready RAG (Retrieval-Augmented Generation) AI assistant that businesses can embed into their websites. The system ingests custom knowledge bases and provides contextually accurate responses while supporting multiple LLM providers for flexibility and cost optimization.",
+    problemDetails: [
+      "Generic chatbots couldn't answer domain-specific questions accurately",
+      "Existing solutions required significant technical expertise to integrate",
+      "No easy way to switch between AI providers based on cost/performance needs",
+      "Real-time streaming responses were essential for good UX but complex to implement"
+    ],
+    technicalApproach: [
+      "Implemented vector embeddings using OpenAI's ada-002 for semantic search",
+      "Built chunking pipeline with overlap to maintain context across document segments",
+      "Created abstraction layer supporting OpenAI GPT-4 and Google Gemini interchangeably",
+      "Designed embeddable widget using Shadow DOM for style isolation"
+    ],
+    keyDecisions: [
+      { decision: "PostgreSQL with pgvector over dedicated vector DB", reasoning: "Reduced infrastructure complexity while maintaining acceptable performance for our scale" },
+      { decision: "Server-Sent Events for streaming", reasoning: "Better browser compatibility than WebSockets for unidirectional real-time data" },
+      { decision: "Admin panel for knowledge management", reasoning: "Non-technical users needed to update FAQs and documentation without developer involvement" }
+    ],
+    results: [
+      "80% reduction in support ticket volume for pilot customers",
+      "Sub-200ms retrieval latency for knowledge base queries",
+      "Seamless integration requiring only a script tag to embed",
+      "Cost flexibility allowing 40% reduction by switching models for simple queries"
+    ],
+    lessons: [
+      "Chunk size and overlap significantly impact retrieval quality - requires experimentation",
+      "Prompt engineering is as important as the retrieval system itself",
+      "Users expect instant responses - streaming is not optional for chat interfaces"
+    ],
+    timeline: "4 months",
+    teamSize: "2 engineers"
   },
   {
     id: 3,
@@ -197,7 +228,38 @@ export const projects: Project[] = [
       { value: "99.9%", label: "Data Uptime" },
       { value: "10%", label: "Less Discrepancy" }
     ],
-    stack: ["React", "TypeScript", "Tauri", "Rust", "Node.js", "AWS Lambda", "Serverless", "Hasura", "PostgreSQL"]
+    stack: ["React", "TypeScript", "Tauri", "Rust", "Node.js", "AWS Lambda", "Serverless", "Hasura", "PostgreSQL"],
+    overview: "Rebuilt a critical desktop application for a retail chain managing hundreds of stores. The legacy Electron-based POS client suffered from slow synchronization and high memory usage, directly impacting store operations and causing inventory discrepancies.",
+    problemDetails: [
+      "Legacy Electron app consumed 800MB+ RAM, causing crashes on older hardware",
+      "Full data sync took 5+ minutes, blocking store opening procedures",
+      "Inventory discrepancies between local and server data reached 15%",
+      "No offline capability meant network issues halted all operations"
+    ],
+    technicalApproach: [
+      "Rebuilt using Tauri with Rust backend for 10x smaller binary and better performance",
+      "Implemented delta sync algorithm - only changed records transfer",
+      "Created local SQLite cache with conflict resolution for offline-first operation",
+      "Built background sync service that runs without blocking UI operations"
+    ],
+    keyDecisions: [
+      { decision: "Tauri over Electron", reasoning: "80% smaller binary size and native Rust performance for data processing" },
+      { decision: "SQLite for local storage", reasoning: "Battle-tested embedded database with excellent concurrent read performance" },
+      { decision: "Operational Transform for conflicts", reasoning: "Predictable conflict resolution that preserves user intent" }
+    ],
+    results: [
+      "Sync time reduced from 5+ minutes to under 10 seconds (97% improvement)",
+      "Memory usage dropped from 800MB to under 100MB",
+      "Inventory discrepancies reduced from 15% to under 5%",
+      "Stores can now operate fully offline for up to 24 hours"
+    ],
+    lessons: [
+      "Native code (Rust) makes a massive difference for data-intensive operations",
+      "Delta sync requires careful versioning - timestamp-based approaches have edge cases",
+      "Retail environments have unreliable networks - offline-first is not optional"
+    ],
+    timeline: "6 months",
+    teamSize: "3 engineers"
   },
   {
     id: 4,
@@ -219,7 +281,38 @@ export const projects: Project[] = [
       { value: "3D", label: "Virtual Rooms" },
       { value: "Real-time", label: "Collaboration" }
     ],
-    stack: ["Electron.js", "React", "Node.js", "Serverless", "Hasura", "Three.js", "Konva.js", "Agora SDK", "Fluent UI"]
+    stack: ["Electron.js", "React", "Node.js", "Serverless", "Hasura", "Three.js", "Konva.js", "Agora SDK", "Fluent UI"],
+    overview: "Led development of a virtual workspace platform designed for distributed teams. The product combined video conferencing, spatial 3D meeting rooms, real-time whiteboarding, and document collaboration - all accessible from web browsers and native desktop applications.",
+    problemDetails: [
+      "Teams using 5+ different tools for remote collaboration (Zoom, Miro, Slack, etc.)",
+      "Context switching between tools reduced productivity by estimated 30%",
+      "No spatial awareness in meetings - participants felt disconnected",
+      "Platform-specific apps meant inconsistent experiences across teams"
+    ],
+    technicalApproach: [
+      "Architected monorepo with shared React component library across web and Electron",
+      "Built 3D meeting rooms using Three.js with spatial audio positioning",
+      "Integrated Agora SDK for low-latency video with custom layout engine",
+      "Created real-time whiteboard using Konva.js with CRDT-based synchronization"
+    ],
+    keyDecisions: [
+      { decision: "Monorepo with Nx over separate repositories", reasoning: "Enabled 85% code sharing between web and desktop while maintaining platform-specific optimizations" },
+      { decision: "Three.js for 3D over Unity WebGL", reasoning: "Faster load times and better integration with React ecosystem" },
+      { decision: "Agora over self-hosted WebRTC", reasoning: "Global edge network provided consistent quality without infrastructure complexity" }
+    ],
+    results: [
+      "85% code reuse across web, macOS, Windows, and Linux clients",
+      "25% faster initial load compared to competing Electron apps",
+      "Spatial audio meetings increased perceived engagement in user studies",
+      "Single codebase reduced maintenance burden by estimated 60%"
+    ],
+    lessons: [
+      "Monorepos require investment in tooling but pay dividends at scale",
+      "3D web experiences need aggressive LOD (level of detail) management",
+      "Real-time collaboration needs conflict resolution strategy from day one"
+    ],
+    timeline: "10 months",
+    teamSize: "5 engineers"
   },
   {
     id: 5,
@@ -241,7 +334,38 @@ export const projects: Project[] = [
       { value: "3x", label: "User Capacity" },
       { value: "Mobile", label: "Optimized" }
     ],
-    stack: ["React", "TypeScript", "Next.js", "Tailwind CSS", "Radix UI", ".NET", "MSSQL", "Vercel"]
+    stack: ["React", "TypeScript", "Next.js", "Tailwind CSS", "Radix UI", ".NET", "MSSQL", "Vercel"],
+    overview: "Architected and built a high-performance gaming portal hosting over 2000 casual and HTML5 games. The platform needed to handle traffic spikes, deliver games quickly across global audiences, and provide a seamless mobile experience while preparing for future cryptocurrency payment integration.",
+    problemDetails: [
+      "Initial page loads took 4+ seconds due to unoptimized game thumbnails and metadata",
+      "Game iframe loading caused layout shifts and poor Core Web Vitals scores",
+      "Mobile users represented 60% of traffic but had poor touch controls",
+      "Existing architecture couldn't handle concurrent user spikes during promotions"
+    ],
+    technicalApproach: [
+      "Implemented ISR (Incremental Static Regeneration) with Next.js for game catalog pages",
+      "Built lazy-loading system with blur placeholders for 2000+ game thumbnails",
+      "Created responsive game container with touch-optimized controls overlay",
+      "Designed edge caching strategy using Vercel's global CDN"
+    ],
+    keyDecisions: [
+      { decision: "Next.js ISR over traditional SSR", reasoning: "Static generation with revalidation balanced freshness with performance" },
+      { decision: "Vercel Edge Network over custom CDN", reasoning: "Zero-config global distribution with automatic cache invalidation" },
+      { decision: "Radix UI for accessibility", reasoning: "Gaming audience includes users with disabilities - accessibility is not optional" }
+    ],
+    results: [
+      "Page load time reduced from 4s to under 2s (50% improvement)",
+      "Core Web Vitals scores improved to green across all metrics",
+      "Platform handles 3x previous concurrent user capacity",
+      "Mobile bounce rate decreased by 35% after touch optimization"
+    ],
+    lessons: [
+      "Image optimization is often the lowest-hanging fruit for performance",
+      "ISR is powerful but requires careful cache invalidation strategy",
+      "Mobile-first isn't just responsive design - it's rethinking interactions"
+    ],
+    timeline: "5 months",
+    teamSize: "3 engineers"
   },
   {
     id: 6,
@@ -263,7 +387,38 @@ export const projects: Project[] = [
       { value: "Pan-African", label: "Deployment" },
       { value: "DDD", label: "Architecture" }
     ],
-    stack: ["React", "TypeScript", "Nhost", "Serverless", "Hasura", "PostgreSQL", "Ant Design", "Tailwind CSS"]
+    stack: ["React", "TypeScript", "Nhost", "Serverless", "Hasura", "PostgreSQL", "Ant Design", "Tailwind CSS"],
+    overview: "Designed and built a comprehensive educational management system serving schools and colleges across multiple African countries. The platform handles everything from student enrollment and attendance to grade management and parent communication, all within a multi-tenant architecture that maintains data isolation between institutions.",
+    problemDetails: [
+      "Each institution had unique workflows that couldn't fit a one-size-fits-all solution",
+      "Data privacy laws varied by country, requiring strict tenant isolation",
+      "Unreliable internet connectivity in many regions meant offline support was critical",
+      "Administrators had varying technical literacy levels"
+    ],
+    technicalApproach: [
+      "Implemented Domain-Driven Design with bounded contexts for each functional area",
+      "Built row-level security in PostgreSQL for multi-tenant data isolation",
+      "Created configurable workflow engine allowing institutions to customize processes",
+      "Designed progressive web app with service worker caching for offline access"
+    ],
+    keyDecisions: [
+      { decision: "Hasura over custom GraphQL server", reasoning: "Instant GraphQL API with row-level security, dramatically reducing backend development time" },
+      { decision: "DDD bounded contexts", reasoning: "Clear separation between enrollment, academics, finance, and communication domains" },
+      { decision: "Ant Design component library", reasoning: "Comprehensive enterprise components reduced UI development time by 40%" }
+    ],
+    results: [
+      "Successfully onboarded institutions across multiple African countries",
+      "Thousands of students and staff managed through the platform",
+      "Row-level security ensures zero cross-tenant data leakage",
+      "Offline-capable PWA works reliably on low-bandwidth connections"
+    ],
+    lessons: [
+      "Multi-tenant architectures need security auditing from the start, not as an afterthought",
+      "Domain-Driven Design pays off when domain complexity is high",
+      "Building for low-bandwidth regions requires fundamentally different performance budgets"
+    ],
+    timeline: "12 months",
+    teamSize: "4 engineers"
   }
 ];
 
