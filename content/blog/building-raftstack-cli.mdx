@@ -1,0 +1,229 @@
+---
+title: "Building RaftStack: How a CLI Transformed Our Development Workflow"
+description: "Why I spent a week building an NPM CLI tool that reduced our project setup time from 2-3 days to 20 seconds, and how it enforces code quality across 30+ engineers."
+publishedAt: 2025-01-22
+coverImage: /images/blog/raftstack-cover.png
+tags:
+  - CLI
+  - TypeScript
+  - Developer Experience
+  - Open Source
+  - Engineering Culture
+author: Aravind Jaimon
+draft: false
+featured: true
+difficulty: intermediate
+---
+
+Last week, I shipped something that's been brewing in my mind for months: [RaftStack](https://github.com/Raft-Labs/raftstack), an NPM CLI tool that standardizes how we initialize and maintain TypeScript projects at RaftLabs. What started as frustration with inconsistent codebases turned into a full development framework that's now mandatory for all 30+ engineers in our organization.
+
+Here's the story of why I built it, what problems it solves, and how 20 seconds of setup time now saves us days of headaches.
+
+## The Problem: 30 Engineers, 30 Different Standards
+
+RaftLabs is a service-based company. We build products for clients—sometimes MVPs that last a month, sometimes enterprise projects that span six months or more. At any given time, we have multiple projects running in parallel, with different engineers initializing repositories based on whatever they remember from the last project they worked on.
+
+The result? Chaos.
+
+### Inconsistent Repositories
+
+Every repository looked different. One project used 4-space indentation, another used 2. Some had strict TypeScript configurations, others were riddled with `any` types. Commit messages ranged from beautifully formatted Conventional Commits to gems like "fix stuff" and "wip".
+
+Some projects had well-organized Git hooks that validated commits and ran linting. Others had nothing—meaning broken code could be pushed directly to main without any checks.
+
+### The AI Code Quality Crisis
+
+Here's something that caught us off guard: the rise of AI-assisted coding tools made quality problems *worse*, not better. Junior developers were generating entire components with AI, but without guardrails, we started seeing:
+
+- Single files with 1000+ lines of code
+- `any` types sprinkled everywhere like confetti
+- Pull requests with 2000+ lines of changes that were impossible to review
+- No separation of concerns—entire features crammed into one component
+
+The AI was producing code faster than ever, but the code was often unmaintainable. Without strict linting rules and code review automation, there was nothing stopping these massive, low-quality PRs from getting merged.
+
+### Setup Was a Multi-Day Affair
+
+Whenever someone started a new project, the ritual was always the same:
+
+1. Initialize a repo (Turborepo, NX, whatever)
+2. Hunt through previous projects for "good" configurations
+3. Copy Husky hooks from Project A
+4. Copy Prettier config from Project B
+5. Copy ESLint rules from Project C
+6. Hope everything works together
+7. Spend half a day debugging why it doesn't
+8. Eventually get a working setup, then forget to commit half the files
+
+This process took **2-3 days**. Every. Single. Time.
+
+And here's the kicker: even after all that effort, the configuration still varied between projects because whoever did the setup made their own choices about what to include.
+
+## The Solution: One Command to Rule Them All
+
+I decided to fix this permanently. Not with documentation (nobody reads it), not with templates (they get outdated), but with a CLI that enforces standards automatically.
+
+```bash
+pnpm dlx @raftlabs/raftstack init
+```
+
+That's it. Run this command in any TypeScript repository, answer a few questions, and in about 20 seconds, your project has:
+
+- **Git Hooks** (Husky) for pre-commit, commit-msg, and pre-push validation
+- **Commit Standards** (Commitlint + cz-git) with an interactive commit wizard
+- **Code Formatting** (Prettier + lint-staged) that runs on every commit
+- **Branch Naming Rules** validated on every push
+- **GitHub Integration**: PR templates, CI workflows, CODEOWNERS
+- **AI Code Review** configuration (CodeRabbit or GitHub Copilot)
+- **Contributing Guidelines** and quick reference documentation
+
+### Smart Detection, Zero Configuration
+
+RaftStack automatically detects your project structure:
+
+- NX workspace? Detected.
+- Turborepo? Detected.
+- pnpm workspace? Detected.
+- Single package? Detected.
+
+It also figures out your package manager (npm, pnpm, or Yarn) and adapts all generated scripts accordingly. No manual configuration needed.
+
+### The Interactive Wizard
+
+Instead of making assumptions, the CLI asks you what you need:
+
+```
+? Select your project type: (auto-detected: Turborepo)
+? Enable Asana task linking in commits?
+? Configure AI code review (CodeRabbit/GitHub Copilot)?
+? Set up CODEOWNERS for automatic reviewer assignment?
+```
+
+Based on your answers, it generates exactly what you need—nothing more, nothing less.
+
+## What Gets Created
+
+After running the CLI, your project gains this structure:
+
+```
+your-project/
+├── .husky/
+│   ├── pre-commit      # Runs lint-staged
+│   ├── commit-msg      # Validates commit format
+│   └── pre-push        # Validates branch names
+├── .github/
+│   ├── PULL_REQUEST_TEMPLATE.md
+│   ├── workflows/pr-checks.yml
+│   ├── CODEOWNERS
+│   └── QUICK_REFERENCE.md
+├── commitlint.config.js
+├── .czrc
+├── cz.config.js
+├── .lintstagedrc.js
+├── .prettierrc
+├── .prettierignore
+└── CONTRIBUTING.md
+```
+
+Every file is generated with sensible defaults that work together out of the box.
+
+## Enforcing Quality Through Constraints
+
+The real power isn't in what the CLI creates—it's in what it *prevents*.
+
+### Commit Message Validation
+
+Every commit must follow the Conventional Commits format:
+
+```bash
+# This works
+git commit -m "feat(auth): add social login support"
+
+# This fails immediately
+git commit -m "fixed the thing"
+```
+
+No more cryptic commit history. Every commit clearly states what changed and why.
+
+### Branch Name Validation
+
+Push attempts are blocked unless your branch follows the naming convention:
+
+```bash
+# This works
+git push origin feature/user-authentication
+
+# This is rejected
+git push origin my-branch
+```
+
+Protected branches (`main`, `develop`, `staging`, `production`) can't be pushed to directly—all changes must go through pull requests.
+
+### Pre-commit Quality Gates
+
+Before any commit succeeds, lint-staged runs Prettier on your staged files. Inconsistent formatting? Fixed automatically. No debates about code style in PRs.
+
+## The Bigger Picture: A Complete Development Framework
+
+RaftStack isn't meant to work alone. It's the third step in a comprehensive project setup workflow I documented for the entire company:
+
+1. **Tech Lead Approval** — Discuss and document stack decisions before writing any code
+2. **Repository Initialization** — Use Better-T-Stack, Turborepo, or AWS Amplify
+3. **Organization Standards** — Run `@raftlabs/raftstack init`
+4. **Environment Management** — Secure environment variables with EnvX encryption
+5. **AI Development Setup** — Initialize Claude Code with bundled skills
+
+This framework eliminates decision fatigue. Instead of 30 engineers making 30 different choices, everyone follows the same path.
+
+## Metrics: Measuring What Matters
+
+The CLI includes a `metrics` command that analyzes how well a repository follows the conventions:
+
+```bash
+pnpm dlx @raftlabs/raftstack metrics
+```
+
+This shows:
+- Percentage of commits following Conventional Commits
+- Branch naming compliance
+- Files that would fail lint checks
+- Overall "health score" for the repository
+
+Now we can quantify code quality across all our projects. Teams with low scores get attention before their technical debt spirals out of control.
+
+## The Impact
+
+After rolling this out organization-wide, we've seen:
+
+- **Project setup time**: 2-3 days → 20 seconds
+- **Commit message quality**: Drastically improved, with clear history across all projects
+- **PR review time**: Reduced because changes are smaller and better documented
+- **Onboarding time**: New engineers get productive faster because every project works the same way
+- **Code review friction**: Eliminated debates about formatting—it's all automated
+
+But the biggest win? **Confidence**. When I look at any RaftLabs repository now, I know exactly what I'll find. The same hooks, the same commit format, the same branch naming, the same PR templates. It just works.
+
+## Try It Yourself
+
+RaftStack is open source and works with any TypeScript project:
+
+```bash
+# Initialize a new or existing project
+pnpm dlx @raftlabs/raftstack init
+
+# Setup GitHub branch protection rules
+pnpm dlx @raftlabs/raftstack setup-protection
+
+# Check repository compliance
+pnpm dlx @raftlabs/raftstack metrics
+```
+
+Check out the [GitHub repository](https://github.com/Raft-Labs/raftstack) for full documentation, or install it directly from [NPM](https://www.npmjs.com/package/@raftlabs/raftstack).
+
+---
+
+Building developer tools that save time is satisfying, but building tools that improve *quality* across an entire organization? That's a different level of impact.
+
+If your team struggles with inconsistent codebases, consider whether the problem is really about discipline—or if you just need better guardrails.
+
+Sometimes the best code you write is the code that writes code.
