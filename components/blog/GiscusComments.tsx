@@ -97,7 +97,7 @@ export function GiscusComments({
   return (
     <div className="mt-16 pt-8 border-t border-[#2D2D2D]">
       <h3 className="font-bebas text-2xl text-white tracking-wide mb-6">Comments</h3>
-      <div ref={ref} className="giscus-container" />
+      <div ref={ref} className="giscus-container min-h-[300px]" />
     </div>
   );
 }

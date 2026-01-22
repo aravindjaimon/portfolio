@@ -135,8 +135,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <div className="lg:grid lg:grid-cols-[1fr_250px] lg:gap-8">
             {/* Main Content */}
             <div className="max-w-4xl">
-              {/* Mobile TOC */}
-              <TableOfContents items={post.toc} />
+              {/* Mobile TOC - only shown on mobile */}
+              <div className="lg:hidden">
+                <TableOfContents items={post.toc} variant="mobile" />
+              </div>
 
               <BlogContent code={post.content} />
 
@@ -156,8 +158,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <RelatedPosts currentSlug={post.slug} />
             </div>
 
-            {/* Desktop TOC Sidebar */}
-            <TableOfContents items={post.toc} />
+            {/* Desktop TOC Sidebar - only shown on desktop */}
+            <div className="hidden lg:block">
+              <TableOfContents items={post.toc} variant="desktop" />
+            </div>
           </div>
         </div>
       </main>
