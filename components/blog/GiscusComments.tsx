@@ -13,12 +13,12 @@ interface GiscusCommentsProps {
   categoryId?: string;
 }
 
-// Default values - user should replace these after setting up Giscus at https://giscus.app
+// Giscus configuration - configured via https://giscus.app
 const DEFAULTS = {
   repo: 'aravindjaimon/portfolio',
-  repoId: '', // Get from https://giscus.app
+  repoId: 'R_kgDOPWNd2w',
   category: 'Blog Comments',
-  categoryId: '', // Get from https://giscus.app
+  categoryId: 'DIC_kwDOPWNd284C1SKj',
 };
 
 export function GiscusComments({
