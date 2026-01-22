@@ -5,8 +5,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 interface TimelineRefs {
-  sectionRef: React.RefObject<HTMLElement>;
-  titleRef: React.RefObject<HTMLDivElement>;
+  sectionRef: React.RefObject<HTMLElement | null>;
+  titleRef: React.RefObject<HTMLDivElement | null>;
   milestonesRef: React.MutableRefObject<(HTMLDivElement | null)[]>;
 }
 

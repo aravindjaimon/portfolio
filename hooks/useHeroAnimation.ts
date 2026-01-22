@@ -2,11 +2,11 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
 interface HeroRefs {
-  nameRef: React.RefObject<HTMLHeadingElement>;
-  subtitleRef: React.RefObject<HTMLDivElement>;
-  taglineRef: React.RefObject<HTMLParagraphElement>;
-  iconsRef: React.RefObject<HTMLDivElement>;
-  scrollRef: React.RefObject<HTMLDivElement>;
+  nameRef: React.RefObject<HTMLHeadingElement | null>;
+  subtitleRef: React.RefObject<HTMLDivElement | null>;
+  taglineRef: React.RefObject<HTMLParagraphElement | null>;
+  iconsRef: React.RefObject<HTMLDivElement | null>;
+  scrollRef: React.RefObject<HTMLDivElement | null>;
 }
 
 export function useHeroAnimation(): HeroRefs {
@@ -42,12 +42,14 @@ export function useHeroAnimation(): HeroRefs {
       '-=0.3'
     );
 
-    tl.fromTo(
-      iconsRef.current?.children,
-      { opacity: 0, scale: 0.8 },
-      { opacity: 1, scale: 1, stagger: 0.1, duration: 0.4 },
-      '-=0.2'
-    );
+    if (iconsRef.current?.children) {
+      tl.fromTo(
+        iconsRef.current.children,
+        { opacity: 0, scale: 0.8 },
+        { opacity: 1, scale: 1, stagger: 0.1, duration: 0.4 },
+        '-=0.2'
+      );
+    }
 
     tl.fromTo(
       scrollRef.current,
