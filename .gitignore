@@ -42,3 +42,19 @@ next-env.d.ts
 
 # velite
 .velite
+
+# JetBrains IDE (.idea)
+# User-specific files (do not share)
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+.idea/**/httpRequests/
+
+# Gradle/Maven specific (if applicable)
+.idea/**/gradle.xml
+.idea/**/libraries
+
+# Auto-generated files
+.idea/**/*.iws
