@@ -19,7 +19,7 @@ jobs:
   send-newsletter:
     runs-on: ubuntu-latest
     env:
-      SITE_URL: ${{ vars.SITE_URL || 'https://aravindjaimon.com' }}
+      SITE_URL: ${{ vars.SITE_URL || 'https://www.aravindjaimon.com' }}
       ADMIN_SECRET: ${{ secrets.NEWSLETTER_ADMIN_SECRET }}
       INPUT_SLUG: ${{ github.event.inputs.slug }}
     steps:
