@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
-import { impactMetrics } from '@/lib/data';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect, useRef } from "react";
+import { impactMetrics } from "@/lib/data";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,7 +13,8 @@ const Metrics = () => {
   const metricsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    gsap.fromTo(titleRef.current,
+    gsap.fromTo(
+      titleRef.current,
       { opacity: 0, y: 50 },
       {
         opacity: 1,
@@ -21,14 +22,15 @@ const Metrics = () => {
         duration: 0.8,
         scrollTrigger: {
           trigger: titleRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse'
-        }
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
       }
     );
 
     metricsRef.current.forEach((metric, index) => {
-      gsap.fromTo(metric,
+      gsap.fromTo(
+        metric,
         { opacity: 0, scale: 0.9, y: 30 },
         {
           opacity: 1,
@@ -38,16 +40,19 @@ const Metrics = () => {
           delay: index * 0.1,
           scrollTrigger: {
             trigger: metric,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse'
-          }
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          },
         }
       );
     });
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-[#0A0A0A] py-24 md:py-32 px-4 sm:px-6 relative overflow-hidden">
+    <section
+      ref={sectionRef}
+      className="bg-[#0A0A0A] py-24 md:py-32 px-4 sm:px-6 relative overflow-hidden"
+    >
       {/* Background accents */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 left-0 w-full h-full">
@@ -71,7 +76,9 @@ const Metrics = () => {
           {impactMetrics.map((metric, index) => (
             <div
               key={index}
-              ref={el => { metricsRef.current[index] = el; }}
+              ref={(el) => {
+                metricsRef.current[index] = el;
+              }}
               className="group relative bg-[#1A1A1A] border border-[#2D2D2D] p-4 sm:p-6 md:p-8 text-center hover:border-[#C41E3A]/50 transition-all duration-300"
             >
               {/* Value */}
@@ -92,7 +99,9 @@ const Metrics = () => {
         <div className="mt-16 text-center">
           <div className="inline-flex items-center gap-4">
             <div className="w-16 h-px bg-[#C41E3A]/30" />
-            <span className="text-xs font-mono text-white/30 tracking-widest">REAL IMPACT. REAL NUMBERS.</span>
+            <span className="text-xs font-mono text-white/30 tracking-widest">
+              REAL IMPACT. REAL NUMBERS.
+            </span>
             <div className="w-16 h-px bg-[#C41E3A]/30" />
           </div>
         </div>

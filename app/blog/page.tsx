@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useState, useMemo, useCallback } from 'react';
-import Link from 'next/link';
-import { ArrowLeft, Rss } from 'lucide-react';
-import { BlogCard, BlogSearch, TagFilter } from '@/components/blog';
-import { getPublishedPosts, getFeaturedPosts, getAllTags } from '@/lib/blog';
+import { useState, useMemo, useCallback } from "react";
+import Link from "next/link";
+import { ArrowLeft, Rss } from "lucide-react";
+import { BlogCard, BlogSearch, TagFilter } from "@/components/blog";
+import { getPublishedPosts, getFeaturedPosts, getAllTags } from "@/lib/blog";
 
 export default function BlogPage() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   const allPosts = getPublishedPosts();
@@ -20,7 +20,9 @@ export default function BlogPage() {
     // Filter by tag
     if (selectedTag) {
       posts = posts.filter((post) =>
-        post.tags.map((t) => t.toLowerCase()).includes(selectedTag.toLowerCase())
+        post.tags
+          .map((t) => t.toLowerCase())
+          .includes(selectedTag.toLowerCase())
       );
     }
 
@@ -81,14 +83,19 @@ export default function BlogPage() {
             The <span className="text-[#C41E3A]">Blog</span>
           </h1>
           <p className="text-white/60 text-lg max-w-2xl">
-            Thoughts on software engineering, architecture patterns, and building products that scale.
+            Thoughts on software engineering, architecture patterns, and
+            building products that scale.
           </p>
         </div>
 
         {/* Search and Filters */}
         <div className="space-y-4 mb-10">
           <BlogSearch onSearch={handleSearch} />
-          <TagFilter tags={allTags} selectedTag={selectedTag} onTagSelect={handleTagSelect} />
+          <TagFilter
+            tags={allTags}
+            selectedTag={selectedTag}
+            onTagSelect={handleTagSelect}
+          />
         </div>
 
         {/* Featured Posts */}
@@ -109,8 +116,14 @@ export default function BlogPage() {
         <section>
           {!showFeatured && (
             <h2 className="font-bebas text-xl sm:text-2xl text-white/80 tracking-wide mb-6">
-              {selectedTag ? `Tagged: ${selectedTag}` : searchQuery ? 'Search Results' : 'All Articles'}
-              <span className="text-white/40 text-lg ml-2">({filteredPosts.length})</span>
+              {selectedTag
+                ? `Tagged: ${selectedTag}`
+                : searchQuery
+                  ? "Search Results"
+                  : "All Articles"}
+              <span className="text-white/40 text-lg ml-2">
+                ({filteredPosts.length})
+              </span>
             </h2>
           )}
 
@@ -125,7 +138,7 @@ export default function BlogPage() {
               <p className="text-white/40 font-mono">No articles found.</p>
               <button
                 onClick={() => {
-                  setSearchQuery('');
+                  setSearchQuery("");
                   setSelectedTag(null);
                 }}
                 className="mt-4 text-[#C41E3A] hover:underline font-mono text-sm"

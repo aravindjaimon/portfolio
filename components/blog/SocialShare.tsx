@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Twitter, Linkedin, Link2, Check } from 'lucide-react';
+import { useState } from "react";
+import { Twitter, Linkedin, Link2, Check } from "lucide-react";
 
 interface SocialShareProps {
   title: string;
@@ -9,12 +9,11 @@ interface SocialShareProps {
   description?: string;
 }
 
-export function SocialShare({ title, url, description }: SocialShareProps) {
+export function SocialShare({ title, url }: SocialShareProps) {
   const [copied, setCopied] = useState(false);
 
   const encodedUrl = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(title);
-  const encodedDescription = encodeURIComponent(description || '');
 
   const shareLinks = {
     twitter: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`,
@@ -28,11 +27,11 @@ export function SocialShare({ title, url, description }: SocialShareProps) {
       setTimeout(() => setCopied(false), 2000);
     } catch {
       // Fallback for older browsers
-      const textArea = document.createElement('textarea');
+      const textArea = document.createElement("textarea");
       textArea.value = url;
       document.body.appendChild(textArea);
       textArea.select();
-      document.execCommand('copy');
+      document.execCommand("copy");
       document.body.removeChild(textArea);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
@@ -68,10 +67,14 @@ export function SocialShare({ title, url, description }: SocialShareProps) {
       <button
         onClick={handleCopyLink}
         className="p-2 bg-[#1A1A1A] border border-[#2D2D2D] text-white/60 hover:text-white hover:border-[#C41E3A] transition-colors"
-        title={copied ? 'Copied!' : 'Copy link'}
+        title={copied ? "Copied!" : "Copy link"}
         aria-label="Copy link to clipboard"
       >
-        {copied ? <Check size={18} className="text-green-500" /> : <Link2 size={18} />}
+        {copied ? (
+          <Check size={18} className="text-green-500" />
+        ) : (
+          <Link2 size={18} />
+        )}
       </button>
     </div>
   );

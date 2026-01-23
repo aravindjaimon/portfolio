@@ -1,8 +1,8 @@
 "use client";
 
-import { personalInfo } from '@/lib/data';
-import { Github, Linkedin, Mail, MapPin, Package } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { personalInfo } from "@/lib/data";
+import { Github, Linkedin, Mail, MapPin, Package } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Contact = () => {
   return (
@@ -10,10 +10,11 @@ const Contact = () => {
       <div className="max-w-4xl mx-auto text-center">
         {/* Section Title */}
         <h2 className="font-bebas text-4xl md:text-5xl lg:text-6xl text-white tracking-wider mb-4">
-          LET'S <span className="text-[#C41E3A]">BUILD</span> SOMETHING
+          LET&apos;S <span className="text-[#C41E3A]">BUILD</span> SOMETHING
         </h2>
         <p className="text-white/50 font-inter text-base md:text-lg max-w-xl mx-auto mb-12">
-          Currently building at RaftLabs. Open to interesting conversations about architecture, AI, and engineering at scale.
+          Currently building at RaftLabs. Open to interesting conversations
+          about architecture, AI, and engineering at scale.
         </p>
 
         {/* Contact Links */}
@@ -26,8 +27,12 @@ const Contact = () => {
               <Mail size={20} className="text-[#C41E3A]" />
             </div>
             <div className="text-left">
-              <div className="text-xs font-mono text-white/40 mb-0.5">EMAIL</div>
-              <div className="text-white/80 font-inter text-sm">{personalInfo.email}</div>
+              <div className="text-xs font-mono text-white/40 mb-0.5">
+                EMAIL
+              </div>
+              <div className="text-white/80 font-inter text-sm">
+                {personalInfo.email}
+              </div>
             </div>
           </a>
 
@@ -41,8 +46,12 @@ const Contact = () => {
               <Linkedin size={20} className="text-[#C41E3A]" />
             </div>
             <div className="text-left">
-              <div className="text-xs font-mono text-white/40 mb-0.5">LINKEDIN</div>
-              <div className="text-white/80 font-inter text-sm">aravindjaimon</div>
+              <div className="text-xs font-mono text-white/40 mb-0.5">
+                LINKEDIN
+              </div>
+              <div className="text-white/80 font-inter text-sm">
+                aravindjaimon
+              </div>
             </div>
           </a>
 
@@ -56,8 +65,12 @@ const Contact = () => {
               <Github size={20} className="text-[#C41E3A]" />
             </div>
             <div className="text-left">
-              <div className="text-xs font-mono text-white/40 mb-0.5">GITHUB</div>
-              <div className="text-white/80 font-inter text-sm">aravindjaimon</div>
+              <div className="text-xs font-mono text-white/40 mb-0.5">
+                GITHUB
+              </div>
+              <div className="text-white/80 font-inter text-sm">
+                aravindjaimon
+              </div>
             </div>
           </a>
 
@@ -72,7 +85,9 @@ const Contact = () => {
             </div>
             <div className="text-left">
               <div className="text-xs font-mono text-white/40 mb-0.5">NPM</div>
-              <div className="text-white/80 font-inter text-sm">~aravindjaimon</div>
+              <div className="text-white/80 font-inter text-sm">
+                ~aravindjaimon
+              </div>
             </div>
           </a>
         </div>

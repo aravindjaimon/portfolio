@@ -46,7 +46,7 @@
   --card-foreground: 0 0% 98%;
   --popover: 0 0% 6%;
   --popover-foreground: 0 0% 98%;
-  --primary: 350 75% 44%;        /* Brand red #C41E3A */
+  --primary: 350 75% 44%; /* Brand red #C41E3A */
   --primary-foreground: 0 0% 98%;
   --secondary: 0 0% 10%;
   --secondary-foreground: 0 0% 98%;
@@ -70,13 +70,21 @@
 
 /* Custom keyframes for accordion animations */
 @keyframes accordion-down {
-  from { height: 0; }
-  to { height: var(--radix-accordion-content-height); }
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
 }
 
 @keyframes accordion-up {
-  from { height: var(--radix-accordion-content-height); }
-  to { height: 0; }
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
 }
 
 @layer base {

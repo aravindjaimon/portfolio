@@ -21,11 +21,11 @@ SEO requires three pillars: technical performance (Core Web Vitals), proper meta
 
 ### 1. Core Web Vitals Are Ranking Factors
 
-| Metric | Target | What It Measures | Key Optimization |
-|--------|--------|------------------|------------------|
-| **LCP** (Largest Contentful Paint) | < 2.5s | Main content load time | `priority` on hero images |
-| **INP** (Interaction to Next Paint) | < 200ms | Responsiveness | scheduler.yield() for long tasks |
-| **CLS** (Cumulative Layout Shift) | < 0.1 | Visual stability | Always set width/height |
+| Metric                              | Target  | What It Measures       | Key Optimization                 |
+| ----------------------------------- | ------- | ---------------------- | -------------------------------- |
+| **LCP** (Largest Contentful Paint)  | < 2.5s  | Main content load time | `priority` on hero images        |
+| **INP** (Interaction to Next Paint) | < 200ms | Responsiveness         | scheduler.yield() for long tasks |
+| **CLS** (Cumulative Layout Shift)   | < 0.1   | Visual stability       | Always set width/height          |
 
 #### LCP Optimization with Next.js Image
 
@@ -68,14 +68,14 @@ INP has three phases to optimize:
 
 ```typescript
 // ❌ BAD: Long synchronous task blocks interactions
-button.addEventListener('click', () => {
+button.addEventListener("click", () => {
   // Heavy computation blocks UI for 500ms
   const result = expensiveCalculation();
   updateUI(result);
 });
 
 // ✅ GOOD: Break up with scheduler.yield()
-button.addEventListener('click', async () => {
+button.addEventListener("click", async () => {
   const data = await fetchData();
 
   // Yield to allow interactions to process
@@ -93,12 +93,13 @@ const debouncedSearch = debounce((query) => {
   performSearch(query);
 }, 300);
 
-input.addEventListener('input', (e) => {
+input.addEventListener("input", (e) => {
   debouncedSearch(e.target.value);
 });
 ```
 
 **Key INP strategies:**
+
 - Use `scheduler.yield()` in long tasks (> 50ms)
 - Debounce rapid user inputs
 - Lazy load below-fold interactivity
@@ -134,24 +135,25 @@ input.addEventListener('input', (e) => {
 
 ```typescript
 // app/layout.tsx
-import { Metadata } from 'next';
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://site.com'), // REQUIRED for OG images
+  metadataBase: new URL("https://site.com"), // REQUIRED for OG images
   title: {
-    default: 'Brand Name',
-    template: '%s | Brand Name', // Auto-appends to all pages
+    default: "Brand Name",
+    template: "%s | Brand Name", // Auto-appends to all pages
   },
-  description: 'Default site description',
+  description: "Default site description",
   openGraph: {
-    siteName: 'Brand Name',
-    locale: 'en_US',
-    type: 'website',
+    siteName: "Brand Name",
+    locale: "en_US",
+    type: "website",
   },
 };
 ```
 
 **Why metadataBase matters:**
+
 - Without it: `images: ['/og.png']` → broken URL
 - With it: `images: ['/og.png']` → `https://site.com/og.png`
 
@@ -159,7 +161,7 @@ export const metadata: Metadata = {
 
 ```typescript
 // app/products/[slug]/page.tsx
-import { Metadata } from 'next';
+import { Metadata } from "next";
 
 export async function generateMetadata({ params }): Promise<Metadata> {
   const product = await getProduct(params.slug);
@@ -174,19 +176,21 @@ export async function generateMetadata({ params }): Promise<Metadata> {
 
     // OpenGraph - use 'product' for e-commerce
     openGraph: {
-      type: 'product', // NOT 'website' for products
+      type: "product", // NOT 'website' for products
       title: product.name,
       description: truncate(product.description, 155),
-      images: [{
-        url: product.image,
-        width: 1200,
-        height: 630,
-        alt: product.name,
-      }],
+      images: [
+        {
+          url: product.image,
+          width: 1200,
+          height: 630,
+          alt: product.name,
+        },
+      ],
     },
 
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: product.name,
       description: truncate(product.description, 155),
       images: [product.image],
@@ -207,30 +211,32 @@ Google shows price, availability, and reviews in search results. You MUST includ
 ```typescript
 // Minimum required fields for Product rich snippet
 const productJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Product',
+  "@context": "https://schema.org",
+  "@type": "Product",
   name: product.name,
   image: product.images,
   description: product.description,
   sku: product.sku,
   brand: {
-    '@type': 'Brand',
+    "@type": "Brand",
     name: product.brand,
   },
   offers: {
-    '@type': 'Offer',
+    "@type": "Offer",
     url: `https://site.com/products/${product.slug}`,
     price: product.price,
-    priceCurrency: 'USD',
-    availability: 'https://schema.org/InStock', // or OutOfStock
-    priceValidUntil: '2025-12-31', // Required for validity
+    priceCurrency: "USD",
+    availability: "https://schema.org/InStock", // or OutOfStock
+    priceValidUntil: "2025-12-31", // Required for validity
   },
   // Optional but highly recommended:
-  aggregateRating: product.rating ? {
-    '@type': 'AggregateRating',
-    ratingValue: product.rating.value,
-    reviewCount: product.rating.count,
-  } : undefined,
+  aggregateRating: product.rating
+    ? {
+        "@type": "AggregateRating",
+        ratingValue: product.rating.value,
+        reviewCount: product.rating.count,
+      }
+    : undefined,
 };
 ```
 
@@ -255,36 +261,36 @@ function JsonLd({ data }: { data: object }) {
 
 ### 5. Essential Structured Data Types
 
-| Page Type | Required Schema | Rich Result |
-|-----------|-----------------|-------------|
-| Product | Product + Offer | Price, availability in search |
-| Article | Article + Author | Article snippet |
-| FAQ | FAQPage | Expandable Q&A in search |
-| Recipe | Recipe | Recipe card with image |
-| Local Business | LocalBusiness | Knowledge panel |
-| Breadcrumbs | BreadcrumbList | Breadcrumb trail in results |
+| Page Type      | Required Schema  | Rich Result                   |
+| -------------- | ---------------- | ----------------------------- |
+| Product        | Product + Offer  | Price, availability in search |
+| Article        | Article + Author | Article snippet               |
+| FAQ            | FAQPage          | Expandable Q&A in search      |
+| Recipe         | Recipe           | Recipe card with image        |
+| Local Business | LocalBusiness    | Knowledge panel               |
+| Breadcrumbs    | BreadcrumbList   | Breadcrumb trail in results   |
 
 #### Article Schema
 
 ```typescript
 const articleJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Article',
+  "@context": "https://schema.org",
+  "@type": "Article",
   headline: post.title,
   image: post.coverImage,
   datePublished: post.publishedAt,
   dateModified: post.updatedAt,
   author: {
-    '@type': 'Person',
+    "@type": "Person",
     name: post.author.name,
     url: `https://site.com/authors/${post.author.slug}`,
   },
   publisher: {
-    '@type': 'Organization',
-    name: 'Brand Name',
+    "@type": "Organization",
+    name: "Brand Name",
     logo: {
-      '@type': 'ImageObject',
-      url: 'https://site.com/logo.png',
+      "@type": "ImageObject",
+      url: "https://site.com/logo.png",
     },
   },
 };
@@ -294,13 +300,13 @@ const articleJsonLd = {
 
 ```typescript
 const faqJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
   mainEntity: faqs.map((faq) => ({
-    '@type': 'Question',
+    "@type": "Question",
     name: faq.question,
     acceptedAnswer: {
-      '@type': 'Answer',
+      "@type": "Answer",
       text: faq.answer,
     },
   })),
@@ -313,23 +319,23 @@ Shows breadcrumb trail in search results:
 
 ```typescript
 const breadcrumbJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
   itemListElement: [
     {
-      '@type': 'ListItem',
+      "@type": "ListItem",
       position: 1,
-      name: 'Home',
-      item: 'https://site.com',
+      name: "Home",
+      item: "https://site.com",
     },
     {
-      '@type': 'ListItem',
+      "@type": "ListItem",
       position: 2,
-      name: 'Products',
-      item: 'https://site.com/products',
+      name: "Products",
+      item: "https://site.com/products",
     },
     {
-      '@type': 'ListItem',
+      "@type": "ListItem",
       position: 3,
       name: product.name,
       item: `https://site.com/products/${product.slug}`,
@@ -344,13 +350,13 @@ AI search engines (ChatGPT, Perplexity, Claude) are becoming traffic sources. Op
 
 **Key AEO strategies:**
 
-| Strategy | Implementation |
-|----------|----------------|
-| **FAQ sections** | Add FAQPage schema - AI pulls from structured Q&A |
-| **Direct answers** | Start content with clear, factual statements |
-| **Structured data** | Schema.org markup helps AI understand content |
-| **Topic authority** | Comprehensive coverage on topic clusters |
-| **Citation-friendly** | Include stats, dates, sources that AI can cite |
+| Strategy              | Implementation                                    |
+| --------------------- | ------------------------------------------------- |
+| **FAQ sections**      | Add FAQPage schema - AI pulls from structured Q&A |
+| **Direct answers**    | Start content with clear, factual statements      |
+| **Structured data**   | Schema.org markup helps AI understand content     |
+| **Topic authority**   | Comprehensive coverage on topic clusters          |
+| **Citation-friendly** | Include stats, dates, sources that AI can cite    |
 
 ```typescript
 // ✅ GOOD: Content structure for AI search
@@ -383,6 +389,7 @@ function ProductPage({ product }) {
 ```
 
 **Why AEO matters:**
+
 - 40% of Gen Z uses TikTok/AI for search over Google
 - AI search engines cite well-structured content
 - FAQ sections appear in AI answers
@@ -394,7 +401,7 @@ function ProductPage({ product }) {
 
 ```typescript
 // app/sitemap.ts
-import { MetadataRoute } from 'next';
+import { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const products = await db.product.findMany({
@@ -404,15 +411,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const productUrls = products.map((product) => ({
     url: `https://site.com/products/${product.slug}`,
     lastModified: product.updatedAt,
-    changeFrequency: 'weekly' as const,
+    changeFrequency: "weekly" as const,
     priority: 0.8,
   }));
 
   return [
     {
-      url: 'https://site.com',
+      url: "https://site.com",
       lastModified: new Date(),
-      changeFrequency: 'daily',
+      changeFrequency: "daily",
       priority: 1,
     },
     ...productUrls,
@@ -424,23 +431,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
 ```typescript
 // app/robots.ts
-import { MetadataRoute } from 'next';
+import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
-        userAgent: '*',
-        allow: '/',
-        disallow: ['/admin/', '/api/'],
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/admin/", "/api/"],
       },
       {
-        userAgent: 'Googlebot',
-        allow: '/',
+        userAgent: "Googlebot",
+        allow: "/",
         crawlDelay: 0,
       },
     ],
-    sitemap: 'https://site.com/sitemap.xml',
+    sitemap: "https://site.com/sitemap.xml",
   };
 }
 ```
@@ -448,6 +455,7 @@ export default function robots(): MetadataRoute.Robots {
 ## Quick Reference: Metadata Checklist
 
 Every page needs:
+
 - [ ] `title` - Unique, < 60 chars, includes primary keyword
 - [ ] `description` - Compelling, < 155 chars, includes CTA
 - [ ] `canonical` URL - Prevents duplicate content
@@ -456,6 +464,7 @@ Every page needs:
 - [ ] `robots` - index/noindex directive
 
 For e-commerce:
+
 - [ ] OpenGraph `type: 'product'` (not 'website')
 - [ ] Product JSON-LD with offers
 - [ ] Breadcrumb JSON-LD
@@ -465,18 +474,19 @@ For e-commerce:
 ### Validation Tools (Before Deploy)
 
 Test structured data BEFORE deploying:
+
 - [Rich Results Test](https://search.google.com/test/rich-results) - Google's official tool
 - [Schema Markup Validator](https://validator.schema.org/) - schema.org validator
 - Chrome DevTools → Lighthouse → SEO audit
 
 ### Performance Measurement
 
-| Tool | What It Measures | Use For |
-|------|------------------|---------|
-| **PageSpeed Insights** | Field data (28 days) | Official Core Web Vitals scores |
-| **Chrome User Experience Report (CrUX)** | Real user data | P75 scores for ranking |
-| **Lighthouse (DevTools)** | Lab data (simulated) | Local testing, not for ranking |
-| **Search Console** | Core Web Vitals report | Per-URL performance in field |
+| Tool                                     | What It Measures       | Use For                         |
+| ---------------------------------------- | ---------------------- | ------------------------------- |
+| **PageSpeed Insights**                   | Field data (28 days)   | Official Core Web Vitals scores |
+| **Chrome User Experience Report (CrUX)** | Real user data         | P75 scores for ranking          |
+| **Lighthouse (DevTools)**                | Lab data (simulated)   | Local testing, not for ranking  |
+| **Search Console**                       | Core Web Vitals report | Per-URL performance in field    |
 
 **Critical:** Only **Field Data** (real users) affects Google rankings. Lab data helps debug but doesn't count for SEO.
 
@@ -486,10 +496,10 @@ Test structured data BEFORE deploying:
 // Measure INP in production
 new PerformanceObserver((list) => {
   for (const entry of list.getEntries()) {
-    if (entry.entryType === 'event') {
+    if (entry.entryType === "event") {
       const inp = entry.processingStart - entry.startTime;
       if (inp > 200) {
-        console.warn('Slow INP:', {
+        console.warn("Slow INP:", {
           duration: inp,
           name: entry.name,
           target: entry.target,
@@ -497,20 +507,20 @@ new PerformanceObserver((list) => {
       }
     }
   }
-}).observe({ type: 'event', buffered: true });
+}).observe({ type: "event", buffered: true });
 
 // Log slow LCP
 new PerformanceObserver((list) => {
   const entries = list.getEntries();
   const lcp = entries[entries.length - 1];
   if (lcp.renderTime > 2500) {
-    console.warn('Slow LCP:', {
+    console.warn("Slow LCP:", {
       duration: lcp.renderTime,
       element: lcp.element,
       url: lcp.url,
     });
   }
-}).observe({ type: 'largest-contentful-paint', buffered: true });
+}).observe({ type: "largest-contentful-paint", buffered: true });
 ```
 
 ## References
@@ -523,6 +533,7 @@ new PerformanceObserver((list) => {
 - [Rich Results Test](https://search.google.com/test/rich-results) - Validate structured data
 
 **Version Notes:**
+
 - INP replaced FID as Core Web Vital (March 2024)
 - Next.js 15: Enhanced Image component, metadataBase required for OG
 - Good INP: < 200ms (improving from 500ms → 200ms = 22% engagement boost)
@@ -530,29 +541,29 @@ new PerformanceObserver((list) => {
 
 ## Red Flags - STOP and Fix
 
-| Thought | Reality |
-|---------|---------|
-| "SEO is just meta tags" | Core Web Vitals are ranking factors. Optimize performance. |
-| "I'll add structured data later" | No rich snippets = lower CTR. Add from day one. |
-| "LCP doesn't matter for this page" | Every page's performance affects site-wide ranking. |
-| "Using img tag is fine" | Next.js Image handles optimization. Always use it. |
-| "OpenGraph type='website' is fine" | Use 'product' for products, 'article' for articles. |
-| "Lab data (Lighthouse) is good enough" | Only field data counts for ranking. Test with real users. |
-| "INP is too complex to optimize" | Use scheduler.yield() and debouncing. Start simple. |
-| "I don't need a sitemap for small sites" | Sitemaps help discovery. Generate dynamically. |
+| Thought                                  | Reality                                                    |
+| ---------------------------------------- | ---------------------------------------------------------- |
+| "SEO is just meta tags"                  | Core Web Vitals are ranking factors. Optimize performance. |
+| "I'll add structured data later"         | No rich snippets = lower CTR. Add from day one.            |
+| "LCP doesn't matter for this page"       | Every page's performance affects site-wide ranking.        |
+| "Using img tag is fine"                  | Next.js Image handles optimization. Always use it.         |
+| "OpenGraph type='website' is fine"       | Use 'product' for products, 'article' for articles.        |
+| "Lab data (Lighthouse) is good enough"   | Only field data counts for ranking. Test with real users.  |
+| "INP is too complex to optimize"         | Use scheduler.yield() and debouncing. Start simple.        |
+| "I don't need a sitemap for small sites" | Sitemaps help discovery. Generate dynamically.             |
 
 ## Common Mistakes
 
-| Mistake | Fix |
-|---------|-----|
-| HTML img instead of Next.js Image | Use `next/image` with priority for LCP |
-| Missing `width`/`height` on images | Always specify to prevent CLS |
-| Description > 160 chars | Truncate to 155 with ellipsis |
-| No canonical URL | Add `alternates.canonical` |
-| Missing `priceValidUntil` in Offer | Required for Product rich snippets |
-| OpenGraph type='website' for products | Use type='product' |
-| No structured data validation | Test with Rich Results Test before deploy |
-| Long tasks without scheduler.yield() | Break up tasks > 50ms to improve INP |
-| Testing only with Lighthouse | Use PageSpeed Insights for field data |
-| No placeholder on LCP images | Add `placeholder="blur"` for perceived performance |
-| Dynamic sitemap with hardcoded URLs | Fetch from database for automatic updates |
+| Mistake                               | Fix                                                |
+| ------------------------------------- | -------------------------------------------------- |
+| HTML img instead of Next.js Image     | Use `next/image` with priority for LCP             |
+| Missing `width`/`height` on images    | Always specify to prevent CLS                      |
+| Description > 160 chars               | Truncate to 155 with ellipsis                      |
+| No canonical URL                      | Add `alternates.canonical`                         |
+| Missing `priceValidUntil` in Offer    | Required for Product rich snippets                 |
+| OpenGraph type='website' for products | Use type='product'                                 |
+| No structured data validation         | Test with Rich Results Test before deploy          |
+| Long tasks without scheduler.yield()  | Break up tasks > 50ms to improve INP               |
+| Testing only with Lighthouse          | Use PageSpeed Insights for field data              |
+| No placeholder on LCP images          | Add `placeholder="blur"` for perceived performance |
+| Dynamic sitemap with hardcoded URLs   | Fetch from database for automatic updates          |

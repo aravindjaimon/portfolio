@@ -1,5 +1,5 @@
 /** @type {import('@commitlint/types').UserConfig} */
-export default {
+const config = {
   extends: ["@commitlint/config-conventional"],
   rules: {
     // Type must be one of the conventional types
@@ -30,3 +30,5 @@ export default {
     "header-max-length": [2, "always", 100],
   },
 };
+
+export default config;

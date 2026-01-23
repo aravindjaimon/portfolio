@@ -1,12 +1,15 @@
-import { posts } from '#site/content';
+import { posts } from "#site/content";
 
 export type Post = (typeof posts)[number];
 
 // Get all published posts sorted by date
 export function getPublishedPosts(): Post[] {
   return posts
-    .filter((post) => !post.draft || process.env.NODE_ENV === 'development')
-    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+    .filter((post) => !post.draft || process.env.NODE_ENV === "development")
+    .sort(
+      (a, b) =>
+        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    );
 }
 
 // Get featured posts
@@ -37,7 +40,9 @@ export function getRelatedPosts(currentSlug: string, limit = 3): Post[] {
   const currentPost = getPostBySlug(currentSlug);
   if (!currentPost) return [];
 
-  const otherPosts = getPublishedPosts().filter((post) => post.slug !== currentSlug);
+  const otherPosts = getPublishedPosts().filter(
+    (post) => post.slug !== currentSlug
+  );
 
   // Score posts by number of matching tags
   const scored = otherPosts.map((post) => {
@@ -56,10 +61,10 @@ export function getRelatedPosts(currentSlug: string, limit = 3): Post[] {
 
 // Format date for display
 export function formatDate(dateString: string): string {
-  return new Date(dateString).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+  return new Date(dateString).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
 }
 
@@ -78,7 +83,7 @@ export function extractTableOfContents(rawContent: string): TOCItem[] {
   while ((match = headingRegex.exec(rawContent)) !== null) {
     const level = match[1].length;
     const text = match[2].trim();
-    const id = text.toLowerCase().replace(/\s+/g, '-');
+    const id = text.toLowerCase().replace(/\s+/g, "-");
     items.push({ id, text, level });
   }
 

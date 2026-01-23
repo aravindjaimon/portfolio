@@ -1,10 +1,18 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
-import { skills } from '@/lib/data';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Code2, Layout, Server, Brain, Cloud, Boxes, LucideIcon } from 'lucide-react';
+import { useEffect, useRef } from "react";
+import { skills } from "@/lib/data";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {
+  Code2,
+  Layout,
+  Server,
+  Brain,
+  Cloud,
+  Boxes,
+  LucideIcon,
+} from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,12 +23,12 @@ interface SkillCategory {
 }
 
 const skillCategories: SkillCategory[] = [
-  { key: 'languages', title: 'Languages', icon: Code2 },
-  { key: 'frontend', title: 'Frontend', icon: Layout },
-  { key: 'backend', title: 'Backend', icon: Server },
-  { key: 'ai', title: 'AI & LLMs', icon: Brain },
-  { key: 'cloud', title: 'Cloud & DevOps', icon: Cloud },
-  { key: 'systemDesign', title: 'System Design', icon: Boxes }
+  { key: "languages", title: "Languages", icon: Code2 },
+  { key: "frontend", title: "Frontend", icon: Layout },
+  { key: "backend", title: "Backend", icon: Server },
+  { key: "ai", title: "AI & LLMs", icon: Brain },
+  { key: "cloud", title: "Cloud & DevOps", icon: Cloud },
+  { key: "systemDesign", title: "System Design", icon: Boxes },
 ];
 
 interface SkillCardProps {
@@ -33,7 +41,8 @@ const SkillCard = ({ category, index }: SkillCardProps) => {
   const Icon = category.icon;
 
   useEffect(() => {
-    gsap.fromTo(cardRef.current,
+    gsap.fromTo(
+      cardRef.current,
       { opacity: 0, y: 40 },
       {
         opacity: 1,
@@ -42,9 +51,9 @@ const SkillCard = ({ category, index }: SkillCardProps) => {
         delay: index * 0.1,
         scrollTrigger: {
           trigger: cardRef.current,
-          start: 'top 85%',
-          toggleActions: 'play none none reverse'
-        }
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
       }
     );
   }, [index]);
@@ -80,7 +89,8 @@ const Skills = () => {
   const titleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    gsap.fromTo(titleRef.current,
+    gsap.fromTo(
+      titleRef.current,
       { opacity: 0, y: 50 },
       {
         opacity: 1,
@@ -88,9 +98,9 @@ const Skills = () => {
         duration: 0.8,
         scrollTrigger: {
           trigger: titleRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse'
-        }
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
       }
     );
   }, []);
@@ -104,7 +114,8 @@ const Skills = () => {
             TECHNICAL <span className="text-[#C41E3A]">EXPERTISE</span>
           </h2>
           <p className="text-white/50 font-inter text-base md:text-lg max-w-2xl mx-auto">
-            Full-stack proficiency from Rust to React, Cloud to AI. Building systems that scale.
+            Full-stack proficiency from Rust to React, Cloud to AI. Building
+            systems that scale.
           </p>
         </div>
 
@@ -118,7 +129,9 @@ const Skills = () => {
         {/* Bottom accent */}
         <div className="mt-16 flex items-center justify-center gap-4">
           <div className="w-20 h-px bg-white/10" />
-          <span className="text-xs font-mono text-white/30 tracking-widest">5+ YEARS OF CRAFT</span>
+          <span className="text-xs font-mono text-white/30 tracking-widest">
+            5+ YEARS OF CRAFT
+          </span>
           <div className="w-20 h-px bg-white/10" />
         </div>
       </div>

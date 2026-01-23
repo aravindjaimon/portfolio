@@ -1,5 +1,5 @@
-import { defineConfig, defineCollection, s } from 'velite';
-import rehypePrettyCode from 'rehype-pretty-code';
+import { defineConfig, defineCollection, s } from "velite";
+import rehypePrettyCode from "rehype-pretty-code";
 
 // Compute reading time from content
 const computeReadingTime = (content: string): string => {
@@ -10,7 +10,9 @@ const computeReadingTime = (content: string): string => {
 };
 
 // Extract table of contents from MDX content
-function extractTOC(content: string): Array<{ id: string; text: string; level: number }> {
+function extractTOC(
+  content: string
+): Array<{ id: string; text: string; level: number }> {
   const headingRegex = /^(#{2,3})\s+(.+)$/gm;
   const items: Array<{ id: string; text: string; level: number }> = [];
   let match;
@@ -18,7 +20,7 @@ function extractTOC(content: string): Array<{ id: string; text: string; level: n
   while ((match = headingRegex.exec(content)) !== null) {
     const level = match[1].length;
     const text = match[2].trim();
-    const id = text.toLowerCase().replace(/\s+/g, '-');
+    const id = text.toLowerCase().replace(/\s+/g, "-");
     items.push({ id, text, level });
   }
 
@@ -26,8 +28,8 @@ function extractTOC(content: string): Array<{ id: string; text: string; level: n
 }
 
 const posts = defineCollection({
-  name: 'Post',
-  pattern: 'blog/**/*.mdx',
+  name: "Post",
+  pattern: "blog/**/*.mdx",
   schema: s
     .object({
       title: s.string().max(100),
@@ -36,10 +38,12 @@ const posts = defineCollection({
       updatedAt: s.isodate().optional(),
       coverImage: s.string(),
       tags: s.array(s.string()),
-      author: s.string().default('Ajay'),
+      author: s.string().default("Ajay"),
       draft: s.boolean().default(false),
       featured: s.boolean().default(false),
-      difficulty: s.enum(['beginner', 'intermediate', 'advanced']).default('intermediate'),
+      difficulty: s
+        .enum(["beginner", "intermediate", "advanced"])
+        .default("intermediate"),
       // Auto-computed fields from file path
       content: s.mdx(),
       raw: s.raw(),
@@ -47,7 +51,11 @@ const posts = defineCollection({
     })
     .transform((data, { meta }) => {
       // Extract slug from file path (e.g., blog/hello-world.mdx -> hello-world)
-      const slug = meta.path.split('/').pop()?.replace(/\.mdx?$/, '') ?? '';
+      const slug =
+        meta.path
+          .split("/")
+          .pop()
+          ?.replace(/\.mdx?$/, "") ?? "";
       return {
         ...data,
         slug,
@@ -59,12 +67,12 @@ const posts = defineCollection({
 });
 
 export default defineConfig({
-  root: 'content',
+  root: "content",
   output: {
-    data: '.velite',
-    assets: 'public/static',
-    base: '/static/',
-    name: '[name]-[hash:6].[ext]',
+    data: ".velite",
+    assets: "public/static",
+    base: "/static/",
+    name: "[name]-[hash:6].[ext]",
     clean: true,
   },
   collections: { posts },
@@ -73,9 +81,9 @@ export default defineConfig({
       [
         rehypePrettyCode,
         {
-          theme: 'github-dark',
+          theme: "github-dark",
           keepBackground: true,
-          defaultLang: 'plaintext',
+          defaultLang: "plaintext",
         },
       ],
     ],

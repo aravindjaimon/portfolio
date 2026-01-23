@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useCallback } from 'react';
-import { List, ChevronDown, ChevronUp } from 'lucide-react';
-import { NewsletterSignup } from './NewsletterSignup';
+import { useState, useEffect, useCallback } from "react";
+import { List, ChevronDown, ChevronUp } from "lucide-react";
+import { NewsletterSignup } from "./NewsletterSignup";
 
 export interface TOCItem {
   id: string;
@@ -12,11 +12,11 @@ export interface TOCItem {
 
 interface TableOfContentsProps {
   items: TOCItem[];
-  variant?: 'mobile' | 'desktop';
+  variant?: "mobile" | "desktop";
 }
 
 export function TableOfContents({ items, variant }: TableOfContentsProps) {
-  const [activeId, setActiveId] = useState<string>('');
+  const [activeId, setActiveId] = useState<string>("");
   const [isExpanded, setIsExpanded] = useState(false);
 
   // Track which heading is currently in view
@@ -29,7 +29,7 @@ export function TableOfContents({ items, variant }: TableOfContentsProps) {
           }
         });
       },
-      { rootMargin: '-80px 0px -80% 0px' }
+      { rootMargin: "-80px 0px -80% 0px" }
     );
 
     items.forEach((item) => {
@@ -40,20 +40,24 @@ export function TableOfContents({ items, variant }: TableOfContentsProps) {
     return () => observer.disconnect();
   }, [items]);
 
-  const handleClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 100;
-      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({
-        top: elementPosition - offset,
-        behavior: 'smooth',
-      });
-      setActiveId(id);
-      setIsExpanded(false);
-    }
-  }, []);
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+      e.preventDefault();
+      const element = document.getElementById(id);
+      if (element) {
+        const offset = 100;
+        const elementPosition =
+          element.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+          top: elementPosition - offset,
+          behavior: "smooth",
+        });
+        setActiveId(id);
+        setIsExpanded(false);
+      }
+    },
+    []
+  );
 
   if (items.length === 0) return null;
 
@@ -74,14 +78,17 @@ export function TableOfContents({ items, variant }: TableOfContentsProps) {
         <nav className="px-4 py-3 bg-[#1A1A1A] border border-t-0 border-[#2D2D2D]">
           <ul className="space-y-2">
             {items.map((item) => (
-              <li key={item.id} style={{ paddingLeft: `${(item.level - 2) * 12}px` }}>
+              <li
+                key={item.id}
+                style={{ paddingLeft: `${(item.level - 2) * 12}px` }}
+              >
                 <a
                   href={`#${item.id}`}
                   onClick={(e) => handleClick(e, item.id)}
                   className={`block py-1 text-sm transition-colors ${
                     activeId === item.id
-                      ? 'text-[#C41E3A] font-medium'
-                      : 'text-white/60 hover:text-white/80'
+                      ? "text-[#C41E3A] font-medium"
+                      : "text-white/60 hover:text-white/80"
                   }`}
                 >
                   {item.text}
@@ -106,14 +113,17 @@ export function TableOfContents({ items, variant }: TableOfContentsProps) {
           <nav>
             <ul className="space-y-1">
               {items.map((item) => (
-                <li key={item.id} style={{ paddingLeft: `${(item.level - 2) * 12}px` }}>
+                <li
+                  key={item.id}
+                  style={{ paddingLeft: `${(item.level - 2) * 12}px` }}
+                >
                   <a
                     href={`#${item.id}`}
                     onClick={(e) => handleClick(e, item.id)}
                     className={`block py-1.5 text-sm transition-colors border-l-2 pl-3 -ml-px ${
                       activeId === item.id
-                        ? 'border-[#C41E3A] text-[#C41E3A]'
-                        : 'border-transparent text-white/50 hover:text-white/80 hover:border-white/20'
+                        ? "border-[#C41E3A] text-[#C41E3A]"
+                        : "border-transparent text-white/50 hover:text-white/80 hover:border-white/20"
                     }`}
                   >
                     {item.text}
@@ -131,8 +141,8 @@ export function TableOfContents({ items, variant }: TableOfContentsProps) {
   );
 
   // Render based on variant
-  if (variant === 'mobile') return mobileContent;
-  if (variant === 'desktop') return desktopContent;
+  if (variant === "mobile") return mobileContent;
+  if (variant === "desktop") return desktopContent;
 
   // Default: render both (legacy behavior)
   return (

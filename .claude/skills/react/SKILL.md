@@ -23,7 +23,7 @@ Write components that are small, focused, and follow framework conventions. Dete
 
 ```typescript
 // Check package.json for framework
-import pkg from './package.json';
+import pkg from "./package.json";
 
 const framework = detectFramework(pkg.dependencies);
 // 'next' → Next.js (check for app/ vs pages/)
@@ -33,13 +33,13 @@ const framework = detectFramework(pkg.dependencies);
 // none → Create React App or custom
 ```
 
-| File/Config | Framework | Router Type |
-|------------|-----------|-------------|
-| `app/` directory + `next.config` | Next.js App Router | File-based, RSC |
-| `pages/` directory + `next.config` | Next.js Pages Router | File-based, CSR/SSR |
-| `remix.config.js` or `@remix-run/*` | Remix | Nested, loader-based |
-| `astro.config.mjs` | Astro | Islands, mostly static |
-| `vite.config.ts` only | Vite SPA | Client-side only |
+| File/Config                         | Framework            | Router Type            |
+| ----------------------------------- | -------------------- | ---------------------- |
+| `app/` directory + `next.config`    | Next.js App Router   | File-based, RSC        |
+| `pages/` directory + `next.config`  | Next.js Pages Router | File-based, CSR/SSR    |
+| `remix.config.js` or `@remix-run/*` | Remix                | Nested, loader-based   |
+| `astro.config.mjs`                  | Astro                | Islands, mostly static |
+| `vite.config.ts` only               | Vite SPA             | Client-side only       |
 
 ## The Iron Rules
 
@@ -67,6 +67,7 @@ export function ClientComponent() { ... }
 ### 2. Server Components by Default (Next.js App Router)
 
 Data fetching belongs on the server. Only add 'use client' when you need:
+
 - Event handlers (onClick, onChange)
 - useState, useEffect, useReducer
 - Browser APIs (localStorage, window)
@@ -104,6 +105,7 @@ function Layout({ children }) {
 ### 3. Component Responsibilities: Max 3 Concerns
 
 A component should handle at most 3 concerns:
+
 1. Data → Layout → Interaction (orchestrator)
 2. Fetch → Transform → Display (data component)
 3. State → Render → Events (interactive component)
@@ -222,6 +224,7 @@ export function SignupForm() {
 ```
 
 **Key patterns:**
+
 - Server Actions return error objects, never throw
 - Use `useActionState` for form state + pending + errors
 - Progressive enhancement: works without JS
@@ -251,12 +254,14 @@ function UserButton({ user }) {
 ```
 
 **Key benefits:**
+
 - No manual memoization needed
 - Reduces bundle size (no memo wrappers)
 - 25-40% fewer re-renders in typical apps
 - Works with existing React 19 codebases
 
 **Enable in Next.js 15+:**
+
 ```javascript
 // next.config.js
 module.exports = {
@@ -371,6 +376,7 @@ async function DynamicPrice({ productId }) {
 ```
 
 **Enable PPR:**
+
 ```javascript
 // next.config.js
 module.exports = {
@@ -381,6 +387,7 @@ module.exports = {
 ```
 
 **Benefits:**
+
 - Static shell loads instantly (like SSG)
 - Dynamic parts stream in (like SSR)
 - Best of both worlds in one request
@@ -426,29 +433,30 @@ export default function Dashboard() {
 ```
 
 **Benefits:**
+
 - TTFB improvement - show shell instantly
 - Independent loading states
 - Partial prefetching for faster navigation
 
 ## Quick Reference: Framework Patterns
 
-| Task | Next.js App Router | Remix | Vite SPA |
-|------|-------------------|-------|----------|
-| Data fetching | async component | loader function | useQuery |
-| Mutations | Server Action | action function | useMutation |
-| Loading UI | loading.tsx | useNavigation | suspense |
-| Error UI | error.tsx | ErrorBoundary | ErrorBoundary |
-| Metadata | metadata export | meta function | react-helmet |
-| Navigation | Link + router | Link + navigate | Link + navigate |
+| Task          | Next.js App Router | Remix           | Vite SPA        |
+| ------------- | ------------------ | --------------- | --------------- |
+| Data fetching | async component    | loader function | useQuery        |
+| Mutations     | Server Action      | action function | useMutation     |
+| Loading UI    | loading.tsx        | useNavigation   | suspense        |
+| Error UI      | error.tsx          | ErrorBoundary   | ErrorBoundary   |
+| Metadata      | metadata export    | meta function   | react-helmet    |
+| Navigation    | Link + router      | Link + navigate | Link + navigate |
 
 ## Testing Strategy
 
-| What to Test | How |
-|--------------|-----|
-| Server Components | Import directly, verify data fetching |
-| Client Components | Render with Testing Library, verify interactions |
-| Server Actions | Call with FormData, assert return values |
-| Suspense fallbacks | Wait for async resolution, verify both states |
+| What to Test              | How                                              |
+| ------------------------- | ------------------------------------------------ |
+| Server Components         | Import directly, verify data fetching            |
+| Client Components         | Render with Testing Library, verify interactions |
+| Server Actions            | Call with FormData, assert return values         |
+| Suspense fallbacks        | Wait for async resolution, verify both states    |
 | Forms with useActionState | Submit form, verify pending/error/success states |
 
 ```typescript
@@ -495,6 +503,7 @@ test('shows fallback then content', async () => {
 - [React Server Components](https://react.dev/reference/rsc/server-components) - Official RSC guide
 
 **Version Notes:**
+
 - Next.js 14+: App Router stable, Server Actions stable
 - Next.js 15: Turbopack stable, React Compiler support, PPR experimental
 - React 19: use(), Actions, useOptimistic, useActionState
@@ -503,26 +512,26 @@ test('shows fallback then content', async () => {
 
 ## Red Flags - STOP and Restructure
 
-| Thought | Reality |
-|---------|---------|
-| "I'll put 'use client' here just for demo" | Broken code teaches nothing. Write it correctly. |
-| "This component does a lot but it's fine" | Max 3 concerns. Split now. |
-| "I'll fetch client-side, it's simpler" | Server fetching is simpler AND faster. |
-| "Let me add useState for this" | Check: can it be URL params, server state, or derived? |
-| "Redux for this small app" | Zustand/Jotai unless you have 50+ reducers. |
-| "I need useEffect for this fetch" | In Next.js/Remix: no. Use server components or loaders. |
-| "I'll create an API route for this form" | Use Server Actions - no API route needed. |
-| "Let me throw an error in Server Action" | Return error object for useActionState. Don't throw. |
-| "I'll add 'use client' to the whole layout" | Keep boundaries deep. Only interactive parts need it. |
-| "Forms need JavaScript to work" | Server Actions work with progressive enhancement. |
+| Thought                                     | Reality                                                 |
+| ------------------------------------------- | ------------------------------------------------------- |
+| "I'll put 'use client' here just for demo"  | Broken code teaches nothing. Write it correctly.        |
+| "This component does a lot but it's fine"   | Max 3 concerns. Split now.                              |
+| "I'll fetch client-side, it's simpler"      | Server fetching is simpler AND faster.                  |
+| "Let me add useState for this"              | Check: can it be URL params, server state, or derived?  |
+| "Redux for this small app"                  | Zustand/Jotai unless you have 50+ reducers.             |
+| "I need useEffect for this fetch"           | In Next.js/Remix: no. Use server components or loaders. |
+| "I'll create an API route for this form"    | Use Server Actions - no API route needed.               |
+| "Let me throw an error in Server Action"    | Return error object for useActionState. Don't throw.    |
+| "I'll add 'use client' to the whole layout" | Keep boundaries deep. Only interactive parts need it.   |
+| "Forms need JavaScript to work"             | Server Actions work with progressive enhancement.       |
 
 ## Common Mistakes
 
-| Mistake | Fix |
-|---------|-----|
-| 'use client' not at file top | Move to separate file |
-| useEffect for data fetching in Next.js | Server component or loader |
-| Prop drilling 3+ levels | Context or composition |
-| Re-render on every keystroke | Debounce or uncontrolled input |
-| window/localStorage in server component | 'use client' or dynamic import |
-| Inline function in JSX causing re-renders | useCallback or extract |
+| Mistake                                   | Fix                            |
+| ----------------------------------------- | ------------------------------ |
+| 'use client' not at file top              | Move to separate file          |
+| useEffect for data fetching in Next.js    | Server component or loader     |
+| Prop drilling 3+ levels                   | Context or composition         |
+| Re-render on every keystroke              | Debounce or uncontrolled input |
+| window/localStorage in server component   | 'use client' or dynamic import |
+| Inline function in JSX causing re-renders | useCallback or extract         |

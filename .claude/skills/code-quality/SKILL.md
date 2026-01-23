@@ -67,19 +67,21 @@ Every number with meaning needs a name.
 ```typescript
 // ❌ BAD: What do these numbers mean?
 if (totalItems >= 10) {
-  total = total * 0.90;
+  total = total * 0.9;
 }
-if (password.length < 8) { }
+if (password.length < 8) {
+}
 
 // ✅ GOOD: Self-documenting
 const BULK_DISCOUNT_THRESHOLD = 10;
-const BULK_DISCOUNT_RATE = 0.10;
+const BULK_DISCOUNT_RATE = 0.1;
 const MIN_PASSWORD_LENGTH = 8;
 
 if (totalItems >= BULK_DISCOUNT_THRESHOLD) {
   total = total * (1 - BULK_DISCOUNT_RATE);
 }
-if (password.length < MIN_PASSWORD_LENGTH) { }
+if (password.length < MIN_PASSWORD_LENGTH) {
+}
 ```
 
 ### 3. DRY: Extract Repeated Logic
@@ -93,7 +95,7 @@ if (!paymentInfo) {
     inventoryDb[item.productId] += item.quantity;
   }
   delete reservedInventory[order.id];
-  return { success: false, error: 'Payment required' };
+  return { success: false, error: "Payment required" };
 }
 // ...same rollback code repeated 4 more times...
 
@@ -112,31 +114,33 @@ function rollbackInventory(orderId: string, items: OrderItem[]) {
 
 One function = one reason to change.
 
-| Bad | Good |
-|-----|------|
+| Bad                         | Good                                 |
+| --------------------------- | ------------------------------------ |
 | `validateAndProcessOrder()` | `validateOrder()` + `processOrder()` |
-| `fetchDataAndRender()` | `fetchData()` + `renderData()` |
-| `parseAndValidateAndSave()` | `parse()` + `validate()` + `save()` |
+| `fetchDataAndRender()`      | `fetchData()` + `renderData()`       |
+| `parseAndValidateAndSave()` | `parse()` + `validate()` + `save()`  |
 
 ### 5. Naming Conventions
 
-| Type | Convention | Examples |
-|------|------------|----------|
-| Functions | camelCase, verb-first | `validateEmail()`, `calculateTotal()` |
-| Booleans | `is`, `has`, `should`, `can` | `isValid`, `hasPermission`, `shouldRetry` |
-| Constants | SCREAMING_SNAKE_CASE | `MAX_RETRIES`, `API_TIMEOUT_MS` |
-| Classes/Types | PascalCase | `OrderProcessor`, `ValidationResult` |
+| Type          | Convention                   | Examples                                  |
+| ------------- | ---------------------------- | ----------------------------------------- |
+| Functions     | camelCase, verb-first        | `validateEmail()`, `calculateTotal()`     |
+| Booleans      | `is`, `has`, `should`, `can` | `isValid`, `hasPermission`, `shouldRetry` |
+| Constants     | SCREAMING_SNAKE_CASE         | `MAX_RETRIES`, `API_TIMEOUT_MS`           |
+| Classes/Types | PascalCase                   | `OrderProcessor`, `ValidationResult`      |
 
 ### 6. Comments: WHY, Not WHAT
 
 ```typescript
 // ❌ BAD: Describes what code does (obvious)
 // Check if user is admin
-if (user.role === 'admin') { }
+if (user.role === "admin") {
+}
 
 // ✅ GOOD: Explains why (not obvious)
 // Admins bypass rate limiting per security policy SEC-2024-001
-if (user.role === 'admin') { }
+if (user.role === "admin") {
+}
 ```
 
 ## Automated Enforcement
@@ -147,8 +151,8 @@ ESLint 9+ uses flat config (`eslint.config.js`). Enforce code quality automatica
 
 ```javascript
 // eslint.config.js (ESLint v9+ flat config)
-import js from '@eslint/js';
-import tseslint from 'typescript-eslint';
+import js from "@eslint/js";
+import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   js.configs.recommended,
@@ -156,38 +160,47 @@ export default tseslint.config(
   {
     rules: {
       // Max function length
-      'max-lines-per-function': ['error', {
-        max: 30,
-        skipBlankLines: true,
-        skipComments: true,
-      }],
+      "max-lines-per-function": [
+        "error",
+        {
+          max: 30,
+          skipBlankLines: true,
+          skipComments: true,
+        },
+      ],
 
       // Cyclomatic complexity
-      'complexity': ['error', { max: 10 }],
+      complexity: ["error", { max: 10 }],
 
       // Max file length
-      'max-lines': ['error', {
-        max: 300,
-        skipBlankLines: true,
-        skipComments: true,
-      }],
+      "max-lines": [
+        "error",
+        {
+          max: 300,
+          skipBlankLines: true,
+          skipComments: true,
+        },
+      ],
 
       // Max function params
-      'max-params': ['error', 3],
+      "max-params": ["error", 3],
 
       // Max nested callbacks
-      'max-nested-callbacks': ['error', 2],
+      "max-nested-callbacks": ["error", 2],
 
       // No magic numbers
-      'no-magic-numbers': ['error', {
-        ignore: [0, 1, -1],
-        ignoreArrayIndexes: true,
-      }],
+      "no-magic-numbers": [
+        "error",
+        {
+          ignore: [0, 1, -1],
+          ignoreArrayIndexes: true,
+        },
+      ],
     },
   },
   {
     // Ignore patterns (replaces .eslintignore)
-    ignores: ['node_modules/', 'dist/', '*.config.js'],
+    ignores: ["node_modules/", "dist/", "*.config.js"],
   }
 );
 ```
@@ -211,13 +224,11 @@ function createUser(options: CreateUserOptions): User {
 }
 
 // ✅ GOOD: Discriminated union for type-safe control flow
-type Result<T> =
-  | { success: true; data: T }
-  | { success: false; error: string };
+type Result<T> = { success: true; data: T } | { success: false; error: string };
 
 function processOrder(order: Order): Result<OrderConfirmation> {
   if (!isValid(order)) {
-    return { success: false, error: 'Invalid order' };
+    return { success: false, error: "Invalid order" };
   }
 
   const confirmation = executeOrder(order);
@@ -225,13 +236,15 @@ function processOrder(order: Order): Result<OrderConfirmation> {
 }
 
 // ✅ GOOD: Branded types for type safety
-type UserId = string & { readonly __brand: 'UserId' };
-type OrderId = string & { readonly __brand: 'OrderId' };
+type UserId = string & { readonly __brand: "UserId" };
+type OrderId = string & { readonly __brand: "OrderId" };
 
-function getUser(id: UserId): User { /* ... */ }
+function getUser(id: UserId): User {
+  /* ... */
+}
 
 // Won't compile - prevents mixing up IDs
-const orderId: OrderId = '123' as OrderId;
+const orderId: OrderId = "123" as OrderId;
 getUser(orderId); // Type error!
 ```
 
@@ -239,14 +252,14 @@ getUser(orderId); // Type error!
 
 ```typescript
 // Test function length and complexity
-describe('Code Quality', () => {
-  it('functions stay under 30 lines', () => {
+describe("Code Quality", () => {
+  it("functions stay under 30 lines", () => {
     const functionSource = processOrder.toString();
-    const lines = functionSource.split('\n').filter(l => l.trim()).length;
+    const lines = functionSource.split("\n").filter((l) => l.trim()).length;
     expect(lines).toBeLessThanOrEqual(30);
   });
 
-  it('maintains low cyclomatic complexity', () => {
+  it("maintains low cyclomatic complexity", () => {
     // Use eslint-plugin-complexity or similar
     const complexity = calculateComplexity(processOrder);
     expect(complexity).toBeLessThanOrEqual(10);
@@ -254,13 +267,13 @@ describe('Code Quality', () => {
 });
 
 // Test extracted helpers
-describe('Helper Functions', () => {
-  it('validateOrder handles invalid input', () => {
+describe("Helper Functions", () => {
+  it("validateOrder handles invalid input", () => {
     const result = validateOrder({ items: [] });
     expect(result.valid).toBe(false);
   });
 
-  it('calculateOrderTotal sums items correctly', () => {
+  it("calculateOrderTotal sums items correctly", () => {
     const total = calculateOrderTotal(mockOrder);
     expect(total).toBe(99.99);
   });
@@ -269,31 +282,31 @@ describe('Helper Functions', () => {
 
 ## Quick Reference
 
-| Smell | Fix | ESLint Rule |
-|-------|-----|-------------|
-| Function > 30 lines | Extract helpers | `max-lines-per-function` |
-| Cyclomatic complexity > 10 | Extract conditionals | `complexity` |
-| Repeated code block | Extract function | Manual review |
-| Magic number | Named constant | `no-magic-numbers` |
-| `validateAndProcess()` | Split into two functions | Manual review |
-| Nested callbacks > 2 levels | Extract or use async/await | `max-nested-callbacks` |
-| Parameter list > 3 | Use options object | `max-params` |
+| Smell                       | Fix                        | ESLint Rule              |
+| --------------------------- | -------------------------- | ------------------------ |
+| Function > 30 lines         | Extract helpers            | `max-lines-per-function` |
+| Cyclomatic complexity > 10  | Extract conditionals       | `complexity`             |
+| Repeated code block         | Extract function           | Manual review            |
+| Magic number                | Named constant             | `no-magic-numbers`       |
+| `validateAndProcess()`      | Split into two functions   | Manual review            |
+| Nested callbacks > 2 levels | Extract or use async/await | `max-nested-callbacks`   |
+| Parameter list > 3          | Use options object         | `max-params`             |
 
 ## Red Flags - STOP and Refactor
 
 These thoughts mean you're about to write bad code:
 
-| Thought | Reality |
-|---------|---------|
-| "It's faster to write it all in one function" | It's faster to read small functions. Write for the reader. |
-| "We'll refactor later" | Later never comes. Write it right the first time. |
-| "It's just prototype code" | Prototypes become production. No excuse. |
-| "The deadline is tight" | Bad code slows you down MORE. Clean code is faster. |
-| "I'll add helpers if it gets complex" | It's already complex. Extract NOW. |
-| "This is a special case" | There are no special cases for quality. |
-| "It's only 35 lines, close enough" | The limit exists for a reason. Extract a helper. |
-| "The user specifically asked for one function" | Push back. Explain why splitting is better. |
-| "I need all this context in one place" | That's what orchestrator functions are for. |
+| Thought                                        | Reality                                                    |
+| ---------------------------------------------- | ---------------------------------------------------------- |
+| "It's faster to write it all in one function"  | It's faster to read small functions. Write for the reader. |
+| "We'll refactor later"                         | Later never comes. Write it right the first time.          |
+| "It's just prototype code"                     | Prototypes become production. No excuse.                   |
+| "The deadline is tight"                        | Bad code slows you down MORE. Clean code is faster.        |
+| "I'll add helpers if it gets complex"          | It's already complex. Extract NOW.                         |
+| "This is a special case"                       | There are no special cases for quality.                    |
+| "It's only 35 lines, close enough"             | The limit exists for a reason. Extract a helper.           |
+| "The user specifically asked for one function" | Push back. Explain why splitting is better.                |
+| "I need all this context in one place"         | That's what orchestrator functions are for.                |
 
 ## Pressure Response
 
@@ -314,6 +327,7 @@ When someone says "just make it work fast":
 - [Clean Code (Martin)](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) - Function length rationale
 
 **Version Notes:**
+
 - ESLint 9+: Flat config (`eslint.config.js`), replaces `.eslintrc.*`
 - TypeScript 5+: Improved discriminated union narrowing, const type parameters
 - typescript-eslint 8+: Native flat config support
@@ -321,13 +335,13 @@ When someone says "just make it work fast":
 
 ## Common Mistakes
 
-| Mistake | Impact | Fix |
-|---------|--------|-----|
-| God function | Untestable, unreadable | Max 30 lines, single responsibility |
-| Copy-paste code | Bugs multiply | Extract shared logic |
-| Cryptic names | Confusion | Descriptive, verb-first names |
-| No constants | Magic numbers everywhere | SCREAMING_SNAKE_CASE for all config |
-| No ESLint enforcement | Quality drifts over time | Add `complexity` and `max-lines-per-function` rules |
-| 5+ function parameters | Hard to call, hard to test | Use options object pattern |
-| Comments describe WHAT | Redundant, unmaintained | Comment WHY, not WHAT |
-| Mixing ID types (string) | Runtime bugs | Use branded types for type safety |
+| Mistake                  | Impact                     | Fix                                                 |
+| ------------------------ | -------------------------- | --------------------------------------------------- |
+| God function             | Untestable, unreadable     | Max 30 lines, single responsibility                 |
+| Copy-paste code          | Bugs multiply              | Extract shared logic                                |
+| Cryptic names            | Confusion                  | Descriptive, verb-first names                       |
+| No constants             | Magic numbers everywhere   | SCREAMING_SNAKE_CASE for all config                 |
+| No ESLint enforcement    | Quality drifts over time   | Add `complexity` and `max-lines-per-function` rules |
+| 5+ function parameters   | Hard to call, hard to test | Use options object pattern                          |
+| Comments describe WHAT   | Redundant, unmaintained    | Comment WHY, not WHAT                               |
+| Mixing ID types (string) | Runtime bugs               | Use branded types for type safety                   |

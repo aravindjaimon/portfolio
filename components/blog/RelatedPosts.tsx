@@ -1,5 +1,5 @@
-import { getRelatedPosts } from '@/lib/blog';
-import { BlogCard } from './BlogCard';
+import { getRelatedPosts } from "@/lib/blog";
+import { BlogCard } from "./BlogCard";
 
 interface RelatedPostsProps {
   currentSlug: string;

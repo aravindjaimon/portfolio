@@ -1,10 +1,17 @@
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
-import { ArrowLeft, ExternalLink, Calendar, Users, Briefcase, Tag } from 'lucide-react';
-import { getProjectBySlug, getAllProjectSlugs, type Project } from '@/lib/data';
-import type { Metadata } from 'next';
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import {
+  ArrowLeft,
+  ExternalLink,
+  Calendar,
+  Users,
+  Briefcase,
+  Tag,
+} from "lucide-react";
+import { getProjectBySlug, getAllProjectSlugs } from "@/lib/data";
+import type { Metadata } from "next";
 
-const baseUrl = 'https://aravindjaimon.com';
+const baseUrl = "https://aravindjaimon.com";
 
 interface CaseStudyPageProps {
   params: Promise<{ slug: string }>;
@@ -17,26 +24,28 @@ export async function generateStaticParams() {
 }
 
 // Generate metadata for SEO
-export async function generateMetadata({ params }: CaseStudyPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: CaseStudyPageProps): Promise<Metadata> {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
 
   if (!project) {
-    return { title: 'Project Not Found' };
+    return { title: "Project Not Found" };
   }
 
   return {
     title: `${project.title} | Case Study | Aravind Jaimon`,
     description: project.overview || project.challenge,
-    keywords: [...project.stack, project.industry, 'case study', 'portfolio'],
+    keywords: [...project.stack, project.industry, "case study", "portfolio"],
     openGraph: {
       title: `${project.title} - Case Study`,
       description: project.overview || project.challenge,
-      type: 'article',
+      type: "article",
       url: `${baseUrl}/projects/${slug}`,
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: `${project.title} - Case Study`,
       description: project.overview || project.challenge,
     },
@@ -49,7 +58,9 @@ export async function generateMetadata({ params }: CaseStudyPageProps): Promise<
 function MetricCard({ value, label }: { value: string; label: string }) {
   return (
     <div className="p-4 bg-[#1A1A1A] border border-[#2D2D2D] text-center">
-      <div className="font-bebas text-2xl sm:text-3xl text-[#C41E3A] tracking-wide">{value}</div>
+      <div className="font-bebas text-2xl sm:text-3xl text-[#C41E3A] tracking-wide">
+        {value}
+      </div>
       <div className="text-white/50 text-xs font-mono mt-1">{label}</div>
     </div>
   );
@@ -71,8 +82,6 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   if (!project) {
     notFound();
   }
-
-  const hasExtendedContent = project.overview || project.problemDetails || project.technicalApproach;
 
   return (
     <main className="min-h-screen bg-[#0A0A0A]">
@@ -132,7 +141,11 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {project.metrics.map((metric, index) => (
-              <MetricCard key={index} value={metric.value} label={metric.label} />
+              <MetricCard
+                key={index}
+                value={metric.value}
+                label={metric.label}
+              />
             ))}
           </div>
         </div>
@@ -144,18 +157,25 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         {project.overview && (
           <section>
             <SectionTitle>Overview</SectionTitle>
-            <p className="text-white/70 text-lg leading-relaxed">{project.overview}</p>
+            <p className="text-white/70 text-lg leading-relaxed">
+              {project.overview}
+            </p>
           </section>
         )}
 
         {/* The Challenge */}
         <section>
           <SectionTitle>The Challenge</SectionTitle>
-          <p className="text-white/70 text-lg leading-relaxed mb-6">{project.challenge}</p>
+          <p className="text-white/70 text-lg leading-relaxed mb-6">
+            {project.challenge}
+          </p>
           {project.problemDetails && (
             <ul className="space-y-3">
               {project.problemDetails.map((detail, index) => (
-                <li key={index} className="flex items-start gap-3 text-white/60">
+                <li
+                  key={index}
+                  className="flex items-start gap-3 text-white/60"
+                >
                   <span className="w-1.5 h-1.5 bg-[#C41E3A] mt-2.5 flex-shrink-0" />
                   {detail}
                 </li>
@@ -173,7 +193,9 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                 key={index}
                 className="p-4 bg-[#1A1A1A] border border-[#2D2D2D] text-white/70"
               >
-                <span className="text-[#C41E3A] font-mono text-sm mr-2">0{index + 1}</span>
+                <span className="text-[#C41E3A] font-mono text-sm mr-2">
+                  0{index + 1}
+                </span>
                 {item}
               </div>
             ))}
@@ -181,10 +203,15 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
 
           {project.technicalApproach && (
             <>
-              <h3 className="font-bebas text-xl text-white/80 tracking-wide mb-4">Technical Approach</h3>
+              <h3 className="font-bebas text-xl text-white/80 tracking-wide mb-4">
+                Technical Approach
+              </h3>
               <ul className="space-y-3">
                 {project.technicalApproach.map((approach, index) => (
-                  <li key={index} className="flex items-start gap-3 text-white/60">
+                  <li
+                    key={index}
+                    className="flex items-start gap-3 text-white/60"
+                  >
                     <span className="w-1.5 h-1.5 bg-[#C41E3A] mt-2.5 flex-shrink-0" />
                     {approach}
                   </li>
@@ -200,12 +227,16 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             <SectionTitle>Key Decisions</SectionTitle>
             <div className="space-y-6">
               {project.keyDecisions.map((item, index) => (
-                <div key={index} className="p-6 bg-[#1A1A1A] border border-[#2D2D2D]">
+                <div
+                  key={index}
+                  className="p-6 bg-[#1A1A1A] border border-[#2D2D2D]"
+                >
                   <h4 className="font-bebas text-lg text-white tracking-wide mb-2">
                     {item.decision}
                   </h4>
                   <p className="text-white/60 text-sm">
-                    <span className="text-[#C41E3A] font-mono">Why:</span> {item.reasoning}
+                    <span className="text-[#C41E3A] font-mono">Why:</span>{" "}
+                    {item.reasoning}
                   </p>
                 </div>
               ))}
@@ -236,8 +267,13 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             <SectionTitle>Lessons Learned</SectionTitle>
             <ul className="space-y-3">
               {project.lessons.map((lesson, index) => (
-                <li key={index} className="flex items-start gap-3 text-white/60">
-                  <span className="text-[#C41E3A] font-mono text-sm flex-shrink-0">{index + 1}.</span>
+                <li
+                  key={index}
+                  className="flex items-start gap-3 text-white/60"
+                >
+                  <span className="text-[#C41E3A] font-mono text-sm flex-shrink-0">
+                    {index + 1}.
+                  </span>
                   {lesson}
                 </li>
               ))}
@@ -267,7 +303,8 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
               Interested in Working Together?
             </h3>
             <p className="text-white/60 mb-6 max-w-xl mx-auto">
-              I help companies build scalable systems and solve complex engineering challenges.
+              I help companies build scalable systems and solve complex
+              engineering challenges.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a

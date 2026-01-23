@@ -1,10 +1,10 @@
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
-import { BlogCard } from '@/components/blog';
-import { getPostsByTag, getAllTags } from '@/lib/blog';
-import type { Metadata } from 'next';
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import { BlogCard } from "@/components/blog";
+import { getPostsByTag, getAllTags } from "@/lib/blog";
+import type { Metadata } from "next";
 
-const baseUrl = 'https://aravindjaimon.com';
+const baseUrl = "https://aravindjaimon.com";
 
 interface TagPageProps {
   params: Promise<{ tag: string }>;
@@ -19,18 +19,20 @@ export async function generateStaticParams() {
 }
 
 // Generate metadata for SEO
-export async function generateMetadata({ params }: TagPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: TagPageProps): Promise<Metadata> {
   const { tag } = await params;
   const decodedTag = decodeURIComponent(tag);
   const posts = getPostsByTag(decodedTag);
 
   return {
     title: `Articles tagged "${decodedTag}" | Aravind Jaimon`,
-    description: `Browse ${posts.length} article${posts.length !== 1 ? 's' : ''} about ${decodedTag}. Technical insights and tutorials on software engineering.`,
+    description: `Browse ${posts.length} article${posts.length !== 1 ? "s" : ""} about ${decodedTag}. Technical insights and tutorials on software engineering.`,
     openGraph: {
       title: `Articles tagged "${decodedTag}"`,
-      description: `Browse ${posts.length} article${posts.length !== 1 ? 's' : ''} about ${decodedTag}.`,
-      type: 'website',
+      description: `Browse ${posts.length} article${posts.length !== 1 ? "s" : ""} about ${decodedTag}.`,
+      type: "website",
     },
     alternates: {
       canonical: `${baseUrl}/blog/tag/${encodeURIComponent(decodedTag.toLowerCase())}`,
@@ -45,7 +47,9 @@ export default async function TagPage({ params }: TagPageProps) {
   const allTags = getAllTags();
 
   // Find the proper cased version of the tag
-  const properTag = allTags.find((t) => t.toLowerCase() === decodedTag.toLowerCase()) || decodedTag;
+  const properTag =
+    allTags.find((t) => t.toLowerCase() === decodedTag.toLowerCase()) ||
+    decodedTag;
 
   return (
     <main className="min-h-screen bg-[#0A0A0A]">
@@ -70,7 +74,7 @@ export default async function TagPage({ params }: TagPageProps) {
             <span className="text-[#C41E3A]">{properTag}</span>
           </h1>
           <p className="text-white/60 mt-4">
-            {posts.length} article{posts.length !== 1 ? 's' : ''} found
+            {posts.length} article{posts.length !== 1 ? "s" : ""} found
           </p>
         </div>
 
@@ -83,7 +87,9 @@ export default async function TagPage({ params }: TagPageProps) {
           </div>
         ) : (
           <div className="text-center py-16">
-            <p className="text-white/40 font-mono">No articles found with this tag.</p>
+            <p className="text-white/40 font-mono">
+              No articles found with this tag.
+            </p>
             <Link
               href="/blog"
               className="mt-4 inline-block text-[#C41E3A] hover:underline font-mono text-sm"

@@ -1,11 +1,18 @@
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
-import { BlogHeader, BlogContent, RelatedPosts, TableOfContents, SocialShare, GiscusComments } from '@/components/blog';
-import { getPostBySlug, getPublishedPosts } from '@/lib/blog';
-import type { Metadata } from 'next';
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import {
+  BlogHeader,
+  BlogContent,
+  RelatedPosts,
+  TableOfContents,
+  SocialShare,
+  GiscusComments,
+} from "@/components/blog";
+import { getPostBySlug, getPublishedPosts } from "@/lib/blog";
+import type { Metadata } from "next";
 
-const baseUrl = 'https://aravindjaimon.com';
+const baseUrl = "https://aravindjaimon.com";
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -20,17 +27,19 @@ export async function generateStaticParams() {
 }
 
 // Generate metadata for SEO
-export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
   const post = getPostBySlug(slug);
 
   if (!post) {
     return {
-      title: 'Post Not Found',
+      title: "Post Not Found",
     };
   }
 
-  const ogImage = post.coverImage.startsWith('http')
+  const ogImage = post.coverImage.startsWith("http")
     ? post.coverImage
     : `${baseUrl}${post.coverImage}`;
 
@@ -42,7 +51,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     openGraph: {
       title: post.title,
       description: post.description,
-      type: 'article',
+      type: "article",
       publishedTime: post.publishedAt,
       modifiedTime: post.updatedAt,
       authors: [post.author],
@@ -57,7 +66,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       ],
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: post.title,
       description: post.description,
       images: [ogImage],
@@ -71,28 +80,30 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 // Generate JSON-LD structured data (safe - uses our own data, not user input)
 function generateJsonLd(post: NonNullable<ReturnType<typeof getPostBySlug>>) {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
     headline: post.title,
     description: post.description,
-    image: post.coverImage.startsWith('http') ? post.coverImage : `${baseUrl}${post.coverImage}`,
+    image: post.coverImage.startsWith("http")
+      ? post.coverImage
+      : `${baseUrl}${post.coverImage}`,
     datePublished: post.publishedAt,
     dateModified: post.updatedAt || post.publishedAt,
     author: {
-      '@type': 'Person',
+      "@type": "Person",
       name: post.author,
       url: baseUrl,
     },
     publisher: {
-      '@type': 'Person',
-      name: 'Aravind Jaimon',
+      "@type": "Person",
+      name: "Aravind Jaimon",
       url: baseUrl,
     },
     mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `${baseUrl}${post.permalink}`,
+      "@type": "WebPage",
+      "@id": `${baseUrl}${post.permalink}`,
     },
-    keywords: post.tags.join(', '),
+    keywords: post.tags.join(", "),
   };
 }
 

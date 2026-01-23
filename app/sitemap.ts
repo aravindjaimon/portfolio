@@ -1,9 +1,9 @@
-import type { MetadataRoute } from 'next';
-import { getPublishedPosts, getAllTags } from '@/lib/blog';
-import { projects } from '@/lib/data';
+import type { MetadataRoute } from "next";
+import { getPublishedPosts, getAllTags } from "@/lib/blog";
+import { projects } from "@/lib/data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://aravindjaimon.com';
+  const baseUrl = "https://aravindjaimon.com";
   const posts = getPublishedPosts();
   const tags = getAllTags();
 
@@ -12,13 +12,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: "monthly",
       priority: 1,
     },
     {
       url: `${baseUrl}/blog`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: "weekly",
       priority: 0.9,
     },
   ];
@@ -27,7 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const blogPosts: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${baseUrl}${post.permalink}`,
     lastModified: new Date(post.updatedAt || post.publishedAt),
-    changeFrequency: 'monthly',
+    changeFrequency: "monthly",
     priority: 0.8,
   }));
 
@@ -35,7 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const tagPages: MetadataRoute.Sitemap = tags.map((tag) => ({
     url: `${baseUrl}/blog/tag/${encodeURIComponent(tag.toLowerCase())}`,
     lastModified: new Date(),
-    changeFrequency: 'weekly',
+    changeFrequency: "weekly",
     priority: 0.6,
   }));
 
@@ -45,7 +45,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .map((project) => ({
       url: `${baseUrl}/projects/${project.slug}`,
       lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+      changeFrequency: "monthly" as const,
       priority: 0.7,
     }));
 

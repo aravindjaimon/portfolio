@@ -1,12 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
-import { projects, Project } from '@/lib/data';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowUpRight } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { projects, Project } from "@/lib/data";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ArrowUpRight } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,11 +25,13 @@ interface ProjectCardProps {
 const ProjectCard = ({ project, index, onSelect }: ProjectCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const linkRef = useRef<HTMLAnchorElement>(null);
-  const hasExtendedContent = project.overview || project.problemDetails || project.technicalApproach;
+  const hasExtendedContent =
+    project.overview || project.problemDetails || project.technicalApproach;
   const animationRef = hasExtendedContent ? linkRef : cardRef;
 
   useEffect(() => {
-    gsap.fromTo(animationRef.current,
+    gsap.fromTo(
+      animationRef.current,
       { opacity: 0, y: 50 },
       {
         opacity: 1,
@@ -32,9 +40,9 @@ const ProjectCard = ({ project, index, onSelect }: ProjectCardProps) => {
         delay: index * 0.15,
         scrollTrigger: {
           trigger: animationRef.current,
-          start: 'top 85%',
-          toggleActions: 'play none none reverse'
-        }
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
       }
     );
   }, [index, animationRef]);
@@ -53,9 +61,7 @@ const ProjectCard = ({ project, index, onSelect }: ProjectCardProps) => {
         <h3 className="font-bebas text-2xl md:text-3xl text-white tracking-wide mb-1">
           {project.title}
         </h3>
-        <p className="text-white/50 font-inter text-sm">
-          {project.subtitle}
-        </p>
+        <p className="text-white/50 font-inter text-sm">{project.subtitle}</p>
       </div>
 
       {/* Challenge preview */}
@@ -67,8 +73,12 @@ const ProjectCard = ({ project, index, onSelect }: ProjectCardProps) => {
       <div className="grid grid-cols-2 gap-3 mb-6">
         {project.metrics.slice(0, 2).map((metric, idx) => (
           <div key={idx} className="text-center p-3 bg-[#0A0A0A]">
-            <div className="font-bebas text-xl text-[#C41E3A]">{metric.value}</div>
-            <div className="text-xs font-mono text-white/40">{metric.label}</div>
+            <div className="font-bebas text-xl text-[#C41E3A]">
+              {metric.value}
+            </div>
+            <div className="text-xs font-mono text-white/40">
+              {metric.label}
+            </div>
           </div>
         ))}
       </div>
@@ -76,7 +86,10 @@ const ProjectCard = ({ project, index, onSelect }: ProjectCardProps) => {
       {/* Stack preview */}
       <div className="flex flex-wrap gap-1 mb-4">
         {project.stack.slice(0, 4).map((tech, idx) => (
-          <span key={idx} className="text-[10px] font-mono text-white/40 bg-[#0A0A0A] px-2 py-1">
+          <span
+            key={idx}
+            className="text-[10px] font-mono text-white/40 bg-[#0A0A0A] px-2 py-1"
+          >
             {tech}
           </span>
         ))}
@@ -90,7 +103,10 @@ const ProjectCard = ({ project, index, onSelect }: ProjectCardProps) => {
       {/* View more indicator */}
       <div className="flex items-center gap-2 text-white/30 group-hover:text-[#C41E3A] transition-colors duration-300">
         <span className="text-xs font-mono tracking-wide">VIEW CASE STUDY</span>
-        <ArrowUpRight size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+        <ArrowUpRight
+          size={14}
+          className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300"
+        />
       </div>
     </>
   );
@@ -150,7 +166,9 @@ const ProjectModal = ({ project, open, onClose }: ProjectModalProps) => {
         <div className="space-y-8 mt-6">
           {/* Challenge */}
           <div>
-            <h4 className="font-bebas text-lg text-white/80 tracking-wide mb-3">THE CHALLENGE</h4>
+            <h4 className="font-bebas text-lg text-white/80 tracking-wide mb-3">
+              THE CHALLENGE
+            </h4>
             <p className="text-white/60 font-inter text-sm leading-relaxed">
               {project.challenge}
             </p>
@@ -158,12 +176,16 @@ const ProjectModal = ({ project, open, onClose }: ProjectModalProps) => {
 
           {/* Solution */}
           <div>
-            <h4 className="font-bebas text-lg text-white/80 tracking-wide mb-3">THE SOLUTION</h4>
+            <h4 className="font-bebas text-lg text-white/80 tracking-wide mb-3">
+              THE SOLUTION
+            </h4>
             <ul className="space-y-2">
               {project.solution.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-3">
                   <span className="w-1.5 h-1.5 bg-[#C41E3A] rounded-full mt-2" />
-                  <span className="text-white/60 font-inter text-sm">{item}</span>
+                  <span className="text-white/60 font-inter text-sm">
+                    {item}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -171,12 +193,21 @@ const ProjectModal = ({ project, open, onClose }: ProjectModalProps) => {
 
           {/* Metrics */}
           <div>
-            <h4 className="font-bebas text-lg text-white/80 tracking-wide mb-3">IMPACT</h4>
+            <h4 className="font-bebas text-lg text-white/80 tracking-wide mb-3">
+              IMPACT
+            </h4>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {project.metrics.map((metric, idx) => (
-                <div key={idx} className="text-center p-4 bg-[#0A0A0A] border border-[#2D2D2D]">
-                  <div className="font-bebas text-2xl text-[#C41E3A]">{metric.value}</div>
-                  <div className="text-xs font-mono text-white/40 mt-1">{metric.label}</div>
+                <div
+                  key={idx}
+                  className="text-center p-4 bg-[#0A0A0A] border border-[#2D2D2D]"
+                >
+                  <div className="font-bebas text-2xl text-[#C41E3A]">
+                    {metric.value}
+                  </div>
+                  <div className="text-xs font-mono text-white/40 mt-1">
+                    {metric.label}
+                  </div>
                 </div>
               ))}
             </div>
@@ -184,10 +215,15 @@ const ProjectModal = ({ project, open, onClose }: ProjectModalProps) => {
 
           {/* Tech Stack */}
           <div>
-            <h4 className="font-bebas text-lg text-white/80 tracking-wide mb-3">TECH STACK</h4>
+            <h4 className="font-bebas text-lg text-white/80 tracking-wide mb-3">
+              TECH STACK
+            </h4>
             <div className="flex flex-wrap gap-2">
               {project.stack.map((tech, idx) => (
-                <span key={idx} className="text-xs font-mono text-white/60 bg-[#0A0A0A] px-3 py-1.5 border border-[#2D2D2D]">
+                <span
+                  key={idx}
+                  className="text-xs font-mono text-white/60 bg-[#0A0A0A] px-3 py-1.5 border border-[#2D2D2D]"
+                >
                   {tech}
                 </span>
               ))}
@@ -205,7 +241,8 @@ const Projects = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    gsap.fromTo(titleRef.current,
+    gsap.fromTo(
+      titleRef.current,
       { opacity: 0, y: 50 },
       {
         opacity: 1,
@@ -213,9 +250,9 @@ const Projects = () => {
         duration: 0.8,
         scrollTrigger: {
           trigger: titleRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse'
-        }
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
       }
     );
   }, []);
@@ -234,7 +271,8 @@ const Projects = () => {
             SELECTED <span className="text-[#C41E3A]">WORK</span>
           </h2>
           <p className="text-white/50 font-inter text-base md:text-lg max-w-2xl mx-auto">
-            Systems built for millions. From high-scale affiliate platforms to AI assistants and cross-platform applications.
+            Systems built for millions. From high-scale affiliate platforms to
+            AI assistants and cross-platform applications.
           </p>
         </div>
 

@@ -1,15 +1,18 @@
-'use client';
+"use client";
 
-import { Search, X } from 'lucide-react';
-import { useState, useCallback } from 'react';
+import { Search, X } from "lucide-react";
+import { useState, useCallback } from "react";
 
 interface BlogSearchProps {
   onSearch: (query: string) => void;
   placeholder?: string;
 }
 
-export function BlogSearch({ onSearch, placeholder = 'Search articles...' }: BlogSearchProps) {
-  const [query, setQuery] = useState('');
+export function BlogSearch({
+  onSearch,
+  placeholder = "Search articles...",
+}: BlogSearchProps) {
+  const [query, setQuery] = useState("");
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,13 +24,16 @@ export function BlogSearch({ onSearch, placeholder = 'Search articles...' }: Blo
   );
 
   const handleClear = useCallback(() => {
-    setQuery('');
-    onSearch('');
+    setQuery("");
+    onSearch("");
   }, [onSearch]);
 
   return (
     <div className="relative">
-      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" size={18} />
+      <Search
+        className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40"
+        size={18}
+      />
       <input
         type="text"
         value={query}

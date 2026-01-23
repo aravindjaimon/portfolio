@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 
 interface HeroRefs {
   nameRef: React.RefObject<HTMLHeadingElement | null>;
@@ -17,10 +17,10 @@ export function useHeroAnimation(): HeroRefs {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
     if (nameRef.current) {
-      const letters = nameRef.current.querySelectorAll('.letter');
+      const letters = nameRef.current.querySelectorAll(".letter");
       tl.fromTo(
         letters,
         { opacity: 0, y: 60 },
@@ -32,14 +32,14 @@ export function useHeroAnimation(): HeroRefs {
       subtitleRef.current,
       { opacity: 0, y: 30 },
       { opacity: 1, y: 0, duration: 0.6 },
-      '-=0.3'
+      "-=0.3"
     );
 
     tl.fromTo(
       taglineRef.current,
       { opacity: 0, y: 20 },
       { opacity: 1, y: 0, duration: 0.6 },
-      '-=0.3'
+      "-=0.3"
     );
 
     if (iconsRef.current?.children) {
@@ -47,7 +47,7 @@ export function useHeroAnimation(): HeroRefs {
         iconsRef.current.children,
         { opacity: 0, scale: 0.8 },
         { opacity: 1, scale: 1, stagger: 0.1, duration: 0.4 },
-        '-=0.2'
+        "-=0.2"
       );
     }
 
@@ -55,7 +55,7 @@ export function useHeroAnimation(): HeroRefs {
       scrollRef.current,
       { opacity: 0 },
       { opacity: 1, duration: 0.6 },
-      '-=0.2'
+      "-=0.2"
     );
 
     gsap.to(scrollRef.current, {
@@ -63,7 +63,7 @@ export function useHeroAnimation(): HeroRefs {
       repeat: -1,
       yoyo: true,
       duration: 1.2,
-      ease: 'power1.inOut'
+      ease: "power1.inOut",
     });
   }, []);
 

@@ -1,24 +1,26 @@
 "use client";
 
-import { ChevronDown, Github, Linkedin, Mail } from 'lucide-react';
-import { personalInfo } from '@/lib/data';
-import { useHeroAnimation } from '@/hooks/useHeroAnimation';
+import { ChevronDown, Github, Linkedin, Mail } from "lucide-react";
+import { personalInfo } from "@/lib/data";
+import { useHeroAnimation } from "@/hooks/useHeroAnimation";
 
 const Hero = () => {
-  const { nameRef, subtitleRef, taglineRef, iconsRef, scrollRef } = useHeroAnimation();
+  const { nameRef, subtitleRef, taglineRef, iconsRef, scrollRef } =
+    useHeroAnimation();
 
   const renderName = () => {
-    return personalInfo.name.split('').map((char, index) => {
-      const isHighlighted = (char === 'A' && index === 0) || (char === 'J' && index === 8);
+    return personalInfo.name.split("").map((char, index) => {
+      const isHighlighted =
+        (char === "A" && index === 0) || (char === "J" && index === 8);
 
       return (
         <span
           key={index}
-          className={`letter inline-block ${char === ' ' ? 'w-2 sm:w-4 md:w-6' : ''} ${
-            isHighlighted ? 'text-[#C41E3A]' : ''
+          className={`letter inline-block ${char === " " ? "w-2 sm:w-4 md:w-6" : ""} ${
+            isHighlighted ? "text-[#C41E3A]" : ""
           }`}
         >
-          {char === ' ' ? '\u00A0' : char}
+          {char === " " ? "\u00A0" : char}
         </span>
       );
     });
@@ -96,7 +98,9 @@ const Hero = () => {
         ref={scrollRef}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40"
       >
-        <span className="text-xs font-inter tracking-widest uppercase">Scroll</span>
+        <span className="text-xs font-inter tracking-widest uppercase">
+          Scroll
+        </span>
         <ChevronDown size={20} />
       </div>
 

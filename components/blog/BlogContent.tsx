@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import * as runtime from 'react/jsx-runtime';
-import { useMemo, memo } from 'react';
-import { mdxComponents } from './mdx-components';
+import * as runtime from "react/jsx-runtime";
+import { useMemo, memo } from "react";
+import { mdxComponents } from "./mdx-components";
 
 interface BlogContentProps {
   code: string;
@@ -18,10 +18,15 @@ function runMDXCode(code: string) {
 }
 
 // Inner component that renders the MDX content
+// Note: This pattern dynamically creates the MDX component from compiled code.
+// This is the standard approach for MDX content systems where components are
+// pre-compiled at build time.
+/* eslint-disable react-hooks/static-components -- MDX compiled components must be created dynamically from code */
 const MDXRenderer = memo(function MDXRenderer({ code }: { code: string }) {
   const MDXContent = useMemo(() => runMDXCode(code), [code]);
   return <MDXContent components={mdxComponents} />;
 });
+/* eslint-enable react-hooks/static-components */
 
 export function BlogContent({ code }: BlogContentProps) {
   return (

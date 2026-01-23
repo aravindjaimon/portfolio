@@ -1,7 +1,7 @@
 "use client";
 
-import { personalInfo } from '@/lib/data';
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { personalInfo } from "@/lib/data";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -12,8 +12,12 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Logo and tagline */}
           <div className="text-center md:text-left">
-            <a href="#" className="font-bebas text-2xl text-white tracking-wider">
-              <span className="text-[#C41E3A]">A</span>RAVIND <span className="text-[#C41E3A]">J</span>AIMON
+            <a
+              href="#"
+              className="font-bebas text-2xl text-white tracking-wider"
+            >
+              <span className="text-[#C41E3A]">A</span>RAVIND{" "}
+              <span className="text-[#C41E3A]">J</span>AIMON
             </a>
             <p className="text-white/40 font-inter text-sm mt-1">
               Engineering at Scale

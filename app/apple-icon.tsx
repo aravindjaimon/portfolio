@@ -1,33 +1,31 @@
-import { ImageResponse } from 'next/og'
+import { ImageResponse } from "next/og";
 
 export const size = {
   width: 180,
   height: 180,
-}
-export const contentType = 'image/png'
+};
+export const contentType = "image/png";
 
 export default function AppleIcon() {
   return new ImageResponse(
-    (
-      <div
-        style={{
-          fontSize: 100,
-          background: 'linear-gradient(135deg, #C41E3A 0%, #8B0000 100%)',
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: '#fff',
-          fontWeight: 'bold',
-          borderRadius: 32,
-        }}
-      >
-        AJ
-      </div>
-    ),
+    <div
+      style={{
+        fontSize: 100,
+        background: "linear-gradient(135deg, #C41E3A 0%, #8B0000 100%)",
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "#fff",
+        fontWeight: "bold",
+        borderRadius: 32,
+      }}
+    >
+      AJ
+    </div>,
     {
       ...size,
     }
-  )
+  );
 }

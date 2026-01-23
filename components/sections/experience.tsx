@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
-import { experience } from '@/lib/data';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Briefcase } from 'lucide-react';
+import { useEffect, useRef } from "react";
+import { experience } from "@/lib/data";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Briefcase } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,7 +13,8 @@ const Experience = () => {
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    gsap.fromTo(titleRef.current,
+    gsap.fromTo(
+      titleRef.current,
       { opacity: 0, y: 50 },
       {
         opacity: 1,
@@ -21,14 +22,15 @@ const Experience = () => {
         duration: 0.8,
         scrollTrigger: {
           trigger: titleRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse'
-        }
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
       }
     );
 
     itemsRef.current.forEach((item, index) => {
-      gsap.fromTo(item,
+      gsap.fromTo(
+        item,
         { opacity: 0, x: -30 },
         {
           opacity: 1,
@@ -37,9 +39,9 @@ const Experience = () => {
           delay: index * 0.1,
           scrollTrigger: {
             trigger: item,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse'
-          }
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          },
         }
       );
     });
@@ -68,7 +70,9 @@ const Experience = () => {
             {experience.map((exp, index) => (
               <div
                 key={index}
-                ref={el => { itemsRef.current[index] = el; }}
+                ref={(el) => {
+                  itemsRef.current[index] = el;
+                }}
                 className="relative pl-16 md:pl-20"
               >
                 {/* Dot */}
@@ -87,7 +91,9 @@ const Experience = () => {
                       </h3>
                       <div className="flex items-center gap-2 mt-1">
                         <Briefcase size={14} className="text-[#C41E3A]" />
-                        <span className="text-white/60 font-inter text-sm">{exp.company}</span>
+                        <span className="text-white/60 font-inter text-sm">
+                          {exp.company}
+                        </span>
                       </div>
                     </div>
                     <span className="text-xs font-mono text-[#C41E3A] mt-2 md:mt-0">
@@ -99,7 +105,9 @@ const Experience = () => {
                     {exp.highlights.map((highlight, idx) => (
                       <li key={idx} className="flex items-start gap-2">
                         <span className="w-1 h-1 bg-white/30 rounded-full mt-2" />
-                        <span className="text-white/50 font-inter text-sm">{highlight}</span>
+                        <span className="text-white/50 font-inter text-sm">
+                          {highlight}
+                        </span>
                       </li>
                     ))}
                   </ul>

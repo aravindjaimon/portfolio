@@ -1,14 +1,14 @@
-import { getPublishedPosts } from '@/lib/blog';
+import { getPublishedPosts } from "@/lib/blog";
 
-const baseUrl = 'https://aravindjaimon.com';
+const baseUrl = "https://aravindjaimon.com";
 
 function escapeXml(text: string): string {
   return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
 }
 
 export async function GET() {
@@ -38,17 +38,17 @@ export async function GET() {
       <description>${escapeXml(post.description)}</description>
       <pubDate>${new Date(post.publishedAt).toUTCString()}</pubDate>
       <author>aravindjaimon@gmail.com (${escapeXml(post.author)})</author>
-      ${post.tags.map((tag) => `<category>${escapeXml(tag)}</category>`).join('\n      ')}
+      ${post.tags.map((tag) => `<category>${escapeXml(tag)}</category>`).join("\n      ")}
     </item>`
       )
-      .join('')}
+      .join("")}
   </channel>
 </rss>`;
 
   return new Response(rss, {
     headers: {
-      'Content-Type': 'application/xml',
-      'Cache-Control': 'public, max-age=3600, s-maxage=3600',
+      "Content-Type": "application/xml",
+      "Cache-Control": "public, max-age=3600, s-maxage=3600",
     },
   });
 }

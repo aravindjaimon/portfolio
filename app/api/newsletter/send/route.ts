@@ -1,16 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getPublishedPosts, getPostBySlug } from '@/lib/blog';
-import {
-  sendNewsletterForPost,
-  getUnsentPosts,
-} from '@/lib/newsletter';
+import { NextRequest, NextResponse } from "next/server";
+import { getPublishedPosts, getPostBySlug } from "@/lib/blog";
+import { sendNewsletterForPost, getUnsentPosts } from "@/lib/newsletter";
 
 /**
  * Validate admin authentication
  */
 function validateAuth(request: NextRequest): boolean {
-  const authHeader = request.headers.get('Authorization');
-  if (!authHeader?.startsWith('Bearer ')) {
+  const authHeader = request.headers.get("Authorization");
+  if (!authHeader?.startsWith("Bearer ")) {
     return false;
   }
 
@@ -18,7 +15,7 @@ function validateAuth(request: NextRequest): boolean {
   const adminSecret = process.env.NEWSLETTER_ADMIN_SECRET;
 
   if (!adminSecret) {
-    console.error('NEWSLETTER_ADMIN_SECRET is not configured');
+    console.error("NEWSLETTER_ADMIN_SECRET is not configured");
     return false;
   }
 
@@ -31,16 +28,13 @@ function validateAuth(request: NextRequest): boolean {
  */
 export async function GET(request: NextRequest) {
   if (!validateAuth(request)) {
-    return NextResponse.json(
-      { error: 'Unauthorized' },
-      { status: 401 }
-    );
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const apiKey = process.env.BUTTONDOWN_API_KEY;
   if (!apiKey) {
     return NextResponse.json(
-      { error: 'Buttondown API key not configured' },
+      { error: "Buttondown API key not configured" },
       { status: 500 }
     );
   }
@@ -59,9 +53,9 @@ export async function GET(request: NextRequest) {
       })),
     });
   } catch (error) {
-    console.error('Error fetching unsent posts:', error);
+    console.error("Error fetching unsent posts:", error);
     return NextResponse.json(
-      { error: 'Failed to fetch unsent posts' },
+      { error: "Failed to fetch unsent posts" },
       { status: 500 }
     );
   }
@@ -82,30 +76,24 @@ interface SendRequestBody {
  */
 export async function POST(request: NextRequest) {
   if (!validateAuth(request)) {
-    return NextResponse.json(
-      { error: 'Unauthorized' },
-      { status: 401 }
-    );
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const apiKey = process.env.BUTTONDOWN_API_KEY;
   if (!apiKey) {
     return NextResponse.json(
-      { error: 'Buttondown API key not configured' },
+      { error: "Buttondown API key not configured" },
       { status: 500 }
     );
   }
 
-  const siteUrl = process.env.SITE_URL || 'https://aravindjaimon.com';
+  const siteUrl = process.env.SITE_URL || "https://aravindjaimon.com";
 
   let body: SendRequestBody;
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json(
-      { error: 'Invalid JSON body' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
   const { slug, sendAll } = body;
@@ -131,7 +119,7 @@ export async function POST(request: NextRequest) {
 
       if (post.draft) {
         return NextResponse.json(
-          { error: 'Cannot send newsletter for draft posts' },
+          { error: "Cannot send newsletter for draft posts" },
           { status: 400 }
         );
       }
@@ -151,7 +139,7 @@ export async function POST(request: NextRequest) {
       if (unsentPosts.length === 0) {
         return NextResponse.json({
           success: true,
-          message: 'No unsent posts found',
+          message: "No unsent posts found",
           results: [],
         });
       }
@@ -176,14 +164,11 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    return NextResponse.json(
-      { error: 'Invalid request' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
   } catch (error) {
-    console.error('Error sending newsletter:', error);
+    console.error("Error sending newsletter:", error);
     return NextResponse.json(
-      { error: 'Failed to send newsletter' },
+      { error: "Failed to send newsletter" },
       { status: 500 }
     );
   }

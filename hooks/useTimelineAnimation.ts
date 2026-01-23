@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -25,9 +25,9 @@ export function useTimelineAnimation(itemCount: number): TimelineRefs {
         duration: 0.8,
         scrollTrigger: {
           trigger: titleRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse'
-        }
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
       }
     );
 
@@ -42,9 +42,9 @@ export function useTimelineAnimation(itemCount: number): TimelineRefs {
             duration: 0.8,
             scrollTrigger: {
               trigger: milestone,
-              start: 'top 85%',
-              toggleActions: 'play none none reverse'
-            }
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
           }
         );
       }

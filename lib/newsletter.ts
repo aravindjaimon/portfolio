@@ -2,9 +2,9 @@
  * Newsletter service for automated blog post notifications via Buttondown
  */
 
-import type { Post } from './blog';
+import type { Post } from "./blog";
 
-const BUTTONDOWN_API_URL = 'https://api.buttondown.email/v1';
+const BUTTONDOWN_API_URL = "https://api.buttondown.email/v1";
 
 interface ButtondownEmail {
   id: string;
@@ -27,27 +27,27 @@ interface ButtondownEmailsResponse {
  */
 export function generateEmailTemplate(post: Post, siteUrl: string): string {
   const postUrl = `${siteUrl}/blog/${post.slug}`;
-  const coverImageUrl = post.coverImage
-    ? `${siteUrl}${post.coverImage}`
-    : null;
+  const coverImageUrl = post.coverImage ? `${siteUrl}${post.coverImage}` : null;
 
   const tagsHtml = post.tags
     .map(
       (tag) =>
         `<span style="display: inline-block; padding: 4px 12px; background-color: #2D2D2D; color: #888; font-size: 12px; font-family: monospace; margin-right: 8px; margin-bottom: 8px;">${tag}</span>`
     )
-    .join('');
+    .join("");
 
   // Handle readingTime - strip "min read" if already present to avoid duplication
   const readingTimeNum = post.readingTime
-    ? String(post.readingTime).replace(/\s*min\s*read\s*/gi, '').trim()
-    : '';
-  const readingTimeText = readingTimeNum ? `${readingTimeNum} min read` : '';
+    ? String(post.readingTime)
+        .replace(/\s*min\s*read\s*/gi, "")
+        .trim()
+    : "";
+  const readingTimeText = readingTimeNum ? `${readingTimeNum} min read` : "";
 
-  const dateText = new Date(post.publishedAt).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+  const dateText = new Date(post.publishedAt).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
 
   return `
@@ -72,7 +72,7 @@ export function generateEmailTemplate(post: Post, siteUrl: string): string {
             </td>
           </tr>
           `
-              : ''
+              : ""
           }
           <tr>
             <td style="padding: 32px;">
@@ -92,7 +92,7 @@ export function generateEmailTemplate(post: Post, siteUrl: string): string {
 
               <!-- Meta -->
               <p style="color: #888; font-size: 14px; font-family: monospace; margin: 0 0 20px 0;">
-                ${dateText}${readingTimeText ? ` • ${readingTimeText}` : ''}
+                ${dateText}${readingTimeText ? ` • ${readingTimeText}` : ""}
               </p>
 
               <!-- Description -->
@@ -214,15 +214,15 @@ export async function sendNewsletterForPost(
   const subject = `New Post: ${post.title}`;
 
   const response = await fetch(`${BUTTONDOWN_API_URL}/emails`, {
-    method: 'POST',
+    method: "POST",
     headers: {
       Authorization: `Token ${apiKey}`,
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       subject,
       body: htmlBody,
-      status: 'about_to_send', // Send immediately
+      status: "about_to_send", // Send immediately
       metadata: {
         postSlug: post.slug,
         sentAt: new Date().toISOString(),

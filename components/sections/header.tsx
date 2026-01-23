@@ -1,18 +1,18 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { personalInfo } from '@/lib/data';
-import { Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { personalInfo } from "@/lib/data";
+import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const navLinks: { label: string; href: string; isExternal?: boolean }[] = [
-  { label: 'Story', href: '#story' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Work', href: '#work' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Blog', href: '/blog', isExternal: true },
-  { label: 'Contact', href: '#contact' }
+  { label: "Story", href: "#story" },
+  { label: "Skills", href: "#skills" },
+  { label: "Work", href: "#work" },
+  { label: "Experience", href: "#experience" },
+  { label: "Blog", href: "/blog", isExternal: true },
+  { label: "Contact", href: "#contact" },
 ];
 
 const Header = () => {
@@ -24,14 +24,14 @@ const Header = () => {
       setIsScrolled(window.scrollY > 50);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
     setMobileMenuOpen(false);
   };
@@ -40,20 +40,23 @@ const Header = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-[#0A0A0A]/95 backdrop-blur-sm border-b border-[#2D2D2D]/50'
-          : 'bg-transparent'
+          ? "bg-[#0A0A0A]/95 backdrop-blur-sm border-b border-[#2D2D2D]/50"
+          : "bg-transparent"
       }`}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <a href="#" className="font-bebas text-xl md:text-2xl text-white tracking-wider">
+          <a
+            href="#"
+            className="font-bebas text-xl md:text-2xl text-white tracking-wider"
+          >
             <span className="text-[#C41E3A]">A</span>J
           </a>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
+            {navLinks.map((link) =>
               link.isExternal ? (
                 <Link
                   key={link.label}
@@ -71,7 +74,7 @@ const Header = () => {
                   {link.label}
                 </button>
               )
-            ))}
+            )}
             <Button
               asChild
               variant="outline"
@@ -96,7 +99,7 @@ const Header = () => {
       {mobileMenuOpen && (
         <div className="md:hidden bg-[#0A0A0A] border-t border-[#2D2D2D]">
           <nav className="flex flex-col px-4 sm:px-6 py-4">
-            {navLinks.map((link) => (
+            {navLinks.map((link) =>
               link.isExternal ? (
                 <Link
                   key={link.label}
@@ -115,7 +118,7 @@ const Header = () => {
                   {link.label}
                 </button>
               )
-            ))}
+            )}
             <Button
               asChild
               className="w-full bg-[#C41E3A] hover:bg-[#A01830] text-white font-mono text-xs tracking-wider transition-all duration-300 mt-4"

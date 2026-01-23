@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import Giscus from '@giscus/react';
+import Giscus from "@giscus/react";
 
 interface GiscusCommentsProps {
   /** The GitHub repository in owner/repo format */
@@ -15,10 +15,10 @@ interface GiscusCommentsProps {
 
 // Giscus configuration - configured via https://giscus.app
 const DEFAULTS = {
-  repo: 'aravindjaimon/portfolio' as const,
-  repoId: 'R_kgDOPWNd2w',
-  category: 'Blog Comments',
-  categoryId: 'DIC_kwDOPWNd284C1SKj',
+  repo: "aravindjaimon/portfolio" as const,
+  repoId: "R_kgDOPWNd2w",
+  category: "Blog Comments",
+  categoryId: "DIC_kwDOPWNd284C1SKj",
 };
 
 export function GiscusComments({
@@ -31,13 +31,17 @@ export function GiscusComments({
   if (!repoId || !categoryId) {
     return (
       <div className="mt-16 pt-8 border-t border-[#2D2D2D]">
-        <h3 className="font-bebas text-2xl text-white tracking-wide mb-4">Comments</h3>
+        <h3 className="font-bebas text-2xl text-white tracking-wide mb-4">
+          Comments
+        </h3>
         <div className="p-6 bg-[#1A1A1A] border border-[#2D2D2D] text-white/60 text-sm font-mono">
-          <p className="mb-4">Comments are powered by Giscus (GitHub Discussions).</p>
+          <p className="mb-4">
+            Comments are powered by Giscus (GitHub Discussions).
+          </p>
           <p className="mb-2">To enable comments:</p>
           <ol className="list-decimal list-inside space-y-1 ml-2">
             <li>
-              Visit{' '}
+              Visit{" "}
               <a
                 href="https://giscus.app"
                 target="_blank"
@@ -58,7 +62,9 @@ export function GiscusComments({
 
   return (
     <div className="mt-16 pt-8 border-t border-[#2D2D2D]">
-      <h3 className="font-bebas text-2xl text-white tracking-wide mb-6">Comments</h3>
+      <h3 className="font-bebas text-2xl text-white tracking-wide mb-6">
+        Comments
+      </h3>
       <Giscus
         repo={repo}
         repoId={repoId}

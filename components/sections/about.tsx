@@ -1,13 +1,18 @@
 "use client";
 
-import { storyMilestones } from '@/lib/data';
-import { useTimelineAnimation } from '@/hooks/useTimelineAnimation';
+import { storyMilestones } from "@/lib/data";
+import { useTimelineAnimation } from "@/hooks/useTimelineAnimation";
 
 const About = () => {
-  const { sectionRef, titleRef, milestonesRef } = useTimelineAnimation(storyMilestones.length);
+  const { sectionRef, titleRef, milestonesRef } = useTimelineAnimation(
+    storyMilestones.length
+  );
 
   return (
-    <section ref={sectionRef} className="bg-[#0A0A0A] py-24 md:py-32 px-4 sm:px-6">
+    <section
+      ref={sectionRef}
+      className="bg-[#0A0A0A] py-24 md:py-32 px-4 sm:px-6"
+    >
       <div className="max-w-6xl mx-auto">
         {/* Section Title */}
         <div ref={titleRef} className="text-center mb-20">
@@ -15,7 +20,8 @@ const About = () => {
             THE <span className="text-[#C41E3A]">STORY</span>
           </h2>
           <p className="text-white/50 font-inter text-base md:text-lg max-w-2xl mx-auto">
-            From the first line of code to leading engineering teams. A journey of building, scaling, and mentoring.
+            From the first line of code to leading engineering teams. A journey
+            of building, scaling, and mentoring.
           </p>
         </div>
 
@@ -29,9 +35,11 @@ const About = () => {
             {storyMilestones.map((milestone, index) => (
               <div
                 key={index}
-                ref={el => { milestonesRef.current[index] = el; }}
+                ref={(el) => {
+                  milestonesRef.current[index] = el;
+                }}
                 className={`relative flex flex-col md:flex-row items-start ${
-                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                  index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
                 }`}
               >
                 {/* Dot indicator */}
@@ -40,9 +48,13 @@ const About = () => {
                 </div>
 
                 {/* Content */}
-                <div className={`ml-12 md:ml-0 md:w-1/2 ${
-                  index % 2 === 0 ? 'md:pr-16 md:text-right' : 'md:pl-16 md:text-left'
-                }`}>
+                <div
+                  className={`ml-12 md:ml-0 md:w-1/2 ${
+                    index % 2 === 0
+                      ? "md:pr-16 md:text-right"
+                      : "md:pl-16 md:text-left"
+                  }`}
+                >
                   <span className="inline-block text-[#C41E3A] font-mono text-sm mb-2">
                     {milestone.date}
                   </span>
@@ -64,7 +76,8 @@ const About = () => {
         {/* Bottom quote */}
         <div className="mt-24 text-center">
           <blockquote className="font-inter text-xl md:text-2xl text-white/80 italic max-w-3xl mx-auto">
-            "Engineering at scale isn't just about code — it's about building systems, teams, and cultures that last."
+            &quot;Engineering at scale isn&apos;t just about code — it&apos;s
+            about building systems, teams, and cultures that last.&quot;
           </blockquote>
           <div className="w-12 h-px bg-[#C41E3A] mx-auto mt-6" />
         </div>

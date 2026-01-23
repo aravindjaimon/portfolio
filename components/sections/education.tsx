@@ -1,17 +1,17 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
-import { education, certifications, achievements } from '@/lib/data';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { GraduationCap, Award, Trophy, Users, LucideIcon } from 'lucide-react';
+import { useEffect, useRef } from "react";
+import { education, certifications, achievements } from "@/lib/data";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { GraduationCap, Award, Trophy, Users, LucideIcon } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const iconMap: Record<string, LucideIcon> = {
   trophy: Trophy,
   award: Award,
-  users: Users
+  users: Users,
 };
 
 const Education = () => {
@@ -19,7 +19,8 @@ const Education = () => {
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    gsap.fromTo(titleRef.current,
+    gsap.fromTo(
+      titleRef.current,
       { opacity: 0, y: 50 },
       {
         opacity: 1,
@@ -27,14 +28,15 @@ const Education = () => {
         duration: 0.8,
         scrollTrigger: {
           trigger: titleRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse'
-        }
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
       }
     );
 
     cardsRef.current.forEach((card, index) => {
-      gsap.fromTo(card,
+      gsap.fromTo(
+        card,
         { opacity: 0, y: 30 },
         {
           opacity: 1,
@@ -43,9 +45,9 @@ const Education = () => {
           delay: index * 0.1,
           scrollTrigger: {
             trigger: card,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse'
-          }
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          },
         }
       );
     });
@@ -74,27 +76,35 @@ const Education = () => {
             {education.map((edu, index) => (
               <div
                 key={index}
-                ref={el => { cardsRef.current[index] = el; }}
+                ref={(el) => {
+                  cardsRef.current[index] = el;
+                }}
                 className="bg-[#1A1A1A] border border-[#2D2D2D] p-6 hover:border-[#C41E3A]/30 transition-colors duration-300"
               >
                 <div className="flex items-start justify-between mb-3">
                   <h4 className="font-bebas text-lg text-white tracking-wide">
                     {edu.degree}
                   </h4>
-                  <span className={`text-xs font-mono px-2 py-1 ${
-                    edu.status === 'In Progress'
-                      ? 'text-[#C41E3A] bg-[#C41E3A]/10'
-                      : 'text-white/40 bg-white/5'
-                  }`}>
+                  <span
+                    className={`text-xs font-mono px-2 py-1 ${
+                      edu.status === "In Progress"
+                        ? "text-[#C41E3A] bg-[#C41E3A]/10"
+                        : "text-white/40 bg-white/5"
+                    }`}
+                  >
                     {edu.status}
                   </span>
                 </div>
-                <p className="text-white/60 font-inter text-sm mb-2">{edu.institution}</p>
+                <p className="text-white/60 font-inter text-sm mb-2">
+                  {edu.institution}
+                </p>
                 <p className="text-white/40 font-mono text-xs">
                   {edu.expected || edu.year}
                 </p>
                 {edu.note && (
-                  <p className="text-white/30 font-inter text-xs mt-2 italic">{edu.note}</p>
+                  <p className="text-white/30 font-inter text-xs mt-2 italic">
+                    {edu.note}
+                  </p>
                 )}
               </div>
             ))}
@@ -105,14 +115,18 @@ const Education = () => {
               CERTIFICATIONS
             </h3>
             <div
-              ref={el => { cardsRef.current[education.length] = el; }}
+              ref={(el) => {
+                cardsRef.current[education.length] = el;
+              }}
               className="bg-[#1A1A1A] border border-[#2D2D2D] p-6"
             >
               <ul className="space-y-2">
                 {certifications.map((cert, idx) => (
                   <li key={idx} className="flex items-start gap-2">
                     <span className="w-1 h-1 bg-[#C41E3A] rounded-full mt-2" />
-                    <span className="text-white/50 font-inter text-sm">{cert}</span>
+                    <span className="text-white/50 font-inter text-sm">
+                      {cert}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -130,7 +144,9 @@ const Education = () => {
               return (
                 <div
                   key={index}
-                  ref={el => { cardsRef.current[education.length + 1 + index] = el; }}
+                  ref={(el) => {
+                    cardsRef.current[education.length + 1 + index] = el;
+                  }}
                   className="bg-[#1A1A1A] border border-[#2D2D2D] p-6 hover:border-[#C41E3A]/30 transition-colors duration-300"
                 >
                   <div className="flex items-start gap-4">

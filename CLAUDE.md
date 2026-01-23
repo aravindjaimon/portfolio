@@ -41,23 +41,27 @@ pnpm lint          # Run ESLint
 ## Architecture Notes
 
 ### Styling Approach
+
 - Uses Tailwind CSS 4 with `@tailwindcss/postcss` plugin
 - Custom CSS variables defined in `globals.css` for theming (`--background`, `--foreground`)
 - Supports dark mode via `prefers-color-scheme` media query
 - Custom theme tokens mapped to CSS variables via `@theme inline` directive
 
 ### Font Loading
+
 - Geist Sans and Geist Mono fonts loaded via `next/font/google`
 - Font variables injected via CSS variables (`--font-geist-sans`, `--font-geist-mono`)
 - Applied to root layout body element for global availability
 
 ### TypeScript Configuration
+
 - Path alias: `@/*` maps to project root
 - Strict mode enabled
 - React JSX mode: `react-jsx` (automatic runtime)
 - Module resolution: `bundler` (Next.js optimized)
 
 ### ESLint Configuration
+
 - Uses `eslint-config-next` with Core Web Vitals and TypeScript rules
 - Flat config format (`eslint.config.mjs`)
 - Ignores: `.next/`, `out/`, `build/`, `next-env.d.ts`

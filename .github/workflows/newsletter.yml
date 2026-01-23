@@ -5,13 +5,13 @@ on:
     branches:
       - main
     paths:
-      - 'content/blog/*.mdx'
+      - "content/blog/*.mdx"
 
   # Allow manual triggering from GitHub Actions UI
   workflow_dispatch:
     inputs:
       slug:
-        description: 'Specific post slug to send (leave empty for all unsent)'
+        description: "Specific post slug to send (leave empty for all unsent)"
         required: false
         type: string
 

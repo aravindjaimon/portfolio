@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
 interface TagFilterProps {
   tags: string[];
@@ -22,8 +22,8 @@ export function TagFilter({ tags, selectedTag, onTagSelect }: TagFilterProps) {
         onClick={() => onTagSelect(null)}
         className={`shrink-0 px-3 py-1.5 font-mono text-xs border transition-colors duration-200 ${
           selectedTag === null
-            ? 'bg-[#C41E3A] border-[#C41E3A] text-white'
-            : 'bg-transparent border-[#2D2D2D] text-white/60 hover:border-[#C41E3A] hover:text-[#C41E3A]'
+            ? "bg-[#C41E3A] border-[#C41E3A] text-white"
+            : "bg-transparent border-[#2D2D2D] text-white/60 hover:border-[#C41E3A] hover:text-[#C41E3A]"
         }`}
       >
         All
@@ -34,8 +34,8 @@ export function TagFilter({ tags, selectedTag, onTagSelect }: TagFilterProps) {
           onClick={() => handleTagClick(tag)}
           className={`shrink-0 px-3 py-1.5 font-mono text-xs border transition-colors duration-200 ${
             selectedTag === tag
-              ? 'bg-[#C41E3A] border-[#C41E3A] text-white'
-              : 'bg-transparent border-[#2D2D2D] text-white/60 hover:border-[#C41E3A] hover:text-[#C41E3A]'
+              ? "bg-[#C41E3A] border-[#C41E3A] text-white"
+              : "bg-transparent border-[#2D2D2D] text-white/60 hover:border-[#C41E3A] hover:text-[#C41E3A]"
           }`}
         >
           {tag}

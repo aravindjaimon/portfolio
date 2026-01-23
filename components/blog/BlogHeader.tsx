@@ -1,9 +1,9 @@
-import Image from 'next/image';
-import { TagBadge } from './TagBadge';
-import { DifficultyBadge } from './DifficultyBadge';
-import { ReadingTime } from './ReadingTime';
-import { formatDate, type Post } from '@/lib/blog';
-import { Calendar, User } from 'lucide-react';
+import Image from "next/image";
+import { TagBadge } from "./TagBadge";
+import { DifficultyBadge } from "./DifficultyBadge";
+import { ReadingTime } from "./ReadingTime";
+import { formatDate, type Post } from "@/lib/blog";
+import { Calendar, User } from "lucide-react";
 
 interface BlogHeaderProps {
   post: Post;
@@ -59,11 +59,16 @@ export function BlogHeader({ post }: BlogHeaderProps) {
             </span>
             <span className="flex items-center gap-2">
               <Calendar size={16} />
-              <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
+              <time dateTime={post.publishedAt}>
+                {formatDate(post.publishedAt)}
+              </time>
             </span>
             {post.updatedAt && (
               <span className="text-white/40">
-                Updated: <time dateTime={post.updatedAt}>{formatDate(post.updatedAt)}</time>
+                Updated:{" "}
+                <time dateTime={post.updatedAt}>
+                  {formatDate(post.updatedAt)}
+                </time>
               </span>
             )}
           </div>

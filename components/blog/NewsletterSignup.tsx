@@ -1,19 +1,22 @@
-'use client';
+"use client";
 
-import { useState, FormEvent } from 'react';
-import { Mail, ArrowRight, Check, AlertCircle } from 'lucide-react';
+import { useState, FormEvent } from "react";
+import { Mail, ArrowRight, Check, AlertCircle } from "lucide-react";
 
 interface NewsletterSignupProps {
-  variant?: 'inline' | 'card';
+  variant?: "inline" | "card";
   className?: string;
 }
 
-type SubmitState = 'idle' | 'loading' | 'success' | 'error';
+type SubmitState = "idle" | "loading" | "success" | "error";
 
-export function NewsletterSignup({ variant = 'card', className = '' }: NewsletterSignupProps) {
-  const [email, setEmail] = useState('');
-  const [state, setState] = useState<SubmitState>('idle');
-  const [errorMessage, setErrorMessage] = useState('');
+export function NewsletterSignup({
+  variant = "card",
+  className = "",
+}: NewsletterSignupProps) {
+  const [email, setEmail] = useState("");
+  const [state, setState] = useState<SubmitState>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,39 +24,41 @@ export function NewsletterSignup({ variant = 'card', className = '' }: Newslette
     // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setState('error');
-      setErrorMessage('Please enter a valid email address');
+      setState("error");
+      setErrorMessage("Please enter a valid email address");
       return;
     }
 
-    setState('loading');
+    setState("loading");
 
     try {
-      const response = await fetch('/api/newsletter', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setState('success');
-        setEmail('');
+        setState("success");
+        setEmail("");
       } else {
-        setState('error');
-        setErrorMessage(data.error || 'Something went wrong. Please try again.');
+        setState("error");
+        setErrorMessage(
+          data.error || "Something went wrong. Please try again."
+        );
       }
     } catch {
-      setState('error');
-      setErrorMessage('Something went wrong. Please try again.');
+      setState("error");
+      setErrorMessage("Something went wrong. Please try again.");
     }
   };
 
-  if (variant === 'inline') {
+  if (variant === "inline") {
     return (
       <div className={className}>
-        {state === 'success' ? (
+        {state === "success" ? (
           <div className="flex items-center gap-2 text-green-500 font-mono text-sm">
             <Check size={16} />
             Thanks for subscribing!
@@ -70,24 +75,24 @@ export function NewsletterSignup({ variant = 'card', className = '' }: Newslette
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
-                  if (state === 'error') setState('idle');
+                  if (state === "error") setState("idle");
                 }}
                 placeholder="your@email.com"
                 className="w-full pl-10 pr-4 py-2 bg-[#1A1A1A] border border-[#2D2D2D] text-white placeholder:text-white/30 font-mono text-sm focus:outline-none focus:border-[#C41E3A] transition-colors"
-                disabled={state === 'loading'}
+                disabled={state === "loading"}
                 required
               />
             </div>
             <button
               type="submit"
-              disabled={state === 'loading'}
+              disabled={state === "loading"}
               className="px-4 py-2 bg-[#C41E3A] text-white font-mono text-sm hover:bg-[#A01830] transition-colors disabled:opacity-50"
             >
-              {state === 'loading' ? '...' : <ArrowRight size={16} />}
+              {state === "loading" ? "..." : <ArrowRight size={16} />}
             </button>
           </form>
         )}
-        {state === 'error' && (
+        {state === "error" && (
           <p className="mt-2 text-red-500 text-xs font-mono flex items-center gap-1">
             <AlertCircle size={12} />
             {errorMessage}
@@ -104,12 +109,16 @@ export function NewsletterSignup({ variant = 'card', className = '' }: Newslette
           <Mail size={20} className="text-[#C41E3A]" />
         </div>
         <div>
-          <h4 className="font-bebas text-lg text-white tracking-wide">Stay Updated</h4>
-          <p className="text-white/50 text-xs font-mono">No spam, unsubscribe anytime</p>
+          <h4 className="font-bebas text-lg text-white tracking-wide">
+            Stay Updated
+          </h4>
+          <p className="text-white/50 text-xs font-mono">
+            No spam, unsubscribe anytime
+          </p>
         </div>
       </div>
 
-      {state === 'success' ? (
+      {state === "success" ? (
         <div className="flex items-center gap-2 p-3 bg-green-500/10 border border-green-500/20 text-green-500 font-mono text-sm">
           <Check size={16} />
           Thanks for subscribing! Check your inbox.
@@ -117,7 +126,8 @@ export function NewsletterSignup({ variant = 'card', className = '' }: Newslette
       ) : (
         <>
           <p className="text-white/60 text-sm mb-4">
-            Get notified about new blog posts on software engineering, architecture, and building products.
+            Get notified about new blog posts on software engineering,
+            architecture, and building products.
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-3">
@@ -131,16 +141,16 @@ export function NewsletterSignup({ variant = 'card', className = '' }: Newslette
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
-                  if (state === 'error') setState('idle');
+                  if (state === "error") setState("idle");
                 }}
                 placeholder="your@email.com"
                 className="w-full pl-10 pr-4 py-3 bg-[#0A0A0A] border border-[#2D2D2D] text-white placeholder:text-white/30 font-mono text-sm focus:outline-none focus:border-[#C41E3A] transition-colors"
-                disabled={state === 'loading'}
+                disabled={state === "loading"}
                 required
               />
             </div>
 
-            {state === 'error' && (
+            {state === "error" && (
               <p className="text-red-500 text-xs font-mono flex items-center gap-1">
                 <AlertCircle size={12} />
                 {errorMessage}
@@ -149,11 +159,11 @@ export function NewsletterSignup({ variant = 'card', className = '' }: Newslette
 
             <button
               type="submit"
-              disabled={state === 'loading'}
+              disabled={state === "loading"}
               className="w-full py-3 bg-[#C41E3A] text-white font-mono text-sm hover:bg-[#A01830] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
-              {state === 'loading' ? (
-                'Subscribing...'
+              {state === "loading" ? (
+                "Subscribing..."
               ) : (
                 <>
                   Subscribe

@@ -13,6 +13,7 @@ This is my corner of the internet where I showcase what I've been up to. Feel fr
 I joined [RaftLabs](https://raftlabs.co) as **employee #1** back in October 2020 — just me, a laptop, and a whole lot of caffeine. Fast forward to today, and we've grown to **30+ engineers**. I've had the privilege of writing the first lines of code, hiring brilliant people, and building the engineering culture from scratch.
 
 Some numbers I'm proud of:
+
 - **1M+** users served through systems I've built
 - **10K** events processed per minute (and counting)
 - **10+** engineers mentored
@@ -62,4 +63,3 @@ I believe the best code is the code that writes code. Automation over documentat
   <i>Built with Next.js, Tailwind CSS, and an unreasonable amount of help from Claude.</i><br/>
   <i>(Yes, I know how to use AI. It's 2025. Fight me.)</i>
 </p>
-

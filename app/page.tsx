@@ -17,13 +17,23 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <section id="story"><About /></section>
-        <section id="skills"><Skills /></section>
-        <section id="work"><Projects /></section>
+        <section id="story">
+          <About />
+        </section>
+        <section id="skills">
+          <Skills />
+        </section>
+        <section id="work">
+          <Projects />
+        </section>
         <Metrics />
-        <section id="experience"><Experience /></section>
+        <section id="experience">
+          <Experience />
+        </section>
         <Education />
-        <section id="contact"><Contact /></section>
+        <section id="contact">
+          <Contact />
+        </section>
       </main>
       <Footer />
     </div>
