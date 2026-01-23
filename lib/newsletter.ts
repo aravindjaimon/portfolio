@@ -220,7 +220,7 @@ export async function sendNewsletterForPost(
     body: JSON.stringify({
       subject,
       body: htmlBody,
-      status: 'sent', // Send immediately
+      status: 'about_to_send', // Send immediately
       metadata: {
         postSlug: post.slug,
         sentAt: new Date().toISOString(),
