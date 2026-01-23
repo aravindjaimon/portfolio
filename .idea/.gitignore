@@ -1,0 +1,21 @@
+# User-specific settings (do not share)
+workspace.xml
+tasks.xml
+usage.statistics.xml
+dictionaries/
+shelf/
+httpRequests/
+
+# AWS User-specific
+aws.xml
+
+# Data sources and database settings
+dataSources/
+dataSources.local.xml
+
+# Gradle/Maven specific
+gradle.xml
+libraries/
+
+# Auto-generated files
+*.iws
