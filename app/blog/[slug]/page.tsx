@@ -10,9 +10,10 @@ import {
   GiscusComments,
 } from "@/components/blog";
 import { getPostBySlug, getPublishedPosts } from "@/lib/blog";
+import { siteConfig } from "@/lib/config";
 import type { Metadata } from "next";
 
-const baseUrl = "https://aravindjaimon.com";
+const { baseUrl } = siteConfig;
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -124,13 +125,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <main className="min-h-screen bg-[#0A0A0A]">
+      <main className="min-h-screen bg-background">
         {/* Navigation */}
-        <div className="border-b border-[#2D2D2D]">
+        <div className="border-b border-border">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4">
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 text-white/60 hover:text-[#C41E3A] font-mono text-sm transition-colors"
+              className="inline-flex items-center gap-2 text-white/60 hover:text-primary font-mono text-sm transition-colors"
             >
               <ArrowLeft size={16} />
               Back to Blog
@@ -154,7 +155,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <BlogContent code={post.content} />
 
               {/* Share Section */}
-              <div className="mt-12 pt-8 border-t border-[#2D2D2D]">
+              <div className="mt-12 pt-8 border-t border-border">
                 <SocialShare
                   title={post.title}
                   url={`${baseUrl}${post.permalink}`}

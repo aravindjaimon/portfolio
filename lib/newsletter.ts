@@ -121,6 +121,12 @@ export function generateEmailTemplate(post: Post, siteUrl: string): string {
           <!-- Footer -->
           <tr>
             <td style="padding: 24px 32px; background-color: #0A0A0A; border-top: 1px solid #2D2D2D;">
+              <!--
+                Buttondown template variable: {{ unsubscribe_url }}
+                This is replaced by Buttondown's email processor with a unique
+                unsubscribe URL for each subscriber. Do not modify the syntax.
+                See: https://docs.buttondown.email/advanced-features/template-variables
+              -->
               <p style="color: #666; font-size: 12px; font-family: monospace; margin: 0; text-align: center;">
                 You're receiving this because you subscribed to updates from Aravind Jaimon's blog.
                 <br><br>

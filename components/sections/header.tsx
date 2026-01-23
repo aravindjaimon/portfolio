@@ -1,10 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { personalInfo } from "@/lib/data";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useScrollPosition } from "@/hooks";
+
+/** Pixels scrolled before header style changes (adds background) */
+const SCROLL_THRESHOLD = 50;
 
 const navLinks: { label: string; href: string; isExternal?: boolean }[] = [
   { label: "Story", href: "#story" },
@@ -16,17 +20,8 @@ const navLinks: { label: string; href: string; isExternal?: boolean }[] = [
 ];
 
 const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const isScrolled = useScrollPosition(SCROLL_THRESHOLD);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -40,7 +35,7 @@ const Header = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-[#0A0A0A]/95 backdrop-blur-sm border-b border-[#2D2D2D]/50"
+          ? "bg-background/95 backdrop-blur-sm border-b border-border/50"
           : "bg-transparent"
       }`}
     >
@@ -51,7 +46,7 @@ const Header = () => {
             href="#"
             className="font-bebas text-xl md:text-2xl text-white tracking-wider"
           >
-            <span className="text-[#C41E3A]">A</span>J
+            <span className="text-primary">A</span>J
           </a>
 
           {/* Desktop Navigation */}
@@ -61,7 +56,7 @@ const Header = () => {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="text-sm font-mono text-white/60 hover:text-[#C41E3A] transition-colors duration-300 tracking-wide"
+                  className="text-sm font-mono text-white/60 hover:text-primary transition-colors duration-300 tracking-wide"
                 >
                   {link.label}
                 </Link>
@@ -69,7 +64,7 @@ const Header = () => {
                 <button
                   key={link.label}
                   onClick={() => scrollToSection(link.href)}
-                  className="text-sm font-mono text-white/60 hover:text-[#C41E3A] transition-colors duration-300 tracking-wide"
+                  className="text-sm font-mono text-white/60 hover:text-primary transition-colors duration-300 tracking-wide"
                 >
                   {link.label}
                 </button>
@@ -78,7 +73,7 @@ const Header = () => {
             <Button
               asChild
               variant="outline"
-              className="border-[#C41E3A] text-[#C41E3A] hover:bg-[#C41E3A] hover:text-white font-mono text-xs tracking-wider transition-all duration-300"
+              className="border-primary text-primary hover:bg-primary hover:text-white font-mono text-xs tracking-wider transition-all duration-300"
             >
               <a href={`mailto:${personalInfo.email}`}>HIRE ME</a>
             </Button>
@@ -87,7 +82,7 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-white/80 hover:text-[#C41E3A] transition-colors duration-300"
+            className="md:hidden text-white/80 hover:text-primary transition-colors duration-300"
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -97,7 +92,7 @@ const Header = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#0A0A0A] border-t border-[#2D2D2D]">
+        <div className="md:hidden bg-background border-t border-border">
           <nav className="flex flex-col px-4 sm:px-6 py-4">
             {navLinks.map((link) =>
               link.isExternal ? (
@@ -105,7 +100,7 @@ const Header = () => {
                   key={link.label}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-left py-3 text-sm font-mono text-white/60 hover:text-[#C41E3A] transition-colors duration-300 tracking-wide border-b border-[#2D2D2D]/50 last:border-b-0"
+                  className="text-left py-3 text-sm font-mono text-white/60 hover:text-primary transition-colors duration-300 tracking-wide border-b border-border/50 last:border-b-0"
                 >
                   {link.label}
                 </Link>
@@ -113,7 +108,7 @@ const Header = () => {
                 <button
                   key={link.label}
                   onClick={() => scrollToSection(link.href)}
-                  className="text-left py-3 text-sm font-mono text-white/60 hover:text-[#C41E3A] transition-colors duration-300 tracking-wide border-b border-[#2D2D2D]/50 last:border-b-0"
+                  className="text-left py-3 text-sm font-mono text-white/60 hover:text-primary transition-colors duration-300 tracking-wide border-b border-border/50 last:border-b-0"
                 >
                   {link.label}
                 </button>
@@ -121,7 +116,7 @@ const Header = () => {
             )}
             <Button
               asChild
-              className="w-full bg-[#C41E3A] hover:bg-[#A01830] text-white font-mono text-xs tracking-wider transition-all duration-300 mt-4"
+              className="w-full bg-primary hover:bg-primary/80 text-white font-mono text-xs tracking-wider transition-all duration-300 mt-4"
             >
               <a href={`mailto:${personalInfo.email}`}>HIRE ME</a>
             </Button>

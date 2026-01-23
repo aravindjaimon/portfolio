@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Bebas_Neue, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { siteConfig } from "@/lib/config";
 import "./globals.css";
 
 const inter = Inter({
@@ -22,7 +23,7 @@ const jetBrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const baseUrl = "https://aravindjaimon.com";
+const { baseUrl } = siteConfig;
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),

@@ -78,7 +78,7 @@ export function NewsletterSignup({
                   if (state === "error") setState("idle");
                 }}
                 placeholder="your@email.com"
-                className="w-full pl-10 pr-4 py-2 bg-[#1A1A1A] border border-[#2D2D2D] text-white placeholder:text-white/30 font-mono text-sm focus:outline-none focus:border-[#C41E3A] transition-colors"
+                className="w-full pl-10 pr-4 py-2 bg-secondary border border-border text-white placeholder:text-white/30 font-mono text-sm focus:outline-none focus:border-primary transition-colors"
                 disabled={state === "loading"}
                 required
               />
@@ -86,7 +86,7 @@ export function NewsletterSignup({
             <button
               type="submit"
               disabled={state === "loading"}
-              className="px-4 py-2 bg-[#C41E3A] text-white font-mono text-sm hover:bg-[#A01830] transition-colors disabled:opacity-50"
+              className="px-4 py-2 bg-primary text-white font-mono text-sm hover:bg-primary/80 transition-colors disabled:opacity-50"
             >
               {state === "loading" ? "..." : <ArrowRight size={16} />}
             </button>
@@ -103,10 +103,10 @@ export function NewsletterSignup({
   }
 
   return (
-    <div className={`p-6 bg-[#1A1A1A] border border-[#2D2D2D] ${className}`}>
+    <div className={`p-6 bg-secondary border border-border ${className}`}>
       <div className="flex items-center gap-3 mb-4">
-        <div className="p-2 bg-[#C41E3A]/10 border border-[#C41E3A]/20">
-          <Mail size={20} className="text-[#C41E3A]" />
+        <div className="p-2 bg-primary/10 border border-primary/20">
+          <Mail size={20} className="text-primary" />
         </div>
         <div>
           <h4 className="font-bebas text-lg text-white tracking-wide">
@@ -144,7 +144,7 @@ export function NewsletterSignup({
                   if (state === "error") setState("idle");
                 }}
                 placeholder="your@email.com"
-                className="w-full pl-10 pr-4 py-3 bg-[#0A0A0A] border border-[#2D2D2D] text-white placeholder:text-white/30 font-mono text-sm focus:outline-none focus:border-[#C41E3A] transition-colors"
+                className="w-full pl-10 pr-4 py-3 bg-background border border-border text-white placeholder:text-white/30 font-mono text-sm focus:outline-none focus:border-primary transition-colors"
                 disabled={state === "loading"}
                 required
               />
@@ -160,7 +160,7 @@ export function NewsletterSignup({
             <button
               type="submit"
               disabled={state === "loading"}
-              className="w-full py-3 bg-[#C41E3A] text-white font-mono text-sm hover:bg-[#A01830] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full py-3 bg-primary text-white font-mono text-sm hover:bg-primary/80 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {state === "loading" ? (
                 "Subscribing..."

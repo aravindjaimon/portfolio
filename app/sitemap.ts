@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
 import { getPublishedPosts, getAllTags } from "@/lib/blog";
 import { projects } from "@/lib/data";
+import { siteConfig } from "@/lib/config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://aravindjaimon.com";
+  const { baseUrl } = siteConfig;
   const posts = getPublishedPosts();
   const tags = getAllTags();
 

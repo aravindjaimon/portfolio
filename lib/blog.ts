@@ -76,6 +76,19 @@ export interface TOCItem {
 }
 
 export function extractTableOfContents(rawContent: string): TOCItem[] {
+  /**
+   * Matches Markdown h2 and h3 headings (## and ###)
+   * - ^: Start of line (with 'm' flag, matches after newlines too)
+   * - (#{2,3}): Capture 2-3 hash characters (h2 or h3)
+   * - \s+: One or more spaces after hashes
+   * - (.+)$: Capture the heading text until end of line
+   * - g flag: Find all matches in the content
+   * - m flag: ^ and $ match line boundaries, not just string boundaries
+   *
+   * We limit to h2-h3 because:
+   * - h1 is typically the page title (not needed in TOC)
+   * - h4+ are too detailed for a clean navigation
+   */
   const headingRegex = /^(#{2,3})\s+(.+)$/gm;
   const items: TOCItem[] = [];
   let match;

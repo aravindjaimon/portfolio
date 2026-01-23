@@ -16,6 +16,25 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
+/** Animation configuration for project cards */
+const CARD_ANIMATION = {
+  /** Initial Y offset in pixels for fade-in effect */
+  INITIAL_Y_OFFSET: 50,
+  /** Animation duration in seconds */
+  DURATION: 0.7,
+  /** Delay multiplier between staggered card animations */
+  STAGGER_DELAY: 0.15,
+  /** Viewport trigger point (card starts animating when 85% from top) */
+  TRIGGER_START: "top 85%",
+} as const;
+
+/** Section title animation config */
+const TITLE_ANIMATION = {
+  INITIAL_Y_OFFSET: 50,
+  DURATION: 0.8,
+  TRIGGER_START: "top 80%",
+} as const;
+
 interface ProjectCardProps {
   project: Project;
   index: number;
@@ -32,15 +51,15 @@ const ProjectCard = ({ project, index, onSelect }: ProjectCardProps) => {
   useEffect(() => {
     gsap.fromTo(
       animationRef.current,
-      { opacity: 0, y: 50 },
+      { opacity: 0, y: CARD_ANIMATION.INITIAL_Y_OFFSET },
       {
         opacity: 1,
         y: 0,
-        duration: 0.7,
-        delay: index * 0.15,
+        duration: CARD_ANIMATION.DURATION,
+        delay: index * CARD_ANIMATION.STAGGER_DELAY,
         scrollTrigger: {
           trigger: animationRef.current,
-          start: "top 85%",
+          start: CARD_ANIMATION.TRIGGER_START,
           toggleActions: "play none none reverse",
         },
       }
@@ -51,7 +70,7 @@ const ProjectCard = ({ project, index, onSelect }: ProjectCardProps) => {
     <>
       {/* Industry tag */}
       <div className="absolute top-4 right-4">
-        <span className="text-xs font-mono text-[#C41E3A] bg-[#C41E3A]/10 px-2 py-1">
+        <span className="text-xs font-mono text-primary bg-primary/10 px-2 py-1">
           {project.industry}
         </span>
       </div>
@@ -72,8 +91,8 @@ const ProjectCard = ({ project, index, onSelect }: ProjectCardProps) => {
       {/* Metrics preview */}
       <div className="grid grid-cols-2 gap-3 mb-6">
         {project.metrics.slice(0, 2).map((metric, idx) => (
-          <div key={idx} className="text-center p-3 bg-[#0A0A0A]">
-            <div className="font-bebas text-xl text-[#C41E3A]">
+          <div key={idx} className="text-center p-3 bg-background">
+            <div className="font-bebas text-xl text-primary">
               {metric.value}
             </div>
             <div className="text-xs font-mono text-white/40">
@@ -88,20 +107,20 @@ const ProjectCard = ({ project, index, onSelect }: ProjectCardProps) => {
         {project.stack.slice(0, 4).map((tech, idx) => (
           <span
             key={idx}
-            className="text-[10px] font-mono text-white/40 bg-[#0A0A0A] px-2 py-1"
+            className="text-[10px] font-mono text-white/40 bg-background px-2 py-1"
           >
             {tech}
           </span>
         ))}
         {project.stack.length > 4 && (
-          <span className="text-[10px] font-mono text-white/30 bg-[#0A0A0A] px-2 py-1">
+          <span className="text-[10px] font-mono text-white/30 bg-background px-2 py-1">
             +{project.stack.length - 4}
           </span>
         )}
       </div>
 
       {/* View more indicator */}
-      <div className="flex items-center gap-2 text-white/30 group-hover:text-[#C41E3A] transition-colors duration-300">
+      <div className="flex items-center gap-2 text-white/30 group-hover:text-primary transition-colors duration-300">
         <span className="text-xs font-mono tracking-wide">VIEW CASE STUDY</span>
         <ArrowUpRight
           size={14}
@@ -117,7 +136,7 @@ const ProjectCard = ({ project, index, onSelect }: ProjectCardProps) => {
       <Link
         href={`/projects/${project.slug}`}
         ref={linkRef}
-        className="group relative bg-[#1A1A1A] border border-[#2D2D2D] p-4 sm:p-6 cursor-pointer hover:border-[#C41E3A]/50 transition-all duration-300 block"
+        className="group relative bg-secondary border border-border p-4 sm:p-6 cursor-pointer hover:border-primary/50 transition-all duration-300 block"
       >
         {CardContent}
       </Link>
@@ -128,7 +147,7 @@ const ProjectCard = ({ project, index, onSelect }: ProjectCardProps) => {
     <div
       ref={cardRef}
       onClick={() => onSelect(project)}
-      className="group relative bg-[#1A1A1A] border border-[#2D2D2D] p-4 sm:p-6 cursor-pointer hover:border-[#C41E3A]/50 transition-all duration-300"
+      className="group relative bg-secondary border border-border p-4 sm:p-6 cursor-pointer hover:border-primary/50 transition-all duration-300"
     >
       {CardContent}
     </div>
@@ -146,11 +165,11 @@ const ProjectModal = ({ project, open, onClose }: ProjectModalProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="bg-[#1A1A1A] border-[#2D2D2D] text-white max-w-[95vw] sm:max-w-xl md:max-w-3xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="bg-secondary border-border text-white max-w-[95vw] sm:max-w-xl md:max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <div className="flex items-start justify-between">
             <div>
-              <span className="text-xs font-mono text-[#C41E3A] bg-[#C41E3A]/10 px-2 py-1 mb-3 inline-block">
+              <span className="text-xs font-mono text-primary bg-primary/10 px-2 py-1 mb-3 inline-block">
                 {project.industry}
               </span>
               <DialogTitle className="font-bebas text-3xl md:text-4xl text-white tracking-wide">
@@ -182,7 +201,7 @@ const ProjectModal = ({ project, open, onClose }: ProjectModalProps) => {
             <ul className="space-y-2">
               {project.solution.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 bg-[#C41E3A] rounded-full mt-2" />
+                  <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2" />
                   <span className="text-white/60 font-inter text-sm">
                     {item}
                   </span>
@@ -200,9 +219,9 @@ const ProjectModal = ({ project, open, onClose }: ProjectModalProps) => {
               {project.metrics.map((metric, idx) => (
                 <div
                   key={idx}
-                  className="text-center p-4 bg-[#0A0A0A] border border-[#2D2D2D]"
+                  className="text-center p-4 bg-background border border-border"
                 >
-                  <div className="font-bebas text-2xl text-[#C41E3A]">
+                  <div className="font-bebas text-2xl text-primary">
                     {metric.value}
                   </div>
                   <div className="text-xs font-mono text-white/40 mt-1">
@@ -222,7 +241,7 @@ const ProjectModal = ({ project, open, onClose }: ProjectModalProps) => {
               {project.stack.map((tech, idx) => (
                 <span
                   key={idx}
-                  className="text-xs font-mono text-white/60 bg-[#0A0A0A] px-3 py-1.5 border border-[#2D2D2D]"
+                  className="text-xs font-mono text-white/60 bg-background px-3 py-1.5 border border-border"
                 >
                   {tech}
                 </span>
@@ -243,14 +262,14 @@ const Projects = () => {
   useEffect(() => {
     gsap.fromTo(
       titleRef.current,
-      { opacity: 0, y: 50 },
+      { opacity: 0, y: TITLE_ANIMATION.INITIAL_Y_OFFSET },
       {
         opacity: 1,
         y: 0,
-        duration: 0.8,
+        duration: TITLE_ANIMATION.DURATION,
         scrollTrigger: {
           trigger: titleRef.current,
-          start: "top 80%",
+          start: TITLE_ANIMATION.TRIGGER_START,
           toggleActions: "play none none reverse",
         },
       }
@@ -263,12 +282,12 @@ const Projects = () => {
   };
 
   return (
-    <section className="bg-[#0A0A0A] py-24 md:py-32 px-4 sm:px-6">
+    <section className="bg-background py-24 md:py-32 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         {/* Section Title */}
         <div ref={titleRef} className="text-center mb-16">
           <h2 className="font-bebas text-4xl md:text-5xl lg:text-6xl text-white tracking-wider mb-4">
-            SELECTED <span className="text-[#C41E3A]">WORK</span>
+            SELECTED <span className="text-primary">WORK</span>
           </h2>
           <p className="text-white/50 font-inter text-base md:text-lg max-w-2xl mx-auto">
             Systems built for millions. From high-scale affiliate platforms to

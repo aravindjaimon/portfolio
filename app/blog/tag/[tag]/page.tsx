@@ -2,9 +2,10 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { BlogCard } from "@/components/blog";
 import { getPostsByTag, getAllTags } from "@/lib/blog";
+import { siteConfig } from "@/lib/config";
 import type { Metadata } from "next";
 
-const baseUrl = "https://aravindjaimon.com";
+const { baseUrl } = siteConfig;
 
 interface TagPageProps {
   params: Promise<{ tag: string }>;
@@ -52,13 +53,13 @@ export default async function TagPage({ params }: TagPageProps) {
     decodedTag;
 
   return (
-    <main className="min-h-screen bg-[#0A0A0A]">
+    <main className="min-h-screen bg-background">
       {/* Header */}
-      <div className="border-b border-[#2D2D2D]">
+      <div className="border-b border-border">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-white/60 hover:text-[#C41E3A] font-mono text-sm transition-colors"
+            className="inline-flex items-center gap-2 text-white/60 hover:text-primary font-mono text-sm transition-colors"
           >
             <ArrowLeft size={16} />
             Back to Blog
@@ -71,7 +72,7 @@ export default async function TagPage({ params }: TagPageProps) {
         <div className="mb-12">
           <p className="text-white/40 font-mono text-sm mb-2">Tagged with</p>
           <h1 className="font-bebas text-4xl sm:text-5xl md:text-6xl text-white tracking-wide">
-            <span className="text-[#C41E3A]">{properTag}</span>
+            <span className="text-primary">{properTag}</span>
           </h1>
           <p className="text-white/60 mt-4">
             {posts.length} article{posts.length !== 1 ? "s" : ""} found
@@ -92,7 +93,7 @@ export default async function TagPage({ params }: TagPageProps) {
             </p>
             <Link
               href="/blog"
-              className="mt-4 inline-block text-[#C41E3A] hover:underline font-mono text-sm"
+              className="mt-4 inline-block text-primary hover:underline font-mono text-sm"
             >
               View all articles
             </Link>

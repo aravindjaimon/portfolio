@@ -9,9 +9,10 @@ import {
   Tag,
 } from "lucide-react";
 import { getProjectBySlug, getAllProjectSlugs } from "@/lib/data";
+import { siteConfig } from "@/lib/config";
 import type { Metadata } from "next";
 
-const baseUrl = "https://aravindjaimon.com";
+const { baseUrl } = siteConfig;
 
 interface CaseStudyPageProps {
   params: Promise<{ slug: string }>;
@@ -57,8 +58,8 @@ export async function generateMetadata({
 
 function MetricCard({ value, label }: { value: string; label: string }) {
   return (
-    <div className="p-4 bg-[#1A1A1A] border border-[#2D2D2D] text-center">
-      <div className="font-bebas text-2xl sm:text-3xl text-[#C41E3A] tracking-wide">
+    <div className="p-4 bg-secondary border border-border text-center">
+      <div className="font-bebas text-2xl sm:text-3xl text-primary tracking-wide">
         {value}
       </div>
       <div className="text-white/50 text-xs font-mono mt-1">{label}</div>
@@ -69,7 +70,7 @@ function MetricCard({ value, label }: { value: string; label: string }) {
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
     <h2 className="font-bebas text-2xl sm:text-3xl text-white tracking-wide mb-6 flex items-center gap-3">
-      <span className="w-8 h-px bg-[#C41E3A]" />
+      <span className="w-8 h-px bg-primary" />
       {children}
     </h2>
   );
@@ -84,13 +85,13 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   }
 
   return (
-    <main className="min-h-screen bg-[#0A0A0A]">
+    <main className="min-h-screen bg-background">
       {/* Navigation */}
-      <div className="border-b border-[#2D2D2D]">
+      <div className="border-b border-border">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4">
           <Link
             href="/#work"
-            className="inline-flex items-center gap-2 text-white/60 hover:text-[#C41E3A] font-mono text-sm transition-colors"
+            className="inline-flex items-center gap-2 text-white/60 hover:text-primary font-mono text-sm transition-colors"
           >
             <ArrowLeft size={16} />
             Back to Projects
@@ -99,10 +100,10 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
       </div>
 
       {/* Header */}
-      <header className="border-b border-[#2D2D2D]">
+      <header className="border-b border-border">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
           {/* Industry Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#C41E3A]/10 border border-[#C41E3A]/20 text-[#C41E3A] text-xs font-mono mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/20 text-primary text-xs font-mono mb-6">
             <Tag size={12} />
             {project.industry}
           </div>
@@ -137,7 +138,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
       </header>
 
       {/* Metrics */}
-      <section className="border-b border-[#2D2D2D]">
+      <section className="border-b border-border">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {project.metrics.map((metric, index) => (
@@ -176,7 +177,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                   key={index}
                   className="flex items-start gap-3 text-white/60"
                 >
-                  <span className="w-1.5 h-1.5 bg-[#C41E3A] mt-2.5 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 bg-primary mt-2.5 flex-shrink-0" />
                   {detail}
                 </li>
               ))}
@@ -191,9 +192,9 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             {project.solution.map((item, index) => (
               <div
                 key={index}
-                className="p-4 bg-[#1A1A1A] border border-[#2D2D2D] text-white/70"
+                className="p-4 bg-secondary border border-border text-white/70"
               >
-                <span className="text-[#C41E3A] font-mono text-sm mr-2">
+                <span className="text-primary font-mono text-sm mr-2">
                   0{index + 1}
                 </span>
                 {item}
@@ -212,7 +213,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                     key={index}
                     className="flex items-start gap-3 text-white/60"
                   >
-                    <span className="w-1.5 h-1.5 bg-[#C41E3A] mt-2.5 flex-shrink-0" />
+                    <span className="w-1.5 h-1.5 bg-primary mt-2.5 flex-shrink-0" />
                     {approach}
                   </li>
                 ))}
@@ -229,13 +230,13 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
               {project.keyDecisions.map((item, index) => (
                 <div
                   key={index}
-                  className="p-6 bg-[#1A1A1A] border border-[#2D2D2D]"
+                  className="p-6 bg-secondary border border-border"
                 >
                   <h4 className="font-bebas text-lg text-white tracking-wide mb-2">
                     {item.decision}
                   </h4>
                   <p className="text-white/60 text-sm">
-                    <span className="text-[#C41E3A] font-mono">Why:</span>{" "}
+                    <span className="text-primary font-mono">Why:</span>{" "}
                     {item.reasoning}
                   </p>
                 </div>
@@ -252,7 +253,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
               {project.results.map((result, index) => (
                 <div
                   key={index}
-                  className="p-4 bg-[#0A0A0A] border-l-2 border-[#C41E3A] text-white/70"
+                  className="p-4 bg-background border-l-2 border-primary text-white/70"
                 >
                   {result}
                 </div>
@@ -271,7 +272,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                   key={index}
                   className="flex items-start gap-3 text-white/60"
                 >
-                  <span className="text-[#C41E3A] font-mono text-sm flex-shrink-0">
+                  <span className="text-primary font-mono text-sm flex-shrink-0">
                     {index + 1}.
                   </span>
                   {lesson}
@@ -288,7 +289,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             {project.stack.map((tech) => (
               <span
                 key={tech}
-                className="px-3 py-1.5 bg-[#1A1A1A] border border-[#2D2D2D] text-white/60 text-sm font-mono"
+                className="px-3 py-1.5 bg-secondary border border-border text-white/60 text-sm font-mono"
               >
                 {tech}
               </span>
@@ -297,8 +298,8 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         </section>
 
         {/* CTA */}
-        <section className="pt-8 border-t border-[#2D2D2D]">
-          <div className="p-8 bg-[#1A1A1A] border border-[#2D2D2D] text-center">
+        <section className="pt-8 border-t border-border">
+          <div className="p-8 bg-secondary border border-border text-center">
             <h3 className="font-bebas text-2xl text-white tracking-wide mb-4">
               Interested in Working Together?
             </h3>
@@ -309,14 +310,14 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="mailto:dev@aravindjaimon.com"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#C41E3A] text-white font-mono text-sm hover:bg-[#A01830] transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-white font-mono text-sm hover:bg-primary/80 transition-colors"
               >
                 Get in Touch
                 <ExternalLink size={14} />
               </a>
               <Link
                 href="/#work"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-[#2D2D2D] text-white/60 font-mono text-sm hover:border-[#C41E3A] hover:text-white transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-border text-white/60 font-mono text-sm hover:border-primary hover:text-white transition-colors"
               >
                 View More Projects
               </Link>

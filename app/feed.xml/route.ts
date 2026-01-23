@@ -1,6 +1,7 @@
 import { getPublishedPosts } from "@/lib/blog";
+import { siteConfig } from "@/lib/config";
 
-const baseUrl = "https://aravindjaimon.com";
+const { baseUrl } = siteConfig;
 
 function escapeXml(text: string): string {
   return text
