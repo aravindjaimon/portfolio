@@ -62,3 +62,4 @@ I believe the best code is the code that writes code. Automation over documentat
   <i>Built with Next.js, Tailwind CSS, and an unreasonable amount of help from Claude.</i><br/>
   <i>(Yes, I know how to use AI. It's 2025. Fight me.)</i>
 </p>
+
