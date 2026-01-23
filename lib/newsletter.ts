@@ -23,8 +23,7 @@ interface ButtondownEmailsResponse {
 }
 
 /**
- * Generate HTML email template - minimal design that complements Buttondown's wrapper
- * Buttondown adds: title, author, date, subscribe link - so we focus on rich content
+ * Generate HTML email template matching site's dark theme
  */
 export function generateEmailTemplate(post: Post, siteUrl: string): string {
   const postUrl = `${siteUrl}/blog/${post.slug}`;
@@ -32,78 +31,109 @@ export function generateEmailTemplate(post: Post, siteUrl: string): string {
     ? `${siteUrl}${post.coverImage}`
     : null;
 
-  // Format reading time (handle if it already includes "min read")
-  const readingTime = post.readingTime
-    ? String(post.readingTime).replace(/\s*min\s*read\s*/gi, '').trim()
-    : '';
-
   const tagsHtml = post.tags
-    .slice(0, 4) // Limit to 4 tags for cleaner look
     .map(
       (tag) =>
-        `<span style="display: inline-block; padding: 6px 14px; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #8892b0; font-size: 11px; font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace; border-radius: 4px; margin-right: 8px; margin-bottom: 8px; border: 1px solid #233554;">${tag}</span>`
+        `<span style="display: inline-block; padding: 4px 12px; background-color: #2D2D2D; color: #888; font-size: 12px; font-family: monospace; margin-right: 8px; margin-bottom: 8px;">${tag}</span>`
     )
     .join('');
 
+  // Handle readingTime - strip "min read" if already present to avoid duplication
+  const readingTimeNum = post.readingTime
+    ? String(post.readingTime).replace(/\s*min\s*read\s*/gi, '').trim()
+    : '';
+  const readingTimeText = readingTimeNum ? `${readingTimeNum} min read` : '';
+
+  const dateText = new Date(post.publishedAt).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   return `
-<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;">
-  ${
-    coverImageUrl
-      ? `
-  <!-- Cover Image with overlay gradient -->
-  <div style="margin: -20px -20px 24px -20px; position: relative;">
-    <img src="${coverImageUrl}" alt="" style="width: 100%; height: auto; display: block; border-radius: 8px 8px 0 0;" />
-  </div>
-  `
-      : ''
-  }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${post.title}</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #0A0A0A; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #0A0A0A; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #1A1A1A; border: 1px solid #2D2D2D;">
+          ${
+            coverImageUrl
+              ? `
+          <tr>
+            <td>
+              <img src="${coverImageUrl}" alt="${post.title}" style="width: 100%; height: auto; display: block;" />
+            </td>
+          </tr>
+          `
+              : ''
+          }
+          <tr>
+            <td style="padding: 32px;">
+              <!-- Header -->
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="padding-bottom: 24px; border-bottom: 1px solid #2D2D2D;">
+                    <span style="color: #C41E3A; font-size: 12px; font-family: monospace; text-transform: uppercase; letter-spacing: 2px;">NEW POST</span>
+                  </td>
+                </tr>
+              </table>
 
-  <!-- Description Card -->
-  <div style="background: linear-gradient(135deg, #0d1117 0%, #161b22 100%); border: 1px solid #30363d; border-radius: 8px; padding: 24px; margin-bottom: 24px;">
-    <p style="color: #c9d1d9; font-size: 16px; line-height: 1.7; margin: 0;">
-      ${post.description}
-    </p>
-  </div>
+              <!-- Title -->
+              <h1 style="color: #FFFFFF; font-size: 28px; font-weight: bold; margin: 24px 0 16px 0; line-height: 1.3;">
+                ${post.title}
+              </h1>
 
-  <!-- Meta Row -->
-  <div style="display: flex; align-items: center; margin-bottom: 20px;">
-    ${
-      readingTime
-        ? `
-    <span style="display: inline-flex; align-items: center; color: #8b949e; font-size: 13px; font-family: 'SF Mono', Monaco, monospace;">
-      <span style="margin-right: 6px;">📖</span> ${readingTime} min read
-    </span>
-    `
-        : ''
-    }
-  </div>
+              <!-- Meta -->
+              <p style="color: #888; font-size: 14px; font-family: monospace; margin: 0 0 20px 0;">
+                ${dateText}${readingTimeText ? ` • ${readingTimeText}` : ''}
+              </p>
 
-  <!-- Tags -->
-  ${
-    tagsHtml
-      ? `
-  <div style="margin-bottom: 28px;">
-    ${tagsHtml}
-  </div>
-  `
-      : ''
-  }
+              <!-- Description -->
+              <p style="color: #CCCCCC; font-size: 16px; line-height: 1.6; margin: 0 0 24px 0;">
+                ${post.description}
+              </p>
 
-  <!-- CTA Button -->
-  <div style="text-align: center; margin: 32px 0;">
-    <a href="${postUrl}" style="display: inline-block; padding: 14px 28px; background: linear-gradient(135deg, #238636 0%, #2ea043 100%); color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 6px; box-shadow: 0 4px 14px rgba(35, 134, 54, 0.4);">
-      Read the full article →
-    </a>
-  </div>
+              <!-- Tags -->
+              <div style="margin-bottom: 32px;">
+                ${tagsHtml}
+              </div>
 
-  <!-- Subtle divider -->
-  <div style="border-top: 1px solid #21262d; margin: 32px 0 24px 0;"></div>
+              <!-- CTA Button -->
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td>
+                    <a href="${postUrl}" style="display: inline-block; padding: 16px 32px; background-color: #C41E3A; color: #FFFFFF; text-decoration: none; font-size: 14px; font-family: monospace; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">
+                      READ FULL POST →
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
 
-  <!-- Footer note -->
-  <p style="color: #6e7681; font-size: 12px; text-align: center; margin: 0; line-height: 1.6;">
-    Thanks for reading! If you enjoyed this, consider sharing it with a friend.
-  </p>
-</div>
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 24px 32px; background-color: #0A0A0A; border-top: 1px solid #2D2D2D;">
+              <p style="color: #666; font-size: 12px; font-family: monospace; margin: 0; text-align: center;">
+                You're receiving this because you subscribed to updates from Aravind Jaimon's blog.
+                <br><br>
+                <a href="{{ unsubscribe_url }}" style="color: #888; text-decoration: underline;">Unsubscribe</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
 `.trim();
 }
 
