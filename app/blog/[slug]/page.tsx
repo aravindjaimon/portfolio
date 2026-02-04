@@ -8,8 +8,10 @@ import {
   TableOfContents,
   SocialShare,
   GiscusComments,
+  ReadingProgress,
+  PostNavigation,
 } from "@/components/blog";
-import { getPostBySlug, getPublishedPosts } from "@/lib/blog";
+import { getPostBySlug, getPublishedPosts, getAdjacentPosts } from "@/lib/blog";
 import { siteConfig } from "@/lib/config";
 import type { Metadata } from "next";
 
@@ -117,6 +119,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   const jsonLd = generateJsonLd(post);
+  const { previous, next } = getAdjacentPosts(post.slug);
 
   return (
     <>
@@ -125,6 +128,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+
+      {/* Skip to content link for accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:font-medium"
+      >
+        Skip to content
+      </a>
+
+      {/* Reading progress indicator */}
+      <ReadingProgress />
+
       <main className="min-h-screen bg-background">
         {/* Navigation */}
         <div className="border-b border-border">
@@ -146,7 +161,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
           <div className="lg:grid lg:grid-cols-[1fr_250px] lg:gap-8">
             {/* Main Content */}
-            <div className="max-w-4xl">
+            <div id="main-content" className="max-w-4xl">
               {/* Mobile TOC - only shown on mobile */}
               <div className="lg:hidden">
                 <TableOfContents items={post.toc} variant="mobile" />
@@ -162,6 +177,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   description={post.description}
                 />
               </div>
+
+              {/* Post Navigation */}
+              <PostNavigation previous={previous} next={next} />
 
               {/* Comments */}
               <GiscusComments />

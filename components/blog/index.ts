@@ -11,4 +11,6 @@ export { TableOfContents } from "./TableOfContents";
 export { SocialShare } from "./SocialShare";
 export { GiscusComments } from "./GiscusComments";
 export { NewsletterSignup } from "./NewsletterSignup";
+export { ReadingProgress } from "./ReadingProgress";
+export { PostNavigation } from "./PostNavigation";
 export { mdxComponents } from "./mdx-components";

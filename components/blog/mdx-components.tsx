@@ -2,8 +2,27 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, isValidElement, ReactNode } from "react";
 import { Check, Copy, Link as LinkIcon } from "lucide-react";
+import { Mermaid } from "./Mermaid";
+
+// Extract plain text from nested React children (handles rehype-pretty-code's span structure)
+function extractTextContent(node: ReactNode): string {
+  if (typeof node === "string") return node;
+  if (typeof node === "number") return String(node);
+  if (!node) return "";
+
+  if (Array.isArray(node)) {
+    return node.map(extractTextContent).join("");
+  }
+
+  if (isValidElement(node)) {
+    const props = node.props as { children?: ReactNode };
+    return extractTextContent(props.children);
+  }
+
+  return "";
+}
 
 // Copy button for code blocks
 function CopyButton({ code }: { code: string }) {
@@ -75,8 +94,25 @@ function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
 function Pre({
   children,
   ...props
-}: React.HTMLAttributes<HTMLPreElement> & { raw?: string }) {
-  const codeContent = props.raw || "";
+}: React.HTMLAttributes<HTMLPreElement> & {
+  raw?: string;
+  "data-language"?: string;
+}) {
+  // Check if this is a mermaid code block
+  // rehype-pretty-code adds data-language to both pre and code elements
+  const language = props["data-language"];
+
+  if (language === "mermaid") {
+    // Extract the mermaid chart code from nested children
+    // rehype-pretty-code wraps content in spans for syntax highlighting
+    const chartCode = extractTextContent(children);
+    if (chartCode.trim()) {
+      return <Mermaid chart={chartCode} />;
+    }
+  }
+
+  // For non-mermaid blocks, extract code for copy button
+  const codeContent = props.raw || extractTextContent(children);
 
   return (
     <div className="relative my-6 group">

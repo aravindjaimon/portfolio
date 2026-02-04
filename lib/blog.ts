@@ -59,6 +59,27 @@ export function getRelatedPosts(currentSlug: string, limit = 3): Post[] {
     .map((item) => item.post);
 }
 
+// Get adjacent posts (previous and next) for navigation
+export function getAdjacentPosts(currentSlug: string): {
+  previous: Post | null;
+  next: Post | null;
+} {
+  const allPosts = getPublishedPosts();
+  const currentIndex = allPosts.findIndex((post) => post.slug === currentSlug);
+
+  if (currentIndex === -1) {
+    return { previous: null, next: null };
+  }
+
+  // Posts are sorted newest-first, so "next" is the newer post (lower index)
+  // and "previous" is the older post (higher index)
+  return {
+    previous:
+      currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null,
+    next: currentIndex > 0 ? allPosts[currentIndex - 1] : null,
+  };
+}
+
 // Format date for display
 export function formatDate(dateString: string): string {
   return new Date(dateString).toLocaleDateString("en-US", {
