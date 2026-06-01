@@ -1,0 +1,5 @@
+User-Agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+Allow: /
+
+Sitemap: https://aravindjaimon.com/sitemap.xml
