@@ -1,12 +1,11 @@
 import type { NextConfig } from "next";
 
-// Run Velite before Next.js starts (works with both Turbopack and Webpack)
-const isDev = process.argv.indexOf("dev") !== -1;
-const isBuild = process.argv.indexOf("build") !== -1;
-
-if (!process.env.VELITE_STARTED && (isDev || isBuild)) {
+// Velite watch for live content reload during `next dev`. One-shot generation
+// (dev startup + builds) runs in the package.json scripts BEFORE Next starts,
+// avoiding a Turbopack race resolving `#site/content` before `.velite` exists.
+if (!process.env.VELITE_STARTED && process.argv.includes("dev")) {
   process.env.VELITE_STARTED = "1";
-  import("velite").then((m) => m.build({ watch: isDev, clean: !isDev }));
+  import("velite").then((m) => m.build({ watch: true, clean: false }));
 }
 
 // RFC 8288 Link header advertising agent-discovery resources from the homepage.
