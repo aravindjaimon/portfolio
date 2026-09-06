@@ -100,7 +100,7 @@
   }
   html {
     overflow-x: hidden;
-    scrollbar-color: hsl(var(--primary)) hsl(var(--background));
+    scrollbar-color: #c41e3a #0a0a0a; /* literals: the minifier drops the space between two hsl(var()) values */
     caret-color: hsl(var(--volt));
   }
   body {

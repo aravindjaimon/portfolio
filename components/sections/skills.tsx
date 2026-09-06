@@ -138,7 +138,7 @@ const Skills = ({ groups }: SkillsProps) => {
                 {group.items.map((item) => (
                   <li
                     key={item}
-                    className={`chip inline-block bg-background border border-foreground/70 px-3 py-2 font-mono text-sm text-foreground select-none shadow-[4px_4px_0_0_hsl(var(--primary))] ${
+                    className={`chip inline-block bg-background border border-foreground/70 px-3 py-2 text-sm text-foreground select-none shadow-[4px_4px_0_0_hsl(var(--primary))] ${
                       physics
                         ? "cursor-grab active:cursor-grabbing touch-none"
                         : ""

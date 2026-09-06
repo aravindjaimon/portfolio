@@ -201,7 +201,7 @@ const Hero = ({ profile, callouts }: HeroProps) => {
         <div className="grid lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] gap-10 lg:gap-12 items-end">
           <h1
             id="hero-name"
-            className="hero-name font-bebas text-[clamp(3.5rem,13vw,7.5rem)] lg:text-[clamp(6rem,9vw,11rem)] lg:whitespace-nowrap leading-[0.86] tracking-wide text-foreground overflow-hidden"
+            className="hero-name font-bebas text-[clamp(3.5rem,13vw,7.5rem)] lg:text-[clamp(5rem,8.2vw,7.5rem)] leading-[0.86] tracking-wide text-foreground overflow-hidden"
           >
             <BrandName name={profile.name} />
           </h1>
@@ -210,7 +210,7 @@ const Hero = ({ profile, callouts }: HeroProps) => {
             <p className="font-bebas text-3xl md:text-4xl tracking-wide text-foreground">
               {profile.title}
             </p>
-            <p className="font-mono text-sm uppercase tracking-[0.2em] text-primary">
+            <p className="font-bebas text-xl tracking-[0.15em] text-primary">
               {profile.subtitle}
             </p>
             <p className="text-foreground/70 text-base md:text-lg leading-relaxed max-w-md">
