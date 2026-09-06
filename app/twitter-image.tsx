@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { MARK_PATTERNS, isOn } from "@/components/chrome/mark-patterns";
 
 export const alt = "Aravind Jaimon - Lead Software Engineer";
 export const size = {
@@ -33,13 +34,23 @@ export default async function Image() {
       >
         <div
           style={{
-            fontSize: 120,
-            fontWeight: "bold",
-            color: "#fff",
-            letterSpacing: "-0.02em",
+            display: "flex",
+            flexWrap: "wrap",
+            width: 124,
+            height: 124,
+            gap: 4,
           }}
         >
-          AJ
+          {Array.from({ length: 25 }, (_, i) => (
+            <div
+              key={i}
+              style={{
+                width: 20,
+                height: 20,
+                background: isOn(MARK_PATTERNS.a, i) ? "#C41E3A" : "#262626",
+              }}
+            />
+          ))}
         </div>
         <div
           style={{

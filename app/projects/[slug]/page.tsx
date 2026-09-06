@@ -145,18 +145,18 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
 
         <section className="mt-16 border border-border bg-grid p-8 sm:p-12">
           <h2 className="font-bebas text-4xl sm:text-5xl text-foreground tracking-wide mb-4 text-balance">
-            Want systems like this built for your team?
+            Working on something like this?
           </h2>
           <p className="text-foreground/70 mb-8 max-w-xl">
-            I lead architecture, delivery and engineering culture end to end.
-            One email starts the conversation.
+            Happy to compare notes on architecture, delivery and building teams
+            — the details above are the short version.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <a
               href={`mailto:${email}`}
               className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-volt text-volt-foreground font-bebas text-xl tracking-[0.1em] hover:bg-primary hover:text-primary-foreground transition-colors"
             >
-              Email {email}
+              Get in touch
               <ArrowUpRight size={14} aria-hidden />
             </a>
             <Link

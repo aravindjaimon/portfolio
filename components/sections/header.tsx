@@ -3,7 +3,8 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import { animate, createTimeline, onScroll, svg } from "animejs";
+import { animate, onScroll } from "animejs";
+import { Mark } from "@/components/chrome/mark";
 import { useAnimeScope, useScrollPosition } from "@/hooks";
 import { siteConfig } from "@/lib/config";
 import type { PersonalInfo } from "@/lib/data";
@@ -19,13 +20,6 @@ const navLinks = [
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/#contact" },
 ];
-
-/* Same-box polygons for the morphing mark: A → J → square → A */
-const MARK = {
-  a: "M4 30 L13 2 L19 2 L28 30 L22 30 L16 10 L10 30 Z",
-  j: "M10 2 L26 2 L26 22 L20 30 L8 30 L4 24 L9 20 L13 24 L18 24 L20 22 L20 8 L10 8 Z",
-  square: "M4 4 L28 4 L28 28 L4 28 Z",
-};
 
 interface HeaderProps {
   profile: PersonalInfo;
@@ -50,15 +44,6 @@ const Header = ({ profile }: HeaderProps) => {
         sync: true,
       }),
     });
-
-    // The mark morphs A → J → square on a loop
-    createTimeline({
-      loop: true,
-      defaults: { ease: "inOut(3)", duration: 800 },
-    })
-      .add(".mark-path", { d: svg.morphTo(".mark-j") }, 2200)
-      .add(".mark-path", { d: svg.morphTo(".mark-square") }, "+=2200")
-      .add(".mark-path", { d: svg.morphTo(".mark-a") }, "+=2200");
   });
 
   return (
@@ -83,18 +68,7 @@ const Header = ({ profile }: HeaderProps) => {
             className="flex items-center gap-3 text-foreground"
             aria-label="Aravind Jaimon — home"
           >
-            <svg
-              viewBox="0 0 32 32"
-              className="w-7 h-7 text-primary"
-              aria-hidden="true"
-            >
-              <defs>
-                <path className="mark-a" d={MARK.a} />
-                <path className="mark-j" d={MARK.j} />
-                <path className="mark-square" d={MARK.square} />
-              </defs>
-              <path className="mark-path" d={MARK.a} fill="currentColor" />
-            </svg>
+            <Mark animate className="w-7 h-7" />
             <span className="font-bebas text-xl md:text-2xl tracking-wider hidden sm:inline">
               ARAVIND JAIMON
             </span>
@@ -134,7 +108,7 @@ const Header = ({ profile }: HeaderProps) => {
               href={`mailto:${siteConfig.email}`}
               className="ml-2 px-4 py-1.5 bg-volt text-volt-foreground font-bebas text-lg tracking-[0.15em] hover:bg-primary hover:text-primary-foreground transition-colors duration-200"
             >
-              Hire me
+              Get in touch
             </a>
           </nav>
 
@@ -171,7 +145,7 @@ const Header = ({ profile }: HeaderProps) => {
               href={`mailto:${siteConfig.email}`}
               className="mt-4 w-full py-3 text-center bg-volt text-volt-foreground font-bebas text-2xl tracking-[0.1em]"
             >
-              Hire me
+              Get in touch
             </a>
           </div>
         </nav>

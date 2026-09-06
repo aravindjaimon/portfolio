@@ -19,6 +19,8 @@ const VOLT = "#CCFF00";
 const HAIRLINE = "#2D2D2D";
 /** Minimum ms between pointer ripples */
 const RIPPLE_THROTTLE = 120;
+/** Cells within this Chebyshev distance of the pointer flash volt */
+const RIPPLE_RADIUS = 2;
 
 interface HeroProps {
   profile: PersonalInfo;
@@ -52,7 +54,7 @@ const Hero = ({ profile, callouts }: HeroProps) => {
 
     // Breathing 13×13 grid from the centre
     animate(cells, {
-      scale: [1, 0.55, 1],
+      scale: [0.8, 0.45, 0.8],
       duration: 2400,
       delay: stagger(50, { grid: [GRID, GRID], from: "center" }),
       loop: true,
@@ -76,10 +78,15 @@ const Hero = ({ profile, callouts }: HeroProps) => {
         0,
         GRID - 1
       );
-      animate(cells, {
+      const near = cells.filter((_, i) => {
+        const r = Math.floor(i / GRID);
+        const c = i % GRID;
+        return Math.max(Math.abs(r - row), Math.abs(c - col)) <= RIPPLE_RADIUS;
+      });
+      animate(near, {
         borderColor: [VOLT, HAIRLINE],
-        duration: 700,
-        delay: stagger(28, { grid: [GRID, GRID], from: row * GRID + col }),
+        duration: 450,
+        delay: stagger(30, { from: "center" }),
         ease: "out(2)",
       });
     };
@@ -149,9 +156,15 @@ const Hero = ({ profile, callouts }: HeroProps) => {
         aria-hidden="true"
       >
         {CELLS.map((i) => (
-          <span key={i} className="cell border border-border/70" />
+          <span key={i} className="cell border border-border/40" />
         ))}
       </div>
+
+      {/* Dark plate so the name and action always sit on near-black, whatever the grid is doing */}
+      <div
+        className="absolute inset-x-0 bottom-0 h-[62%] bg-[radial-gradient(ellipse_120%_90%_at_30%_100%,hsl(var(--background))_35%,transparent_75%)] pointer-events-none"
+        aria-hidden="true"
+      />
 
       {/* Dimension callouts (drafting-sheet grammar) */}
       <div
@@ -221,7 +234,7 @@ const Hero = ({ profile, callouts }: HeroProps) => {
                 href={`mailto:${profile.email}`}
                 className="inline-flex items-center px-6 py-3 bg-volt text-volt-foreground font-bebas text-xl tracking-[0.15em] shadow-[6px_6px_0_0_hsl(var(--primary))] hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[3px_3px_0_0_hsl(var(--primary))] transition-[transform,box-shadow] duration-150"
               >
-                Hire me
+                Start a conversation
               </a>
               <ul className="flex items-center gap-4">
                 {socials.map(({ href, label, Icon }) => (

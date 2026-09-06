@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { Github, Linkedin, Mail, Package } from "lucide-react";
 import { animate, onScroll, svg } from "animejs";
 import { useAnimeScope } from "@/hooks";
+import { Mark } from "@/components/chrome/mark";
 import type { PersonalInfo } from "@/lib/data";
 
 interface FooterProps {
@@ -104,8 +105,11 @@ const Footer = ({ profile }: FooterProps) => {
               </li>
             ))}
           </ul>
-          <p className="text-foreground/60 font-mono text-xs">
-            © {year} {profile.name}. Built with Next.js and anime.js.
+          <p className="flex items-center gap-3 text-foreground/60 font-mono text-xs">
+            <Mark className="w-5 h-5 shrink-0" />
+            <span>
+              © {year} {profile.name}. Built with Next.js and anime.js.
+            </span>
           </p>
         </div>
       </div>
