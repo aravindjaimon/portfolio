@@ -1,111 +1,270 @@
 "use client";
 
-import { ChevronDown, Github, Linkedin, Mail } from "lucide-react";
-import { personalInfo } from "@/lib/data";
-import { useHeroAnimation } from "@/hooks/useHeroAnimation";
+import { useRef } from "react";
+import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
+import {
+  animate,
+  createTimeline,
+  splitText,
+  stagger,
+  svg,
+  utils,
+} from "animejs";
+import { useAnimeScope } from "@/hooks";
+import type { ImpactMetric, PersonalInfo } from "@/lib/data";
 
-const Hero = () => {
-  const { nameRef, subtitleRef, taglineRef, iconsRef, scrollRef } =
-    useHeroAnimation();
+const GRID = 13;
+const CELLS = Array.from({ length: GRID * GRID }, (_, i) => i);
+const VOLT = "#CCFF00";
+const HAIRLINE = "#2D2D2D";
+/** Minimum ms between pointer ripples */
+const RIPPLE_THROTTLE = 120;
 
-  const renderName = () => {
-    return personalInfo.name.split("").map((char, index) => {
-      const isHighlighted =
-        (char === "A" && index === 0) || (char === "J" && index === 8);
+interface HeroProps {
+  profile: PersonalInfo;
+  /** Two metrics rendered as dimension callouts on the grid edges */
+  callouts: [ImpactMetric, ImpactMetric];
+}
 
-      return (
-        <span
-          key={index}
-          className={`letter inline-block ${char === " " ? "w-2 sm:w-4 md:w-6" : ""} ${
-            isHighlighted ? "text-[#C41E3A]" : ""
-          }`}
-        >
-          {char === " " ? "\u00A0" : char}
+/** Wraps the leading letter of each word in the brand red */
+function BrandName({ name }: { name: string }) {
+  return (
+    <>
+      {name.split(" ").map((word, i) => (
+        <span key={word} className="inline-block whitespace-nowrap">
+          {i > 0 && <span className="inline-block w-[0.18em]" aria-hidden />}
+          <span className="text-primary">{word[0]}</span>
+          {word.slice(1)}
         </span>
-      );
+      ))}
+    </>
+  );
+}
+
+const Hero = ({ profile, callouts }: HeroProps) => {
+  const root = useRef<HTMLElement>(null);
+
+  useAnimeScope(root, ({ matches }) => {
+    if (matches.reduceMotion) return;
+    const section = root.current!;
+    const layer = section.querySelector<HTMLElement>(".cells")!;
+    const cells = utils.$(".cell");
+
+    // Breathing 13×13 grid from the centre
+    animate(cells, {
+      scale: [1, 0.55, 1],
+      duration: 2400,
+      delay: stagger(50, { grid: [GRID, GRID], from: "center" }),
+      loop: true,
+      ease: "inOutSine",
     });
-  };
+
+    // Pointer ripple in volt from the nearest cell
+    let last = 0;
+    const ripple = (e: PointerEvent) => {
+      const now = performance.now();
+      if (now - last < RIPPLE_THROTTLE) return;
+      last = now;
+      const box = layer.getBoundingClientRect();
+      const col = utils.clamp(
+        Math.floor(((e.clientX - box.left) / box.width) * GRID),
+        0,
+        GRID - 1
+      );
+      const row = utils.clamp(
+        Math.floor(((e.clientY - box.top) / box.height) * GRID),
+        0,
+        GRID - 1
+      );
+      animate(cells, {
+        borderColor: [VOLT, HAIRLINE],
+        duration: 700,
+        delay: stagger(28, { grid: [GRID, GRID], from: row * GRID + col }),
+        ease: "out(2)",
+      });
+    };
+    section.addEventListener("pointermove", ripple);
+
+    // Name letters spring up, then the meta column follows
+    const { chars } = splitText(".hero-name", { chars: true });
+    createTimeline({ defaults: { ease: "out(4)" } })
+      .add(chars, {
+        y: ["110%", "0%"],
+        opacity: [0, 1],
+        duration: 900,
+        delay: stagger(28),
+      })
+      .add(
+        ".hero-meta > *",
+        { y: [24, 0], opacity: [0, 1], duration: 700, delay: stagger(90) },
+        "-=500"
+      )
+      .add(
+        ".callout",
+        { opacity: [0, 1], duration: 600, delay: stagger(150) },
+        "-=400"
+      );
+
+    // Nested squares badge — each ring spins at its own speed and direction
+    animate(".badge-ring:nth-child(odd)", {
+      rotate: 360,
+      duration: stagger(6000, { start: 7000 }),
+      loop: true,
+      ease: "linear",
+    });
+    animate(".badge-ring:nth-child(even)", {
+      rotate: -360,
+      duration: stagger(6000, { start: 10000 }),
+      loop: true,
+      ease: "linear",
+    });
+
+    // Scroll cue draws down, over and over
+    animate(svg.createDrawable(".cue"), {
+      draw: ["0 0", "0 1", "1 1"],
+      duration: 1800,
+      loop: true,
+      ease: "inOut(2)",
+    });
+
+    return () => section.removeEventListener("pointermove", ripple);
+  });
+
+  const socials = [
+    { href: profile.github, label: "GitHub", Icon: Github },
+    { href: profile.linkedin, label: "LinkedIn", Icon: Linkedin },
+    { href: `mailto:${profile.email}`, label: "Email", Icon: Mail },
+  ];
 
   return (
-    <section className="relative min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center overflow-hidden">
-      {/* Subtle geometric background */}
-      <div className="absolute inset-0 opacity-5 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 border border-white/20 rotate-45" />
-        <div className="absolute bottom-1/4 right-1/4 w-32 sm:w-48 md:w-64 h-32 sm:h-48 md:h-64 border border-white/20 rotate-12" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] sm:w-[400px] md:w-[600px] h-[280px] sm:h-[400px] md:h-[600px] border border-white/10 rounded-full" />
-      </div>
-
-      {/* Main content */}
-      <div className="relative z-10 text-center px-4 sm:px-6 max-w-5xl">
-        {/* Name */}
-        <h1
-          ref={nameRef}
-          className="font-bebas text-[clamp(36px,11vw,60px)] sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-white tracking-wider mb-4 whitespace-nowrap"
-        >
-          {renderName()}
-        </h1>
-
-        {/* Title */}
-        <div ref={subtitleRef} className="mb-6">
-          <p className="text-lg md:text-xl text-white/80 font-inter tracking-wide">
-            {personalInfo.title}
-          </p>
-          <p className="text-sm md:text-base text-[#C41E3A] font-medium mt-1">
-            {personalInfo.subtitle}
-          </p>
-        </div>
-
-        {/* Tagline */}
-        <p
-          ref={taglineRef}
-          className="text-white/60 font-inter text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-10"
-        >
-          {personalInfo.tagline}
-        </p>
-
-        {/* Social Icons */}
-        <div ref={iconsRef} className="flex items-center justify-center gap-6">
-          <a
-            href={personalInfo.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white/60 hover:text-[#C41E3A] transition-colors duration-300"
-            aria-label="GitHub"
-          >
-            <Github size={24} />
-          </a>
-          <a
-            href={personalInfo.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white/60 hover:text-[#C41E3A] transition-colors duration-300"
-            aria-label="LinkedIn"
-          >
-            <Linkedin size={24} />
-          </a>
-          <a
-            href={`mailto:${personalInfo.email}`}
-            className="text-white/60 hover:text-[#C41E3A] transition-colors duration-300"
-            aria-label="Email"
-          >
-            <Mail size={24} />
-          </a>
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
+    <section
+      ref={root}
+      className="relative min-h-svh bg-background overflow-hidden flex flex-col"
+      aria-labelledby="hero-name"
+    >
+      {/* Animated cell layer: a square that always covers the viewport */}
       <div
-        ref={scrollRef}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40"
+        className="cells absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 grid w-[max(100vw,100svh)] h-[max(100vw,100svh)] pointer-events-none"
+        style={{ gridTemplateColumns: `repeat(${GRID}, 1fr)` }}
+        aria-hidden="true"
       >
-        <span className="text-xs font-inter tracking-widest uppercase">
+        {CELLS.map((i) => (
+          <span key={i} className="cell border border-border/70" />
+        ))}
+      </div>
+
+      {/* Dimension callouts (drafting-sheet grammar) */}
+      <div
+        className="callout absolute top-24 left-6 right-6 hidden md:flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.25em] text-volt"
+        aria-hidden="true"
+      >
+        <span className="w-px h-3 bg-volt" />
+        <span className="flex-1 h-px bg-volt/60" />
+        <span className="px-2">
+          {callouts[0].value} {callouts[0].label}
+        </span>
+        <span className="flex-1 h-px bg-volt/60" />
+        <span className="w-px h-3 bg-volt" />
+      </div>
+      <div
+        className="callout absolute right-6 top-32 bottom-32 hidden lg:flex flex-col items-center gap-3 font-mono text-[11px] uppercase tracking-[0.25em] text-volt"
+        aria-hidden="true"
+      >
+        <span className="h-px w-3 bg-volt" />
+        <span className="flex-1 w-px bg-volt/60" />
+        <span className="py-2 [writing-mode:vertical-rl]">
+          {callouts[1].value} {callouts[1].label}
+        </span>
+        <span className="flex-1 w-px bg-volt/60" />
+        <span className="h-px w-3 bg-volt" />
+      </div>
+
+      {/* Rotating squares badge */}
+      <div
+        className="absolute top-28 md:top-36 right-6 lg:right-16 w-24 h-24 md:w-32 md:h-32 grid place-items-center"
+        aria-hidden="true"
+      >
+        {[1, 0.78, 0.56, 0.34].map((s, i) => (
+          <span
+            key={s}
+            className={`badge-ring absolute border ${i % 2 ? "border-volt" : "border-primary"}`}
+            style={{ width: `${s * 100}%`, height: `${s * 100}%` }}
+          />
+        ))}
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/70 bg-background px-1">
+          since 2020
+        </span>
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 flex-1 flex flex-col justify-end w-full max-w-7xl mx-auto px-4 sm:px-6 pt-40 pb-20 md:pb-24">
+        <div className="grid lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] gap-10 lg:gap-12 items-end">
+          <h1
+            id="hero-name"
+            className="hero-name font-bebas text-[clamp(3.5rem,13vw,7.5rem)] lg:text-[clamp(6rem,9vw,11rem)] lg:whitespace-nowrap leading-[0.86] tracking-wide text-foreground overflow-hidden"
+          >
+            <BrandName name={profile.name} />
+          </h1>
+
+          <div className="hero-meta flex flex-col gap-5 lg:pb-3">
+            <p className="font-bebas text-3xl md:text-4xl tracking-wide text-foreground">
+              {profile.title}
+            </p>
+            <p className="font-mono text-sm uppercase tracking-[0.2em] text-primary">
+              {profile.subtitle}
+            </p>
+            <p className="text-foreground/70 text-base md:text-lg leading-relaxed max-w-md">
+              {profile.tagline}
+            </p>
+            <div className="flex flex-wrap items-center gap-4 pt-2">
+              <a
+                href={`mailto:${profile.email}`}
+                className="inline-flex items-center px-6 py-3 bg-volt text-volt-foreground font-bebas text-xl tracking-[0.15em] shadow-[6px_6px_0_0_hsl(var(--primary))] hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[3px_3px_0_0_hsl(var(--primary))] transition-[transform,box-shadow] duration-150"
+              >
+                Hire me
+              </a>
+              <ul className="flex items-center gap-4">
+                {socials.map(({ href, label, Icon }) => (
+                  <li key={label}>
+                    <a
+                      href={href}
+                      target={href.startsWith("mailto:") ? undefined : "_blank"}
+                      rel="noopener noreferrer"
+                      className="block p-2 border border-border text-foreground/60 hover:text-volt hover:border-volt transition-colors duration-200"
+                      aria-label={label}
+                    >
+                      <Icon size={18} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Scroll cue */}
+      <a
+        href="#story"
+        className="absolute bottom-6 left-4 sm:left-6 flex items-center gap-3 text-foreground/50 hover:text-volt transition-colors"
+        aria-label="Scroll to the story"
+      >
+        <svg width="2" height="48" viewBox="0 0 2 48" aria-hidden="true">
+          <line
+            className="cue"
+            x1="1"
+            y1="0"
+            x2="1"
+            y2="48"
+            stroke="currentColor"
+            strokeWidth="2"
+          />
+        </svg>
+        <span className="font-mono text-[11px] uppercase tracking-[0.25em]">
           Scroll
         </span>
-        <ChevronDown size={20} />
-      </div>
-
-      {/* Red accent line */}
-      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#C41E3A] to-transparent opacity-60" />
+        <ArrowDown size={14} aria-hidden />
+      </a>
     </section>
   );
 };

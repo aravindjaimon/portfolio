@@ -1,0 +1,13 @@
+items:
+  - phase: THE BEGINNING
+    date: October 2020
+    description: Joined as the FIRST engineer at RaftLabs. Started with nothing but vision and code.
+  - phase: THE BUILDING
+    date: 2020-2022
+    description: Established technical culture, coding standards, architectural roadmap. Every system, every pattern, every decision — built from scratch.
+  - phase: THE SCALING
+    date: 2022-2024
+    description: 1 → 30+ engineers. Mentored 10+ developers. Created the engineering DNA that powers the company today.
+  - phase: THE IMPACT
+    date: 2024-Present
+    description: 1M+ users served. 10,000 events/minute processed. 97% performance improvements delivered. 50+ production systems shipped.

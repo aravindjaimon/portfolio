@@ -42,3 +42,8 @@ next-env.d.ts
 
 # velite
 .velite
+
+# design review captures and browser tooling output
+.impeccable/review/
+.impeccable/mocks/
+.playwright-mcp/

@@ -1,127 +1,180 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
-import { personalInfo } from "@/lib/data";
 import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useScrollPosition } from "@/hooks";
+import { animate, createTimeline, onScroll, svg } from "animejs";
+import { useAnimeScope, useScrollPosition } from "@/hooks";
+import { siteConfig } from "@/lib/config";
+import type { PersonalInfo } from "@/lib/data";
 
-/** Pixels scrolled before header style changes (adds background) */
+/** Pixels scrolled before the header gains its ground */
 const SCROLL_THRESHOLD = 50;
 
-const navLinks: { label: string; href: string; isExternal?: boolean }[] = [
-  { label: "Story", href: "#story" },
-  { label: "Skills", href: "#skills" },
-  { label: "Work", href: "#work" },
-  { label: "Experience", href: "#experience" },
-  { label: "Blog", href: "/blog", isExternal: true },
-  { label: "Contact", href: "#contact" },
+const navLinks = [
+  { label: "Story", href: "/#story" },
+  { label: "Skills", href: "/#skills" },
+  { label: "Work", href: "/#work" },
+  { label: "Experience", href: "/#experience" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/#contact" },
 ];
 
-const Header = () => {
+/* Same-box polygons for the morphing mark: A → J → square → A */
+const MARK = {
+  a: "M4 30 L13 2 L19 2 L28 30 L22 30 L16 10 L10 30 Z",
+  j: "M10 2 L26 2 L26 22 L20 30 L8 30 L4 24 L9 20 L13 24 L18 24 L20 22 L20 8 L10 8 Z",
+  square: "M4 4 L28 4 L28 28 L4 28 Z",
+};
+
+interface HeaderProps {
+  profile: PersonalInfo;
+}
+
+const Header = ({ profile }: HeaderProps) => {
   const isScrolled = useScrollPosition(SCROLL_THRESHOLD);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const root = useRef<HTMLElement>(null);
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-    setMobileMenuOpen(false);
-  };
+  useAnimeScope(root, ({ matches }) => {
+    if (matches.reduceMotion) return;
+
+    // Scroll progress hairline across the top of the viewport
+    animate(".progress", {
+      scaleX: [0, 1],
+      ease: "linear",
+      autoplay: onScroll({
+        target: document.documentElement,
+        enter: "top top",
+        leave: "bottom bottom",
+        sync: true,
+      }),
+    });
+
+    // The mark morphs A → J → square on a loop
+    createTimeline({
+      loop: true,
+      defaults: { ease: "inOut(3)", duration: 800 },
+    })
+      .add(".mark-path", { d: svg.morphTo(".mark-j") }, 2200)
+      .add(".mark-path", { d: svg.morphTo(".mark-square") }, "+=2200")
+      .add(".mark-path", { d: svg.morphTo(".mark-a") }, "+=2200");
+  });
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-background/95 backdrop-blur-sm border-b border-border/50"
-          : "bg-transparent"
+      ref={root}
+      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
+        isScrolled || mobileMenuOpen
+          ? "bg-background/90 backdrop-blur-sm border-b border-border"
+          : "bg-transparent border-b border-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <a
-            href="#"
-            className="font-bebas text-xl md:text-2xl text-white tracking-wider"
-          >
-            <span className="text-primary">A</span>J
-          </a>
+      <div
+        className="progress absolute top-0 left-0 h-[2px] w-full bg-volt origin-left scale-x-0 motion-reduce:hidden"
+        aria-hidden
+      />
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) =>
-              link.isExternal ? (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="text-sm font-mono text-white/60 hover:text-primary transition-colors duration-300 tracking-wide"
-                >
-                  {link.label}
-                </Link>
-              ) : (
-                <button
-                  key={link.label}
-                  onClick={() => scrollToSection(link.href)}
-                  className="text-sm font-mono text-white/60 hover:text-primary transition-colors duration-300 tracking-wide"
-                >
-                  {link.label}
-                </button>
-              )
-            )}
-            <Button
-              asChild
-              variant="outline"
-              className="border-primary text-primary hover:bg-primary hover:text-white font-mono text-xs tracking-wider transition-all duration-300"
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-16 md:h-20">
+          {/* Mark + wordmark */}
+          <Link
+            href="/"
+            className="flex items-center gap-3 text-foreground"
+            aria-label="Aravind Jaimon — home"
+          >
+            <svg
+              viewBox="0 0 32 32"
+              className="w-7 h-7 text-primary"
+              aria-hidden="true"
             >
-              <a href={`mailto:${personalInfo.email}`}>HIRE ME</a>
-            </Button>
+              <defs>
+                <path className="mark-a" d={MARK.a} />
+                <path className="mark-j" d={MARK.j} />
+                <path className="mark-square" d={MARK.square} />
+              </defs>
+              <path className="mark-path" d={MARK.a} fill="currentColor" />
+            </svg>
+            <span className="font-bebas text-xl md:text-2xl tracking-wider hidden sm:inline">
+              ARAVIND JAIMON
+            </span>
+          </Link>
+
+          {/* Drafting-sheet title block (pairs with the footer's) */}
+          <dl className="hidden xl:flex items-stretch border border-border divide-x divide-border font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/60">
+            <div className="px-3 py-1.5">
+              <dt className="sr-only">Role</dt>
+              <dd>{profile.title}</dd>
+            </div>
+            <div className="px-3 py-1.5">
+              <dt className="sr-only">Location</dt>
+              <dd>{profile.location}</dd>
+            </div>
+            <div className="px-3 py-1.5 text-volt">
+              <dt className="sr-only">Revision</dt>
+              <dd>Rev {new Date().getFullYear()}</dd>
+            </div>
+          </dl>
+
+          {/* Desktop navigation */}
+          <nav
+            className="hidden md:flex items-center gap-6"
+            aria-label="Primary"
+          >
+            {navLinks.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="nav-link relative font-bebas text-lg tracking-[0.15em] text-foreground/70 hover:text-foreground transition-colors duration-200"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <a
+              href={`mailto:${siteConfig.email}`}
+              className="ml-2 px-4 py-1.5 bg-volt text-volt-foreground font-bebas text-lg tracking-[0.15em] hover:bg-primary hover:text-primary-foreground transition-colors duration-200"
+            >
+              Hire me
+            </a>
           </nav>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile menu button */}
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-white/80 hover:text-primary transition-colors duration-300"
-            aria-label="Toggle menu"
+            onClick={() => setMobileMenuOpen((open) => !open)}
+            className="md:hidden text-foreground/80 hover:text-primary transition-colors duration-200"
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-background border-t border-border">
-          <nav className="flex flex-col px-4 sm:px-6 py-4">
-            {navLinks.map((link) =>
-              link.isExternal ? (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-left py-3 text-sm font-mono text-white/60 hover:text-primary transition-colors duration-300 tracking-wide border-b border-border/50 last:border-b-0"
-                >
-                  {link.label}
-                </Link>
-              ) : (
-                <button
-                  key={link.label}
-                  onClick={() => scrollToSection(link.href)}
-                  className="text-left py-3 text-sm font-mono text-white/60 hover:text-primary transition-colors duration-300 tracking-wide border-b border-border/50 last:border-b-0"
-                >
-                  {link.label}
-                </button>
-              )
-            )}
-            <Button
-              asChild
-              className="w-full bg-primary hover:bg-primary/80 text-white font-mono text-xs tracking-wider transition-all duration-300 mt-4"
+        <nav
+          className="md:hidden bg-background border-t border-border"
+          aria-label="Primary"
+        >
+          <div className="flex flex-col px-4 sm:px-6 py-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-3 font-bebas text-2xl tracking-[0.1em] text-foreground/80 hover:text-primary transition-colors duration-200 border-b border-border last:border-b-0"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <a
+              href={`mailto:${siteConfig.email}`}
+              className="mt-4 w-full py-3 text-center bg-volt text-volt-foreground font-bebas text-2xl tracking-[0.1em]"
             >
-              <a href={`mailto:${personalInfo.email}`}>HIRE ME</a>
-            </Button>
-          </nav>
-        </div>
+              Hire me
+            </a>
+          </div>
+        </nav>
       )}
     </header>
   );

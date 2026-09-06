@@ -1,120 +1,116 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { experience } from "@/lib/data";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Briefcase } from "lucide-react";
+import { useRef } from "react";
+import { createTimeline, onScroll, splitText, stagger } from "animejs";
+import { useAnimeScope } from "@/hooks";
+import type { Experience as Role } from "@/lib/data";
 
-gsap.registerPlugin(ScrollTrigger);
+interface ExperienceProps {
+  experience: Role[];
+}
 
-const Experience = () => {
-  const titleRef = useRef<HTMLDivElement>(null);
-  const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
+/** Timeline ms per role; scroll progress maps onto the whole timeline */
+const STEP = 600;
 
-  useEffect(() => {
-    gsap.fromTo(
-      titleRef.current,
-      { opacity: 0, y: 50 },
+const Experience = ({ experience }: ExperienceProps) => {
+  const root = useRef<HTMLElement>(null);
+
+  useAnimeScope(root, ({ matches }) => {
+    if (matches.reduceMotion) return;
+    const roles = [...root.current!.querySelectorAll<HTMLElement>(".role")];
+
+    const tl = createTimeline({
+      defaults: { ease: "out(3)" },
+      autoplay: onScroll({
+        target: ".rail",
+        enter: "bottom-=20% top",
+        leave: "top+=20% bottom",
+        sync: true,
+      }),
+    });
+
+    // Playhead sweeps the rail across the full scroll span
+    tl.add(
+      ".playhead",
       {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: titleRef.current,
-          start: "top 80%",
-          toggleActions: "play none none reverse",
-        },
-      }
+        [matches.mobile ? "scaleY" : "scaleX"]: [0, 1],
+        ease: "linear",
+        duration: roles.length * STEP,
+      },
+      0
     );
 
-    itemsRef.current.forEach((item, index) => {
-      gsap.fromTo(
-        item,
-        { opacity: 0, x: -30 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.6,
-          delay: index * 0.1,
-          scrollTrigger: {
-            trigger: item,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          },
-        }
+    roles.forEach((role, i) => {
+      const at = i * STEP;
+      tl.add(role, { opacity: [0.15, 1], y: [24, 0], duration: 400 }, at);
+      tl.add(
+        splitText(role.querySelector(".role-highlights")!, { words: true })
+          .words,
+        { opacity: [0, 1], y: [8, 0], duration: 300, delay: stagger(14) },
+        at + 150
       );
     });
-  }, []);
+  });
 
   return (
-    <section className="bg-[#1A1A1A] py-24 md:py-32 px-6">
-      <div className="max-w-4xl mx-auto">
-        {/* Section Title */}
-        <div ref={titleRef} className="text-center mb-16">
-          <h2 className="font-bebas text-4xl md:text-5xl lg:text-6xl text-white tracking-wider mb-4">
-            CAREER <span className="text-[#C41E3A]">TIMELINE</span>
-          </h2>
-          <p className="text-white/50 font-inter text-base md:text-lg max-w-2xl mx-auto">
-            From intern to tech lead. A progression built on impact.
-          </p>
-        </div>
+    <section
+      ref={root}
+      id="experience"
+      className="bg-grid py-20 md:py-24 px-4 sm:px-6 scroll-mt-20"
+      aria-labelledby="experience-title"
+    >
+      <div className="max-w-7xl mx-auto">
+        <h2
+          id="experience-title"
+          className="font-bebas text-6xl md:text-8xl leading-[0.9] tracking-wide text-foreground mb-12 max-w-3xl"
+        >
+          Five roles, <span className="text-primary">one</span> trajectory
+        </h2>
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-6 md:left-8 top-0 bottom-0 w-px bg-white/10" />
+        <div className="rail relative">
+          {/* The rail: vertical on mobile, horizontal on desktop */}
+          <div
+            className="absolute left-0 top-0 h-full w-px md:h-px md:w-full bg-border"
+            aria-hidden
+          />
+          <div
+            className="playhead absolute left-0 top-0 h-full w-[3px] md:h-[3px] md:w-full bg-volt origin-top md:origin-left"
+            aria-hidden
+          />
 
-          {/* Experience Items */}
-          <div className="space-y-8">
-            {experience.map((exp, index) => (
-              <div
-                key={index}
-                ref={(el) => {
-                  itemsRef.current[index] = el;
-                }}
-                className="relative pl-16 md:pl-20"
+          <ol className="grid md:grid-cols-5 gap-y-12 md:gap-x-8 pl-8 md:pl-0 pt-0 md:pt-10">
+            {experience.map((role) => (
+              <li
+                key={`${role.company}-${role.period}`}
+                className="role relative"
               >
-                {/* Dot */}
-                <div className="absolute left-4 md:left-6 w-4 h-4 bg-[#0A0A0A] border-2 border-[#C41E3A] rounded-full top-1">
-                  {index === 0 && (
-                    <div className="absolute inset-0 bg-[#C41E3A] rounded-full animate-pulse" />
-                  )}
-                </div>
-
-                {/* Content Card */}
-                <div className="bg-[#0A0A0A] border border-[#2D2D2D] p-6 hover:border-[#C41E3A]/30 transition-colors duration-300">
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                    <div>
-                      <h3 className="font-bebas text-xl md:text-2xl text-white tracking-wide">
-                        {exp.role}
-                      </h3>
-                      <div className="flex items-center gap-2 mt-1">
-                        <Briefcase size={14} className="text-[#C41E3A]" />
-                        <span className="text-white/60 font-inter text-sm">
-                          {exp.company}
-                        </span>
-                      </div>
-                    </div>
-                    <span className="text-xs font-mono text-[#C41E3A] mt-2 md:mt-0">
-                      {exp.period}
-                    </span>
-                  </div>
-
-                  <ul className="space-y-2">
-                    {exp.highlights.map((highlight, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="w-1 h-1 bg-white/30 rounded-full mt-2" />
-                        <span className="text-white/50 font-inter text-sm">
-                          {highlight}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+                <span
+                  className="absolute -left-8 md:left-0 top-1 md:-top-10 w-3 h-3 -translate-x-[5px] md:translate-x-0 md:-translate-y-[5px] bg-primary"
+                  aria-hidden
+                />
+                <p className="font-mono text-xs uppercase tracking-[0.2em] text-volt mb-3 tabular-nums">
+                  {role.period}
+                </p>
+                <h3 className="font-bebas text-3xl md:text-[1.9rem] lg:text-4xl leading-none tracking-wide text-foreground mb-1">
+                  {role.role}
+                </h3>
+                <p className="font-mono text-sm text-foreground/60 mb-5">
+                  {role.company}
+                </p>
+                <ul className="role-highlights space-y-2 text-foreground/75 leading-relaxed">
+                  {role.highlights.map((h) => (
+                    <li key={h} className="flex gap-3">
+                      <span
+                        className="mt-[0.7em] w-3 h-px bg-foreground/40 shrink-0"
+                        aria-hidden
+                      />
+                      <span>{h}</span>
+                    </li>
+                  ))}
+                </ul>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </div>
     </section>

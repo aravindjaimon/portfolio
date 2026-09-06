@@ -1,0 +1,53 @@
+groups:
+  - key: languages
+    label: Languages
+    items:
+      - TypeScript
+      - JavaScript
+      - Rust
+      - SQL
+      - HTML/CSS
+  - key: frontend
+    label: Frontend
+    items:
+      - React
+      - Next.js
+      - Redux
+      - Electron.js
+      - Tauri
+      - Three.js
+      - Tailwind CSS
+      - Shadcn/ui
+  - key: backend
+    label: Backend
+    items:
+      - Node.js
+      - NestJS
+      - Serverless Framework
+      - GraphQL (Hasura)
+      - REST
+      - gRPC
+  - key: ai
+    label: AI & LLMs
+    items:
+      - OpenAI API
+      - Google Gemini
+      - RAG Implementation
+      - Vector Databases
+      - Prompt Engineering
+  - key: cloud
+    label: Cloud & DevOps
+    items:
+      - AWS (Lambda, CDK, API Gateway)
+      - Docker
+      - PostgreSQL
+      - Redis
+      - Vercel
+      - CI/CD Pipelines
+  - key: systemDesign
+    label: System Design
+    items:
+      - Microservices Architecture
+      - Event-Driven Architecture
+      - Caching Strategies
+      - Domain-Driven Design (DDD)

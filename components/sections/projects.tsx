@@ -1,319 +1,245 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import Link from "next/link";
-import { projects, Project } from "@/lib/data";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+import { animate, onScroll, splitText, stagger, svg } from "animejs";
+import { useAnimeScope } from "@/hooks";
+import { CountUp } from "@/components/motion/count-up";
+import { ProjectGlyph } from "./project-glyphs";
+import type { Project } from "@/lib/data";
 
-gsap.registerPlugin(ScrollTrigger);
-
-/** Animation configuration for project cards */
-const CARD_ANIMATION = {
-  /** Initial Y offset in pixels for fade-in effect */
-  INITIAL_Y_OFFSET: 50,
-  /** Animation duration in seconds */
-  DURATION: 0.7,
-  /** Delay multiplier between staggered card animations */
-  STAGGER_DELAY: 0.15,
-  /** Viewport trigger point (card starts animating when 85% from top) */
-  TRIGGER_START: "top 85%",
-} as const;
-
-/** Section title animation config */
-const TITLE_ANIMATION = {
-  INITIAL_Y_OFFSET: 50,
-  DURATION: 0.8,
-  TRIGGER_START: "top 80%",
-} as const;
-
-interface ProjectCardProps {
-  project: Project;
-  index: number;
-  onSelect: (project: Project) => void;
+interface ProjectsProps {
+  projects: Project[];
 }
 
-const ProjectCard = ({ project, index, onSelect }: ProjectCardProps) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const linkRef = useRef<HTMLAnchorElement>(null);
-  const hasExtendedContent =
-    project.overview || project.problemDetails || project.technicalApproach;
-  const animationRef = hasExtendedContent ? linkRef : cardRef;
+const VISIBLE_STACK = 5;
 
-  useEffect(() => {
-    gsap.fromTo(
-      animationRef.current,
-      { opacity: 0, y: CARD_ANIMATION.INITIAL_Y_OFFSET },
-      {
-        opacity: 1,
-        y: 0,
-        duration: CARD_ANIMATION.DURATION,
-        delay: index * CARD_ANIMATION.STAGGER_DELAY,
-        scrollTrigger: {
-          trigger: animationRef.current,
-          start: CARD_ANIMATION.TRIGGER_START,
-          toggleActions: "play none none reverse",
-        },
-      }
-    );
-  }, [index, animationRef]);
+const Projects = ({ projects }: ProjectsProps) => {
+  const root = useRef<HTMLElement>(null);
 
-  const CardContent = (
-    <>
-      {/* Industry tag */}
-      <div className="absolute top-4 right-4">
-        <span className="text-xs font-mono text-primary bg-primary/10 px-2 py-1">
-          {project.industry}
-        </span>
-      </div>
+  useAnimeScope(root, ({ matches }) => {
+    if (matches.reduceMotion) return;
+    const cleanups: Array<() => void> = [];
 
-      {/* Content */}
-      <div className="mb-6 pr-20">
-        <h3 className="font-bebas text-2xl md:text-3xl text-white tracking-wide mb-1">
-          {project.title}
-        </h3>
-        <p className="text-white/50 font-inter text-sm">{project.subtitle}</p>
-      </div>
+    for (const card of root.current!.querySelectorAll<HTMLElement>(
+      ".project-card"
+    )) {
+      const path = card.querySelector<SVGPathElement>(".glyph-path")!;
+      const alt = card.querySelector<SVGPathElement>(".glyph-alt")!;
+      const base = card.querySelector<SVGPathElement>(".glyph-base")!;
 
-      {/* Challenge preview */}
-      <p className="text-white/40 font-inter text-sm leading-relaxed mb-6 line-clamp-2">
-        {project.challenge}
-      </p>
+      // Entrance: glyph strokes itself in, title letters rise
+      const enter = () => onScroll({ target: card, enter: "bottom-=10% top" });
+      animate(svg.createDrawable(path), {
+        draw: ["0 0", "0 1"],
+        duration: 1400,
+        ease: "inOut(3)",
+        autoplay: enter(),
+      });
+      animate(
+        splitText(card.querySelector(".project-title")!, { chars: true }).chars,
+        {
+          y: ["100%", "0%"],
+          opacity: [0, 1],
+          duration: 600,
+          delay: stagger(18),
+          ease: "out(4)",
+          autoplay: enter(),
+        }
+      );
 
-      {/* Metrics preview */}
-      <div className="grid grid-cols-2 gap-3 mb-6">
-        {project.metrics.slice(0, 2).map((metric, idx) => (
-          <div key={idx} className="text-center p-3 bg-background">
-            <div className="font-bebas text-xl text-primary">
-              {metric.value}
-            </div>
-            <div className="text-xs font-mono text-white/40">
-              {metric.label}
-            </div>
-          </div>
-        ))}
-      </div>
+      // Hover: glyph morphs into its counter-shape and back
+      const morph = (to: SVGPathElement) => () =>
+        animate(path, { d: svg.morphTo(to), duration: 600, ease: "inOut(3)" });
+      const toAlt = morph(alt);
+      const toBase = morph(base);
+      card.addEventListener("mouseenter", toAlt);
+      card.addEventListener("mouseleave", toBase);
+      card.addEventListener("focusin", toAlt);
+      card.addEventListener("focusout", toBase);
+      cleanups.push(() => {
+        card.removeEventListener("mouseenter", toAlt);
+        card.removeEventListener("mouseleave", toBase);
+        card.removeEventListener("focusin", toAlt);
+        card.removeEventListener("focusout", toBase);
+      });
+    }
 
-      {/* Stack preview */}
-      <div className="flex flex-wrap gap-1 mb-4">
-        {project.stack.slice(0, 4).map((tech, idx) => (
-          <span
-            key={idx}
-            className="text-[10px] font-mono text-white/40 bg-background px-2 py-1"
-          >
-            {tech}
-          </span>
-        ))}
-        {project.stack.length > 4 && (
-          <span className="text-[10px] font-mono text-white/30 bg-background px-2 py-1">
-            +{project.stack.length - 4}
-          </span>
-        )}
-      </div>
-
-      {/* View more indicator */}
-      <div className="flex items-center gap-2 text-white/30 group-hover:text-primary transition-colors duration-300">
-        <span className="text-xs font-mono tracking-wide">VIEW CASE STUDY</span>
-        <ArrowUpRight
-          size={14}
-          className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300"
-        />
-      </div>
-    </>
-  );
-
-  // Link to case study page if extended content exists, otherwise use modal
-  if (hasExtendedContent) {
-    return (
-      <Link
-        href={`/projects/${project.slug}`}
-        ref={linkRef}
-        className="group relative bg-secondary border border-border p-4 sm:p-6 cursor-pointer hover:border-primary/50 transition-all duration-300 block"
-      >
-        {CardContent}
-      </Link>
-    );
-  }
+    return () => cleanups.forEach((fn) => fn());
+  });
 
   return (
-    <div
-      ref={cardRef}
-      onClick={() => onSelect(project)}
-      className="group relative bg-secondary border border-border p-4 sm:p-6 cursor-pointer hover:border-primary/50 transition-all duration-300"
+    <section
+      ref={root}
+      id="work"
+      className="bg-grid py-20 md:py-24 px-4 sm:px-6 scroll-mt-20"
+      aria-labelledby="work-title"
     >
-      {CardContent}
-    </div>
-  );
-};
-
-interface ProjectModalProps {
-  project: Project | null;
-  open: boolean;
-  onClose: () => void;
-}
-
-const ProjectModal = ({ project, open, onClose }: ProjectModalProps) => {
-  if (!project) return null;
-
-  return (
-    <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="bg-secondary border-border text-white max-w-[95vw] sm:max-w-xl md:max-w-3xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <div className="flex items-start justify-between">
-            <div>
-              <span className="text-xs font-mono text-primary bg-primary/10 px-2 py-1 mb-3 inline-block">
-                {project.industry}
-              </span>
-              <DialogTitle className="font-bebas text-3xl md:text-4xl text-white tracking-wide">
-                {project.title}
-              </DialogTitle>
-              <DialogDescription className="text-white/50 font-inter text-sm mt-1">
-                {project.subtitle} • {project.role}
-              </DialogDescription>
-            </div>
-          </div>
-        </DialogHeader>
-
-        <div className="space-y-8 mt-6">
-          {/* Challenge */}
-          <div>
-            <h4 className="font-bebas text-lg text-white/80 tracking-wide mb-3">
-              THE CHALLENGE
-            </h4>
-            <p className="text-white/60 font-inter text-sm leading-relaxed">
-              {project.challenge}
-            </p>
-          </div>
-
-          {/* Solution */}
-          <div>
-            <h4 className="font-bebas text-lg text-white/80 tracking-wide mb-3">
-              THE SOLUTION
-            </h4>
-            <ul className="space-y-2">
-              {project.solution.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2" />
-                  <span className="text-white/60 font-inter text-sm">
-                    {item}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Metrics */}
-          <div>
-            <h4 className="font-bebas text-lg text-white/80 tracking-wide mb-3">
-              IMPACT
-            </h4>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {project.metrics.map((metric, idx) => (
-                <div
-                  key={idx}
-                  className="text-center p-4 bg-background border border-border"
-                >
-                  <div className="font-bebas text-2xl text-primary">
-                    {metric.value}
-                  </div>
-                  <div className="text-xs font-mono text-white/40 mt-1">
-                    {metric.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Tech Stack */}
-          <div>
-            <h4 className="font-bebas text-lg text-white/80 tracking-wide mb-3">
-              TECH STACK
-            </h4>
-            <div className="flex flex-wrap gap-2">
-              {project.stack.map((tech, idx) => (
-                <span
-                  key={idx}
-                  className="text-xs font-mono text-white/60 bg-background px-3 py-1.5 border border-border"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </DialogContent>
-    </Dialog>
-  );
-};
-
-const Projects = () => {
-  const titleRef = useRef<HTMLDivElement>(null);
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
-
-  useEffect(() => {
-    gsap.fromTo(
-      titleRef.current,
-      { opacity: 0, y: TITLE_ANIMATION.INITIAL_Y_OFFSET },
-      {
-        opacity: 1,
-        y: 0,
-        duration: TITLE_ANIMATION.DURATION,
-        scrollTrigger: {
-          trigger: titleRef.current,
-          start: TITLE_ANIMATION.TRIGGER_START,
-          toggleActions: "play none none reverse",
-        },
-      }
-    );
-  }, []);
-
-  const handleSelectProject = (project: Project) => {
-    setSelectedProject(project);
-    setModalOpen(true);
-  };
-
-  return (
-    <section className="bg-background py-24 md:py-32 px-4 sm:px-6">
-      <div className="max-w-6xl mx-auto">
-        {/* Section Title */}
-        <div ref={titleRef} className="text-center mb-16">
-          <h2 className="font-bebas text-4xl md:text-5xl lg:text-6xl text-white tracking-wider mb-4">
-            SELECTED <span className="text-primary">WORK</span>
+      <div className="max-w-7xl mx-auto">
+        <div className="max-w-3xl mb-16">
+          <h2
+            id="work-title"
+            className="font-bebas text-6xl md:text-8xl leading-[0.9] tracking-wide text-foreground mb-6"
+          >
+            Systems <span className="text-primary">shipped</span>
           </h2>
-          <p className="text-white/50 font-inter text-base md:text-lg max-w-2xl mx-auto">
-            Systems built for millions. From high-scale affiliate platforms to
-            AI assistants and cross-platform applications.
+          <p className="text-foreground/70 text-lg md:text-xl leading-relaxed">
+            Six production systems across six industries. Each one a case study
+            in trade-offs — read the decisions, not just the stack.
           </p>
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              index={index}
-              onSelect={handleSelectProject}
-            />
-          ))}
-        </div>
-      </div>
+        {/* Ledger topology: one dominant case, two wide, three compact — not a uniform card grid */}
+        <ul className="grid md:grid-cols-6 gap-px bg-border border border-border">
+          {projects.map((project, i) => {
+            const tier = i === 0 ? "lead" : i < 3 ? "wide" : "compact";
+            const span =
+              tier === "lead"
+                ? "md:col-span-6"
+                : tier === "wide"
+                  ? "md:col-span-3"
+                  : "md:col-span-2";
+            const metrics =
+              tier === "compact"
+                ? project.metrics.slice(0, 2)
+                : project.metrics;
+            const visibleStack =
+              tier === "lead"
+                ? project.stack.length
+                : tier === "wide"
+                  ? VISIBLE_STACK
+                  : 3;
+            return (
+              <li key={project.slug} className={`bg-background ${span}`}>
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className={`project-card group relative flex h-full outline-none focus-visible:ring-2 focus-visible:ring-volt focus-visible:ring-inset ${
+                    tier === "lead"
+                      ? "flex-col lg:grid lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-10 p-6 sm:p-8 lg:p-12"
+                      : tier === "wide"
+                        ? "flex-col p-6 sm:p-8 lg:p-10"
+                        : "flex-col p-5 sm:p-6"
+                  }`}
+                >
+                  <div
+                    className={
+                      tier === "lead"
+                        ? "flex flex-col justify-between gap-8"
+                        : "contents"
+                    }
+                  >
+                    <div
+                      className={`flex items-start justify-between gap-6 ${
+                        tier === "compact" ? "mb-5" : "mb-8"
+                      }`}
+                    >
+                      <ProjectGlyph
+                        name={project.glyph}
+                        pathClassName="glyph-path"
+                        className={`text-primary shrink-0 ${
+                          tier === "lead"
+                            ? "w-28 h-28 lg:w-44 lg:h-44"
+                            : tier === "wide"
+                              ? "w-16 h-16 sm:w-20 sm:h-20"
+                              : "w-12 h-12"
+                        }`}
+                      />
+                      <ArrowUpRight
+                        size={tier === "compact" ? 20 : 28}
+                        className="text-foreground/40 group-hover:text-volt group-hover:translate-x-1 group-hover:-translate-y-1 transition-[color,transform] duration-200"
+                        aria-hidden
+                      />
+                    </div>
+                    {tier === "lead" && (
+                      <p className="hidden lg:block font-mono text-xs uppercase tracking-[0.2em] text-foreground/60">
+                        Case 01 · {project.timeline} · {project.teamSize}
+                      </p>
+                    )}
+                  </div>
 
-      {/* Project Modal */}
-      <ProjectModal
-        project={selectedProject}
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-      />
+                  <div className="flex flex-col flex-1">
+                    <h3
+                      className={`project-title font-bebas leading-[0.95] tracking-wide text-foreground overflow-hidden mb-2 ${
+                        tier === "lead"
+                          ? "text-5xl sm:text-6xl lg:text-8xl"
+                          : tier === "wide"
+                            ? "text-4xl sm:text-5xl"
+                            : "text-3xl"
+                      }`}
+                    >
+                      {project.title}
+                    </h3>
+                    <p className="font-mono text-xs uppercase tracking-[0.2em] text-volt mb-5">
+                      {project.industry} · {project.role}
+                    </p>
+                    <p
+                      className={`text-foreground/70 leading-relaxed mb-8 ${
+                        tier === "lead"
+                          ? "text-lg max-w-2xl"
+                          : tier === "compact"
+                            ? "text-sm line-clamp-3"
+                            : ""
+                      }`}
+                    >
+                      {project.challenge}
+                    </p>
+
+                    <dl
+                      className={`grid gap-px bg-border border border-border mb-8 ${
+                        tier === "lead"
+                          ? "grid-cols-2 lg:grid-cols-4"
+                          : "grid-cols-2"
+                      }`}
+                    >
+                      {metrics.map((metric) => (
+                        <div
+                          key={metric.label}
+                          className={`bg-background ${tier === "compact" ? "p-3" : "p-4"}`}
+                        >
+                          <dd
+                            className={`font-bebas text-foreground tracking-wide tabular-nums ${
+                              tier === "lead"
+                                ? "text-4xl lg:text-5xl"
+                                : tier === "wide"
+                                  ? "text-3xl"
+                                  : "text-2xl"
+                            }`}
+                          >
+                            <CountUp value={metric.value} />
+                          </dd>
+                          <dt className="font-mono text-[11px] uppercase tracking-[0.15em] text-foreground/60 mt-1">
+                            {metric.label}
+                          </dt>
+                        </div>
+                      ))}
+                    </dl>
+
+                    <ul
+                      className="mt-auto flex flex-wrap gap-2"
+                      aria-label="Stack"
+                    >
+                      {project.stack.slice(0, visibleStack).map((tech) => (
+                        <li
+                          key={tech}
+                          className="px-2 py-1 border border-border text-xs text-foreground/70"
+                        >
+                          {tech}
+                        </li>
+                      ))}
+                      {project.stack.length > visibleStack && (
+                        <li className="px-2 py-1 text-xs text-foreground/60">
+                          +{project.stack.length - visibleStack}
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </section>
   );
 };

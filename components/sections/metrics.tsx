@@ -1,109 +1,146 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { impactMetrics } from "@/lib/data";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef } from "react";
+import { animate, onScroll, svg } from "animejs";
+import { useAnimeScope } from "@/hooks";
+import { CountUp } from "@/components/motion/count-up";
+import type { ImpactMetric } from "@/lib/data";
 
-gsap.registerPlugin(ScrollTrigger);
+interface MetricsProps {
+  metrics: ImpactMetric[];
+}
 
-const Metrics = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
-  const metricsRef = useRef<(HTMLDivElement | null)[]>([]);
+/* Serpentine paths through the cell centres of a 4×2 (desktop) and 2×4 (mobile) grid */
+const PATH_DESKTOP = "M50 50 H350 V150 H50";
+const PATH_MOBILE = "M50 50 H150 V150 H50 V250 H150 V350 H50";
 
-  useEffect(() => {
-    gsap.fromTo(
-      titleRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: titleRef.current,
-          start: "top 80%",
-          toggleActions: "play none none reverse",
-        },
-      }
-    );
+const Metrics = ({ metrics }: MetricsProps) => {
+  const root = useRef<HTMLElement>(null);
 
-    metricsRef.current.forEach((metric, index) => {
-      gsap.fromTo(
-        metric,
-        { opacity: 0, scale: 0.9, y: 30 },
-        {
-          opacity: 1,
-          scale: 1,
-          y: 0,
-          duration: 0.6,
-          delay: index * 0.1,
-          scrollTrigger: {
-            trigger: metric,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
+  useAnimeScope(root, ({ matches }) => {
+    if (matches.reduceMotion) return;
+    const layer = matches.mobile ? ".rail-mobile" : ".rail-desktop";
+    const path = root.current!.querySelector<SVGPathElement>(`${layer} .rail`)!;
+    const dot = root.current!.querySelector<SVGElement>(`${layer} .dot`)!;
+    const scrub = () =>
+      onScroll({
+        target: ".metric-grid",
+        enter: "bottom-=15% top",
+        leave: "top+=15% bottom",
+        sync: true,
+      });
+
+    // The volt dot rides the rail as the grid scrolls through
+    animate(dot, {
+      ...svg.createMotionPath(path),
+      ease: "linear",
+      autoplay: scrub(),
     });
-  }, []);
+    animate(svg.createDrawable(path), {
+      draw: ["0 0", "0 1"],
+      ease: "linear",
+      autoplay: scrub(),
+    });
+  });
 
   return (
     <section
-      ref={sectionRef}
-      className="bg-[#0A0A0A] py-24 md:py-32 px-4 sm:px-6 relative overflow-hidden"
+      ref={root}
+      className="bg-grid border-y border-border py-24 md:py-32 px-4 sm:px-6"
+      aria-labelledby="metrics-title"
     >
-      {/* Background accents */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-0 left-0 w-full h-full">
-          <div className="absolute top-1/4 right-1/4 w-96 h-96 border border-white/20 rotate-45" />
-        </div>
-      </div>
+      <div className="max-w-6xl mx-auto">
+        <h2
+          id="metrics-title"
+          className="font-bebas text-6xl md:text-8xl leading-[0.9] tracking-wide text-foreground mb-14 max-w-3xl"
+        >
+          Numbers that <span className="text-primary">shipped</span>
+        </h2>
 
-      <div className="max-w-6xl mx-auto relative z-10">
-        {/* Section Title */}
-        <div ref={titleRef} className="text-center mb-16">
-          <h2 className="font-bebas text-4xl md:text-5xl lg:text-6xl text-white tracking-wider mb-4">
-            BY THE <span className="text-[#C41E3A]">NUMBERS</span>
-          </h2>
-          <p className="text-white/50 font-inter text-base md:text-lg max-w-2xl mx-auto">
-            Measurable impact across systems, teams, and users.
-          </p>
+        {/* Dimension line: the readings are measurements, drafted */}
+        <div
+          className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.25em] text-volt mb-3"
+          aria-hidden="true"
+        >
+          <span className="w-px h-3 bg-volt" />
+          <span className="flex-1 h-px bg-volt/60" />
+          <span className="px-2">
+            Measured 2020 → {new Date().getFullYear()} · production figures
+          </span>
+          <span className="flex-1 h-px bg-volt/60" />
+          <span className="w-px h-3 bg-volt" />
         </div>
 
-        {/* Metrics Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {impactMetrics.map((metric, index) => (
-            <div
-              key={index}
-              ref={(el) => {
-                metricsRef.current[index] = el;
-              }}
-              className="group relative bg-[#1A1A1A] border border-[#2D2D2D] p-4 sm:p-6 md:p-8 text-center hover:border-[#C41E3A]/50 transition-all duration-300"
-            >
-              {/* Value */}
-              <div className="font-bebas text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white group-hover:text-[#C41E3A] transition-colors duration-300 mb-2">
-                {metric.value}
+        <div className="metric-grid relative aspect-[1/2] md:aspect-[2/1]">
+          {/* Rails: one per layout, sized exactly to the grid so path units stay square */}
+          <svg
+            className="rail-desktop hidden md:block absolute inset-0 w-full h-full pointer-events-none"
+            viewBox="0 0 400 200"
+            aria-hidden="true"
+          >
+            <path
+              className="rail"
+              d={PATH_DESKTOP}
+              fill="none"
+              stroke="hsl(var(--volt))"
+              strokeWidth="1.5"
+            />
+            <rect
+              className="dot"
+              x="-6"
+              y="-6"
+              width="12"
+              height="12"
+              fill="hsl(var(--volt))"
+            />
+          </svg>
+          <svg
+            className="rail-mobile md:hidden absolute inset-0 w-full h-full pointer-events-none"
+            viewBox="0 0 200 400"
+            aria-hidden="true"
+          >
+            <path
+              className="rail"
+              d={PATH_MOBILE}
+              fill="none"
+              stroke="hsl(var(--volt))"
+              strokeWidth="1.5"
+            />
+            <rect
+              className="dot"
+              x="-6"
+              y="-6"
+              width="12"
+              height="12"
+              fill="hsl(var(--volt))"
+            />
+          </svg>
+
+          <dl className="grid grid-cols-2 md:grid-cols-4 h-full border border-border bg-background/70 backdrop-blur-[2px]">
+            {metrics.map((metric, i) => (
+              <div
+                key={metric.label}
+                className={`flex flex-col items-center justify-center text-center p-4 border-border ${
+                  i % 2 === 1 ? "border-l" : ""
+                } ${i >= 2 ? "border-t" : ""} md:border-l md:first:border-l-0 md:[&:nth-child(5)]:border-l-0 md:[&:nth-child(-n+4)]:border-t-0`}
+              >
+                <dd
+                  className={`order-1 font-bebas text-foreground tracking-wide tabular-nums whitespace-nowrap ${
+                    i < 2
+                      ? "text-5xl sm:text-6xl lg:text-7xl"
+                      : i < 4
+                        ? "text-4xl sm:text-5xl lg:text-6xl"
+                        : "text-3xl sm:text-4xl lg:text-5xl text-foreground/90"
+                  }`}
+                >
+                  <CountUp value={metric.value} />
+                </dd>
+                <dt className="order-2 font-mono text-[11px] sm:text-xs uppercase tracking-[0.2em] text-foreground/60 mt-2">
+                  {metric.label}
+                </dt>
               </div>
-              {/* Label */}
-              <div className="text-xs md:text-sm font-mono text-white/40 tracking-wide uppercase">
-                {metric.label}
-              </div>
-              {/* Hover accent */}
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#C41E3A] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-            </div>
-          ))}
-        </div>
-
-        {/* Bottom line */}
-        <div className="mt-16 text-center">
-          <div className="inline-flex items-center gap-4">
-            <div className="w-16 h-px bg-[#C41E3A]/30" />
-            <span className="text-xs font-mono text-white/30 tracking-widest">
-              REAL IMPACT. REAL NUMBERS.
-            </span>
-            <div className="w-16 h-px bg-[#C41E3A]/30" />
-          </div>
+            ))}
+          </dl>
         </div>
       </div>
     </section>

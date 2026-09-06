@@ -1,0 +1,82 @@
+---
+id: 1
+title: Enterprise Affiliate Platform
+subtitle: High-Scale Affiliate Tracking System
+industry: iGaming
+role: Lead Software Engineer
+challenge: Build a distributed tracking system handling millions of players and thousands of affiliates with financial-grade accuracy
+solution:
+  - Distributed event ingestion pipeline
+  - Real-time processing architecture
+  - High-accuracy tracking system
+  - Scalable microservices design
+metrics:
+  - value: 1M+
+    label: Player Accounts
+  - value: 10K
+    label: Events/Min
+  - value: 99.9%
+    label: Data Accuracy
+  - value: 40%
+    label: Performance Boost
+stack:
+  - React
+  - TypeScript
+  - Node.js
+  - AWS Lambda
+  - Serverless
+  - Hasura
+  - PostgreSQL
+  - AWS CDK
+  - Docker
+timeline: 8 months
+teamSize: 4 engineers
+glyph: ledger
+---
+
+## Overview
+
+Led the architecture and development of a comprehensive affiliate tracking platform for a major iGaming company. The system needed to handle millions of players, track complex referral chains, and calculate commissions with financial-grade accuracy.
+
+## The Challenge
+
+Build a distributed tracking system handling millions of players and thousands of affiliates with financial-grade accuracy.
+
+- Legacy system couldn't scale beyond 1000 events/minute
+- Manual commission calculations led to disputes and delays
+- No real-time visibility into affiliate performance
+- Data inconsistencies between tracking and payment systems
+
+## Technical Approach
+
+- Designed event-driven architecture using AWS Lambda and SQS for decoupled processing
+- Implemented CQRS pattern to separate read and write workloads
+- Built real-time dashboards using Hasura GraphQL subscriptions
+- Created idempotent event handlers to ensure exactly-once processing
+
+## Key Decisions
+
+### Chose Serverless over Kubernetes
+
+Auto-scaling requirements and cost optimization for bursty traffic patterns
+
+### PostgreSQL with Hasura over custom GraphQL
+
+Rapid development with built-in subscriptions while maintaining flexibility
+
+### Event sourcing for financial transactions
+
+Complete audit trail and ability to replay events for reconciliation
+
+## Results
+
+- 10x improvement in event processing capacity
+- Reduced commission calculation time from hours to real-time
+- 99.9% accuracy in tracking attribution
+- Zero data loss during peak traffic periods
+
+## Lessons Learned
+
+1. Event-driven architectures require robust dead-letter queue handling
+2. Financial systems need idempotency at every layer
+3. Real-time doesn't always mean instant - define acceptable latency

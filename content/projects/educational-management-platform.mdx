@@ -1,0 +1,81 @@
+---
+id: 6
+title: Educational Management Platform
+subtitle: Multi-Tenant Institution System
+industry: EdTech
+role: Lead Software Engineer
+challenge: Build comprehensive management system for schools and colleges across Africa with multi-institutional support
+solution:
+  - Domain-Driven Design architecture
+  - Multi-tenant system
+  - Comprehensive workflow automation
+  - Scalable backend design
+metrics:
+  - value: Multi
+    label: Institutions
+  - value: 1000s
+    label: Users Served
+  - value: Pan-African
+    label: Deployment
+  - value: DDD
+    label: Architecture
+stack:
+  - React
+  - TypeScript
+  - Nhost
+  - Serverless
+  - Hasura
+  - PostgreSQL
+  - Ant Design
+  - Tailwind CSS
+timeline: 12 months
+teamSize: 4 engineers
+glyph: book
+---
+
+## Overview
+
+Designed and built a comprehensive educational management system serving schools and colleges across multiple African countries. The platform handles everything from student enrollment and attendance to grade management and parent communication, all within a multi-tenant architecture that maintains data isolation between institutions.
+
+## The Challenge
+
+Build comprehensive management system for schools and colleges across Africa with multi-institutional support.
+
+- Each institution had unique workflows that couldn't fit a one-size-fits-all solution
+- Data privacy laws varied by country, requiring strict tenant isolation
+- Unreliable internet connectivity in many regions meant offline support was critical
+- Administrators had varying technical literacy levels
+
+## Technical Approach
+
+- Implemented Domain-Driven Design with bounded contexts for each functional area
+- Built row-level security in PostgreSQL for multi-tenant data isolation
+- Created configurable workflow engine allowing institutions to customize processes
+- Designed progressive web app with service worker caching for offline access
+
+## Key Decisions
+
+### Hasura over custom GraphQL server
+
+Instant GraphQL API with row-level security, dramatically reducing backend development time
+
+### DDD bounded contexts
+
+Clear separation between enrollment, academics, finance, and communication domains
+
+### Ant Design component library
+
+Comprehensive enterprise components reduced UI development time by 40%
+
+## Results
+
+- Successfully onboarded institutions across multiple African countries
+- Thousands of students and staff managed through the platform
+- Row-level security ensures zero cross-tenant data leakage
+- Offline-capable PWA works reliably on low-bandwidth connections
+
+## Lessons Learned
+
+1. Multi-tenant architectures need security auditing from the start, not as an afterthought
+2. Domain-Driven Design pays off when domain complexity is high
+3. Building for low-bandwidth regions requires fundamentally different performance budgets

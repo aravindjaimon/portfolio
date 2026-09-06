@@ -1,0 +1,82 @@
+---
+id: 2
+title: RAG-Powered AI Assistant
+subtitle: Context-Aware AI Chat Platform
+industry: AI/SaaS
+role: Full Stack Engineer
+challenge: Create an intelligent, context-aware AI assistant that can be embedded into any website with domain-specific knowledge
+solution:
+  - Retrieval-Augmented Generation implementation
+  - Multi-model support (OpenAI + Gemini)
+  - Embeddable widget SDK
+  - Admin panel for customization
+metrics:
+  - value: RAG
+    label: Architecture
+  - value: Multi
+    label: Model Support
+  - value: SDK
+    label: Embeddable
+  - value: Real-time
+    label: Streaming
+stack:
+  - React
+  - TypeScript
+  - Node.js
+  - AWS Lambda
+  - Serverless
+  - Hasura
+  - PostgreSQL
+  - OpenAI
+  - Gemini
+timeline: 4 months
+teamSize: 2 engineers
+glyph: brain
+---
+
+## Overview
+
+Built a production-ready RAG (Retrieval-Augmented Generation) AI assistant that businesses can embed into their websites. The system ingests custom knowledge bases and provides contextually accurate responses while supporting multiple LLM providers for flexibility and cost optimization.
+
+## The Challenge
+
+Create an intelligent, context-aware AI assistant that can be embedded into any website with domain-specific knowledge.
+
+- Generic chatbots couldn't answer domain-specific questions accurately
+- Existing solutions required significant technical expertise to integrate
+- No easy way to switch between AI providers based on cost/performance needs
+- Real-time streaming responses were essential for good UX but complex to implement
+
+## Technical Approach
+
+- Implemented vector embeddings using OpenAI's ada-002 for semantic search
+- Built chunking pipeline with overlap to maintain context across document segments
+- Created abstraction layer supporting OpenAI GPT-4 and Google Gemini interchangeably
+- Designed embeddable widget using Shadow DOM for style isolation
+
+## Key Decisions
+
+### PostgreSQL with pgvector over dedicated vector DB
+
+Reduced infrastructure complexity while maintaining acceptable performance for our scale
+
+### Server-Sent Events for streaming
+
+Better browser compatibility than WebSockets for unidirectional real-time data
+
+### Admin panel for knowledge management
+
+Non-technical users needed to update FAQs and documentation without developer involvement
+
+## Results
+
+- 80% reduction in support ticket volume for pilot customers
+- Sub-200ms retrieval latency for knowledge base queries
+- Seamless integration requiring only a script tag to embed
+- Cost flexibility allowing 40% reduction by switching models for simple queries
+
+## Lessons Learned
+
+1. Chunk size and overlap significantly impact retrieval quality - requires experimentation
+2. Prompt engineering is as important as the retrieval system itself
+3. Users expect instant responses - streaming is not optional for chat interfaces

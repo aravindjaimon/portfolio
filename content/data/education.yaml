@@ -1,0 +1,27 @@
+education:
+  - degree: M.S. Computer Science
+    status: In Progress
+    institution: Woolf / Scaler Neovarsity
+    expected: September 2026
+  - degree: B.Tech Computer Science & Engineering
+    status: Completed
+    institution: Bir Tikendrajit University
+    year: "2024"
+    note: Transferred from College of Engineering, Poonjar - KTU
+certifications:
+  - "GCP Fundamentals: Core Infrastructure"
+  - "Elastic Cloud Infrastructure: Scaling and Automation"
+  - "Reliable Cloud Infrastructure: Design and Process"
+achievements:
+  - icon: trophy
+    title: Smart India Hackathon Finalist
+    description: Grand Finale (2018 & 2019)
+    detail: Top 0.1% among 200,000+ participants
+  - icon: award
+    title: NCR Corporation Special Recognition
+    description: Technical innovation award
+    detail: e-Waste Management application - SIH 2019
+  - icon: users
+    title: IEEE Leadership
+    description: Chairman, IEEE Student Branch
+    detail: College of Engineering Poonjar

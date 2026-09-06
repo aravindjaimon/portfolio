@@ -28,6 +28,8 @@
   --color-chart-3: hsl(var(--chart-3));
   --color-chart-4: hsl(var(--chart-4));
   --color-chart-5: hsl(var(--chart-5));
+  --color-volt: hsl(var(--volt));
+  --color-volt-foreground: hsl(var(--volt-foreground));
 
   --font-bebas: var(--font-bebas-neue);
   --font-inter: var(--font-inter);
@@ -61,6 +63,11 @@
   --ring: 350 75% 44%;
   --radius: 0rem;
 
+  /* Electric secondary for motion demos — acid lime #CCFF00 */
+  --volt: 72 100% 50%;
+  --volt-foreground: 0 0% 4%;
+  --grid-cell: 48px;
+
   --chart-1: 350 75% 44%;
   --chart-2: 173 58% 39%;
   --chart-3: 197 37% 24%;
@@ -93,10 +100,70 @@
   }
   html {
     overflow-x: hidden;
+    scrollbar-color: hsl(var(--primary)) hsl(var(--background));
+    caret-color: hsl(var(--volt));
   }
   body {
     @apply bg-background text-foreground font-inter antialiased;
     overflow-x: hidden;
+  }
+  ::selection {
+    background: hsl(var(--volt));
+    color: hsl(var(--volt-foreground));
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary));
+    border: 2px solid hsl(var(--background));
+  }
+  :focus-visible {
+    outline: 2px solid hsl(var(--volt));
+    outline-offset: 2px;
+  }
+  a,
+  button {
+    text-underline-offset: 0.2em;
+  }
+}
+
+@layer utilities {
+  /* Neo-brutalist hairline grid ground */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, hsl(var(--border) / 0.6) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border) / 0.6) 1px, transparent 1px);
+    background-size: var(--grid-cell) var(--grid-cell);
+  }
+  /* Infinite horizontal ticker; children duplicated once for a seamless loop */
+  .marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee var(--marquee-duration, 40s) linear infinite;
+  }
+  .marquee:hover {
+    animation-play-state: paused;
+  }
+  .outline-text {
+    -webkit-text-stroke: 1px hsl(var(--foreground) / 0.55);
+    color: transparent;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    animation: none;
   }
 }
 

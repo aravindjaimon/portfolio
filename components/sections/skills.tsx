@@ -1,138 +1,155 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { skills } from "@/lib/data";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef, useState } from "react";
+import { Shuffle, Undo2 } from "lucide-react";
 import {
-  Code2,
-  Layout,
-  Server,
-  Brain,
-  Cloud,
-  Boxes,
-  LucideIcon,
-} from "lucide-react";
+  animate,
+  createDraggable,
+  spring,
+  utils,
+  type Draggable,
+} from "animejs";
+import { useAnimeScope, type AnimeScope } from "@/hooks";
+import type { SkillGroup } from "@/lib/data";
 
-gsap.registerPlugin(ScrollTrigger);
-
-interface SkillCategory {
-  key: keyof typeof skills;
-  title: string;
-  icon: LucideIcon;
+interface SkillsProps {
+  groups: SkillGroup[];
 }
 
-const skillCategories: SkillCategory[] = [
-  { key: "languages", title: "Languages", icon: Code2 },
-  { key: "frontend", title: "Frontend", icon: Layout },
-  { key: "backend", title: "Backend", icon: Server },
-  { key: "ai", title: "AI & LLMs", icon: Brain },
-  { key: "cloud", title: "Cloud & DevOps", icon: Cloud },
-  { key: "systemDesign", title: "System Design", icon: Boxes },
-];
-
-interface SkillCardProps {
-  category: SkillCategory;
-  index: number;
+/** Spring a draggable to (x, y) without fighting its internal state */
+function springTo(d: Draggable, x: number, y: number, rotate = 0) {
+  const pos = { x: d.x, y: d.y };
+  animate(pos, {
+    x,
+    y,
+    ease: spring({ bounce: 0.45 }),
+    duration: 900,
+    onUpdate: () => {
+      d.setX(pos.x, true);
+      d.setY(pos.y, true);
+    },
+  });
+  animate(d.$target, { rotate, ease: spring({ bounce: 0.3 }), duration: 900 });
 }
 
-const SkillCard = ({ category, index }: SkillCardProps) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const Icon = category.icon;
+const Skills = ({ groups }: SkillsProps) => {
+  const root = useRef<HTMLElement>(null);
+  const scopeRef = useRef<AnimeScope | null>(null);
+  const [physics, setPhysics] = useState(false);
 
-  useEffect(() => {
-    gsap.fromTo(
-      cardRef.current,
-      { opacity: 0, y: 40 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        delay: index * 0.1,
-        scrollTrigger: {
-          trigger: cardRef.current,
-          start: "top 85%",
-          toggleActions: "play none none reverse",
-        },
-      }
+  useAnimeScope(root, (self) => {
+    scopeRef.current = self;
+    // Touch scrolling and dragging fight on small screens; reduced motion wants stillness.
+    if (self.matches.mobile || self.matches.reduceMotion) return;
+    setPhysics(true);
+
+    const arena = root.current!.querySelector<HTMLElement>(".arena")!;
+    const draggables = utils.$(".chip").map((chip) =>
+      createDraggable(chip, {
+        container: arena,
+        containerPadding: 8,
+        containerFriction: 0.6,
+        releaseContainerFriction: 0.85,
+        releaseEase: spring({ stiffness: 120, damping: 12 }),
+      })
     );
-  }, [index]);
+
+    self.add("shuffle", () => {
+      const { width, height } = arena.getBoundingClientRect();
+      draggables.forEach((d) => {
+        const box = d.$target.getBoundingClientRect();
+        const origin = { x: box.left - d.x, y: box.top - d.y };
+        const arenaBox = arena.getBoundingClientRect();
+        const maxX = arenaBox.left + width - box.width - 8 - origin.x;
+        const minX = arenaBox.left + 8 - origin.x;
+        const maxY = arenaBox.top + height - box.height - 8 - origin.y;
+        const minY = arenaBox.top + 8 - origin.y;
+        setTimeout(
+          () =>
+            springTo(
+              d,
+              utils.random(minX, maxX),
+              utils.random(minY, maxY),
+              utils.random(-14, 14)
+            ),
+          utils.random(0, 300)
+        );
+      });
+    });
+
+    self.add("reset", () => {
+      draggables.forEach((d, i) =>
+        setTimeout(() => springTo(d, 0, 0, 0), i * 10)
+      );
+    });
+
+    return () => setPhysics(false);
+  });
 
   return (
-    <div
-      ref={cardRef}
-      className="group bg-[#1A1A1A] border border-[#2D2D2D] p-4 sm:p-6 hover:border-[#C41E3A]/50 transition-all duration-300"
+    <section
+      ref={root}
+      id="skills"
+      className="bg-grid py-20 md:py-24 px-4 sm:px-6 scroll-mt-20"
+      aria-labelledby="skills-title"
     >
-      <div className="flex items-center gap-3 mb-5">
-        <div className="p-2 bg-[#0A0A0A] group-hover:bg-[#C41E3A]/10 transition-colors duration-300">
-          <Icon className="w-5 h-5 text-[#C41E3A]" />
-        </div>
-        <h3 className="font-bebas text-xl text-white tracking-wide">
-          {category.title}
-        </h3>
-      </div>
-      <div className="flex flex-wrap gap-2">
-        {skills[category.key].map((skill, idx) => (
-          <span
-            key={idx}
-            className="text-xs font-mono text-white/60 bg-[#0A0A0A] px-3 py-1.5 border border-[#2D2D2D] hover:border-[#C41E3A]/30 hover:text-white/80 transition-all duration-300"
-          >
-            {skill}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const Skills = () => {
-  const titleRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    gsap.fromTo(
-      titleRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: titleRef.current,
-          start: "top 80%",
-          toggleActions: "play none none reverse",
-        },
-      }
-    );
-  }, []);
-
-  return (
-    <section className="bg-[#0A0A0A] py-24 md:py-32 px-4 sm:px-6">
-      <div className="max-w-6xl mx-auto">
-        {/* Section Title */}
-        <div ref={titleRef} className="text-center mb-16">
-          <h2 className="font-bebas text-4xl md:text-5xl lg:text-6xl text-white tracking-wider mb-4">
-            TECHNICAL <span className="text-[#C41E3A]">EXPERTISE</span>
-          </h2>
-          <p className="text-white/50 font-inter text-base md:text-lg max-w-2xl mx-auto">
-            Full-stack proficiency from Rust to React, Cloud to AI. Building
-            systems that scale.
-          </p>
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-12">
+          <div className="max-w-2xl">
+            <h2
+              id="skills-title"
+              className="font-bebas text-6xl md:text-8xl leading-[0.9] tracking-wide text-foreground mb-6"
+            >
+              Skills, <span className="text-primary">loose</span> on the table
+            </h2>
+            <p className="text-foreground/70 text-lg md:text-xl leading-relaxed">
+              {physics
+                ? "Every chip is a physical object. Drag one, throw it, watch it spring off the walls."
+                : "Six groups, one stack — front to back, cloud to model."}
+            </p>
+          </div>
+          {physics && (
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={() => scopeRef.current?.methods.shuffle()}
+                className="inline-flex items-center gap-2 px-5 py-3 bg-foreground text-background font-bebas text-lg tracking-[0.15em] hover:bg-volt hover:text-volt-foreground transition-colors duration-200"
+              >
+                <Shuffle size={14} aria-hidden /> Shuffle
+              </button>
+              <button
+                type="button"
+                onClick={() => scopeRef.current?.methods.reset()}
+                className="inline-flex items-center gap-2 px-5 py-3 border border-border text-foreground/80 font-bebas text-lg tracking-[0.15em] hover:border-foreground hover:text-foreground transition-colors duration-200"
+              >
+                <Undo2 size={14} aria-hidden /> Reset
+              </button>
+            </div>
+          )}
         </div>
 
-        {/* Skills Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {skillCategories.map((category, index) => (
-            <SkillCard key={category.key} category={category} index={index} />
+        <div className="arena relative bg-grid border border-border min-h-[70vh] p-6 md:p-10 grid md:grid-cols-3 gap-x-8 gap-y-10 content-start overflow-hidden">
+          {groups.map((group) => (
+            <div key={group.key}>
+              <h3 className="font-bebas text-2xl tracking-wide text-foreground/80 mb-4 border-b border-border pb-2">
+                {group.label}
+              </h3>
+              <ul className="flex flex-wrap gap-3">
+                {group.items.map((item) => (
+                  <li
+                    key={item}
+                    className={`chip inline-block bg-background border border-foreground/70 px-3 py-2 font-mono text-sm text-foreground select-none shadow-[4px_4px_0_0_hsl(var(--primary))] ${
+                      physics
+                        ? "cursor-grab active:cursor-grabbing touch-none"
+                        : ""
+                    }`}
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </div>
-
-        {/* Bottom accent */}
-        <div className="mt-16 flex items-center justify-center gap-4">
-          <div className="w-20 h-px bg-white/10" />
-          <span className="text-xs font-mono text-white/30 tracking-widest">
-            5+ YEARS OF CRAFT
-          </span>
-          <div className="w-20 h-px bg-white/10" />
         </div>
       </div>
     </section>

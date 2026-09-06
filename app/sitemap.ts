@@ -40,15 +40,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  // Project case study pages (only for projects with extended content)
-  const projectPages: MetadataRoute.Sitemap = projects
-    .filter((p) => p.overview || p.problemDetails || p.technicalApproach)
-    .map((project) => ({
-      url: `${baseUrl}/projects/${project.slug}`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    }));
+  // Project case study pages
+  const projectPages: MetadataRoute.Sitemap = projects.map((project) => ({
+    url: `${baseUrl}/projects/${project.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
 
   return [...staticPages, ...blogPosts, ...tagPages, ...projectPages];
 }

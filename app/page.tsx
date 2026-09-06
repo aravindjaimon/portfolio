@@ -1,41 +1,42 @@
-"use client";
-
-import Header from "@/components/sections/header";
 import Hero from "@/components/sections/hero";
-import About from "@/components/sections/about";
+import Ticker from "@/components/sections/ticker";
+import Story from "@/components/sections/story";
 import Skills from "@/components/sections/skills";
 import Projects from "@/components/sections/projects";
 import Metrics from "@/components/sections/metrics";
 import Experience from "@/components/sections/experience";
 import Education from "@/components/sections/education";
 import Contact from "@/components/sections/contact";
-import Footer from "@/components/sections/footer";
+import {
+  achievements,
+  certifications,
+  education,
+  experience,
+  impactMetrics,
+  personalInfo,
+  projects,
+  skillGroups,
+  storyMilestones,
+} from "@/lib/data";
 
 export default function Home() {
+  const [teamGrowth, usersServed] = impactMetrics;
+
   return (
-    <div className="bg-[#0A0A0A] min-h-screen">
-      <Header />
-      <main>
-        <Hero />
-        <section id="story">
-          <About />
-        </section>
-        <section id="skills">
-          <Skills />
-        </section>
-        <section id="work">
-          <Projects />
-        </section>
-        <Metrics />
-        <section id="experience">
-          <Experience />
-        </section>
-        <Education />
-        <section id="contact">
-          <Contact />
-        </section>
-      </main>
-      <Footer />
-    </div>
+    <main className="bg-background">
+      <Hero profile={personalInfo} callouts={[usersServed, teamGrowth]} />
+      <Ticker metrics={impactMetrics} />
+      <Story milestones={storyMilestones} />
+      <Skills groups={skillGroups} />
+      <Projects projects={projects} />
+      <Metrics metrics={impactMetrics} />
+      <Experience experience={experience} />
+      <Education
+        education={education}
+        certifications={certifications}
+        achievements={achievements}
+      />
+      <Contact profile={personalInfo} />
+    </main>
   );
 }

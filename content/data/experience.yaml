@@ -1,0 +1,34 @@
+items:
+  - period: 2024 - Present
+    role: Lead Software Engineer
+    company: RaftLabs
+    highlights:
+      - Driving technical strategy
+      - AI-assisted development adoption
+      - Engineering culture architect
+  - period: 2022 - 2024
+    role: Senior Software Engineer
+    company: RaftLabs
+    highlights:
+      - System architecture leadership
+      - Performance optimization
+      - Team scaling initiatives
+  - period: 2020 - 2022
+    role: Software Engineer
+    company: RaftLabs
+    highlights:
+      - First engineering hire
+      - Foundation building
+      - Full-stack development
+  - period: "2020"
+    role: Full Stack Intern
+    company: Techtonic
+    highlights:
+      - React-Gatsby development
+      - Three.js 3D experiences
+  - period: "2019"
+    role: Python Developer Intern
+    company: Vaultboard
+    highlights:
+      - Resume parsing algorithms
+      - Automation development

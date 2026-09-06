@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter, Bebas_Neue, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { siteConfig } from "@/lib/config";
+import { personalInfo } from "@/lib/data";
+import Header from "@/components/sections/header";
+import Footer from "@/components/sections/footer";
 import "./globals.css";
 
 const inter = Inter({
@@ -114,7 +117,9 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${bebasNeue.variable} ${jetBrainsMono.variable} antialiased`}
       >
+        <Header profile={personalInfo} />
         {children}
+        <Footer profile={personalInfo} />
         <Analytics />
       </body>
     </html>

@@ -1,66 +1,111 @@
 "use client";
 
-import { personalInfo } from "@/lib/data";
-import { Github, Linkedin, Mail } from "lucide-react";
+import { useRef } from "react";
+import { Github, Linkedin, Mail, Package } from "lucide-react";
+import { animate, onScroll, svg } from "animejs";
+import { useAnimeScope } from "@/hooks";
+import type { PersonalInfo } from "@/lib/data";
 
-const Footer = () => {
-  const currentYear = new Date().getFullYear();
+interface FooterProps {
+  profile: PersonalInfo;
+}
+
+const Footer = ({ profile }: FooterProps) => {
+  const root = useRef<HTMLElement>(null);
+  const year = new Date().getFullYear();
+
+  useAnimeScope(root, ({ matches }) => {
+    if (matches.reduceMotion) return;
+    // Top rule draws itself in as the footer enters
+    animate(svg.createDrawable(".rule"), {
+      draw: ["0 0", "0 1"],
+      ease: "inOut(3)",
+      duration: 1600,
+      autoplay: onScroll({ target: root.current!, enter: "bottom top+=40" }),
+    });
+    animate(".wordmark", {
+      y: ["30%", "0%"],
+      opacity: [0, 1],
+      ease: "out(4)",
+      duration: 1200,
+      autoplay: onScroll({ target: ".wordmark", enter: "bottom top" }),
+    });
+  });
+
+  const socials = [
+    { href: profile.github, label: "GitHub", Icon: Github },
+    { href: profile.linkedin, label: "LinkedIn", Icon: Linkedin },
+    { href: profile.npm, label: "npm", Icon: Package },
+    { href: `mailto:${profile.email}`, label: "Email", Icon: Mail },
+  ];
 
   return (
-    <footer className="bg-[#0A0A0A] border-t border-[#2D2D2D] py-12 px-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          {/* Logo and tagline */}
-          <div className="text-center md:text-left">
-            <a
-              href="#"
-              className="font-bebas text-2xl text-white tracking-wider"
-            >
-              <span className="text-[#C41E3A]">A</span>RAVIND{" "}
-              <span className="text-[#C41E3A]">J</span>AIMON
-            </a>
-            <p className="text-white/40 font-inter text-sm mt-1">
-              Engineering at Scale
-            </p>
-          </div>
+    <footer ref={root} className="relative bg-grid overflow-hidden">
+      <svg
+        className="absolute top-0 left-0 w-full h-[2px]"
+        viewBox="0 0 100 1"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <line
+          className="rule"
+          x1="0"
+          y1="0.5"
+          x2="100"
+          y2="0.5"
+          stroke="hsl(var(--volt))"
+          strokeWidth="1"
+          vectorEffect="non-scaling-stroke"
+        />
+      </svg>
 
-          {/* Social Links */}
-          <div className="flex items-center gap-6">
-            <a
-              href={personalInfo.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/40 hover:text-[#C41E3A] transition-colors duration-300"
-              aria-label="GitHub"
-            >
-              <Github size={20} />
-            </a>
-            <a
-              href={personalInfo.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/40 hover:text-[#C41E3A] transition-colors duration-300"
-              aria-label="LinkedIn"
-            >
-              <Linkedin size={20} />
-            </a>
-            <a
-              href={`mailto:${personalInfo.email}`}
-              className="text-white/40 hover:text-[#C41E3A] transition-colors duration-300"
-              aria-label="Email"
-            >
-              <Mail size={20} />
-            </a>
-          </div>
-        </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-20 pb-8">
+        {/* Outline wordmark */}
+        <p
+          className="wordmark font-bebas outline-text text-foreground/70 leading-[0.85] tracking-wide text-[17vw] lg:text-[13rem] select-none"
+          aria-hidden="true"
+        >
+          {profile.name}
+        </p>
 
-        {/* Bottom bar */}
-        <div className="mt-8 pt-8 border-t border-[#2D2D2D]/50 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-white/30 font-mono text-xs">
-            © {currentYear} Aravind Jaimon. All rights reserved.
-          </p>
-          <p className="text-white/20 font-mono text-xs">
-            Built with passion & precision
+        {/* Drafting-sheet title block */}
+        <dl className="mt-10 grid grid-cols-2 md:grid-cols-4 border border-border divide-x divide-y md:divide-y-0 divide-border bg-background/80 font-mono text-xs uppercase tracking-[0.15em]">
+          <div className="p-4">
+            <dt className="text-foreground/60 mb-1">Drawn by</dt>
+            <dd className="text-foreground">{profile.name}</dd>
+          </div>
+          <div className="p-4">
+            <dt className="text-foreground/60 mb-1">Role</dt>
+            <dd className="text-foreground">{profile.title}</dd>
+          </div>
+          <div className="p-4">
+            <dt className="text-foreground/60 mb-1">Location</dt>
+            <dd className="text-foreground">{profile.location}</dd>
+          </div>
+          <div className="p-4">
+            <dt className="text-foreground/60 mb-1">Revision</dt>
+            <dd className="text-volt">{year}</dd>
+          </div>
+        </dl>
+
+        <div className="mt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <ul className="flex items-center gap-5">
+            {socials.map(({ href, label, Icon }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  target={href.startsWith("mailto:") ? undefined : "_blank"}
+                  rel="noopener noreferrer"
+                  className="text-foreground/50 hover:text-volt transition-colors duration-200"
+                  aria-label={label}
+                >
+                  <Icon size={20} />
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p className="text-foreground/60 font-mono text-xs">
+            © {year} {profile.name}. Built with Next.js and anime.js.
           </p>
         </div>
       </div>
