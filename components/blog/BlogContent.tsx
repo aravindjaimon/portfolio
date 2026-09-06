@@ -1,7 +1,9 @@
 "use client";
 
 import * as runtime from "react/jsx-runtime";
-import { useMemo, memo } from "react";
+import { useMemo, memo, useRef } from "react";
+import { animate, onScroll } from "animejs";
+import { useAnimeScope } from "@/hooks";
 import { mdxComponents } from "./mdx-components";
 
 interface BlogContentProps {
@@ -29,8 +31,29 @@ const MDXRenderer = memo(function MDXRenderer({ code }: { code: string }) {
 /* eslint-enable react-hooks/static-components */
 
 export function BlogContent({ code }: BlogContentProps) {
+  const root = useRef<HTMLElement>(null);
+
+  // Each h2 rule draws itself in as the heading scrolls into view
+  useAnimeScope(
+    root,
+    ({ matches }) => {
+      if (matches.reduceMotion) return;
+      for (const rule of root.current!.querySelectorAll<HTMLElement>(
+        ".h-rule"
+      )) {
+        animate(rule, {
+          scaleX: [0, 1],
+          duration: 900,
+          ease: "inOut(3)",
+          autoplay: onScroll({ target: rule, enter: "bottom-=10% top" }),
+        });
+      }
+    },
+    [code]
+  );
+
   return (
-    <article className="prose prose-invert max-w-none">
+    <article ref={root} className="prose prose-invert max-w-none">
       <MDXRenderer code={code} />
     </article>
   );

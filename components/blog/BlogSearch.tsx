@@ -31,7 +31,7 @@ export function BlogSearch({
   return (
     <div className="relative">
       <Search
-        className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40"
+        className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground/60"
         size={18}
       />
       <input
@@ -39,12 +39,12 @@ export function BlogSearch({
         value={query}
         onChange={handleChange}
         placeholder={placeholder}
-        className="w-full pl-10 pr-10 py-3 bg-[#1A1A1A] border border-[#2D2D2D] text-white placeholder:text-white/40 font-mono text-sm focus:outline-none focus:border-[#C41E3A] transition-colors duration-200"
+        className="w-full pl-10 pr-10 py-3 bg-secondary border border-border text-foreground placeholder:text-foreground/60 font-mono text-sm focus:outline-none focus:border-primary transition-colors duration-200"
       />
       {query && (
         <button
           onClick={handleClear}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground/60 hover:text-foreground transition-colors"
           aria-label="Clear search"
         >
           <X size={18} />

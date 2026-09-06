@@ -4,6 +4,7 @@ import { DifficultyBadge } from "./DifficultyBadge";
 import { ReadingTime } from "./ReadingTime";
 import { formatDate, type Post } from "@/lib/blog";
 import { Calendar, User } from "lucide-react";
+import { SplitHeading } from "@/components/motion/split-heading";
 
 interface BlogHeaderProps {
   post: Post;
@@ -22,7 +23,7 @@ export function BlogHeader({ post }: BlogHeaderProps) {
           className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
       </div>
 
       {/* Content overlay */}
@@ -35,12 +36,12 @@ export function BlogHeader({ post }: BlogHeaderProps) {
           </div>
 
           {/* Title */}
-          <h1 className="font-bebas text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white tracking-wide leading-tight mb-4">
+          <SplitHeading className="font-bebas text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-foreground tracking-wide leading-[0.95] mb-4 text-balance">
             {post.title}
-          </h1>
+          </SplitHeading>
 
           {/* Description */}
-          <p className="text-white/70 text-base sm:text-lg md:text-xl max-w-2xl mb-6">
+          <p className="text-foreground/70 text-base sm:text-lg md:text-xl max-w-2xl mb-6">
             {post.description}
           </p>
 
@@ -52,7 +53,7 @@ export function BlogHeader({ post }: BlogHeaderProps) {
           </div>
 
           {/* Author and date */}
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm text-white/50 font-mono pb-6 border-b border-[#2D2D2D]">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm text-foreground/50 font-mono pb-6 border-b border-border">
             <span className="flex items-center gap-2">
               <User size={16} />
               {post.author}
@@ -64,7 +65,7 @@ export function BlogHeader({ post }: BlogHeaderProps) {
               </time>
             </span>
             {post.updatedAt && (
-              <span className="text-white/40">
+              <span className="text-foreground/60">
                 Updated:{" "}
                 <time dateTime={post.updatedAt}>
                   {formatDate(post.updatedAt)}

@@ -53,7 +53,7 @@ export function TableOfContents({ items, variant }: TableOfContentsProps) {
     <div className="mb-8">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between px-4 py-3 bg-secondary border border-border text-white/80 font-mono text-sm"
+        className="w-full flex items-center justify-between px-4 py-3 bg-secondary border border-border text-foreground/80 font-mono text-sm"
       >
         <span className="flex items-center gap-2">
           <List size={16} />
@@ -77,7 +77,7 @@ export function TableOfContents({ items, variant }: TableOfContentsProps) {
                   className={`block py-1 text-sm transition-colors ${
                     activeId === item.id
                       ? "text-primary font-medium"
-                      : "text-white/60 hover:text-white/80"
+                      : "text-foreground/60 hover:text-foreground/80"
                   }`}
                 >
                   {item.text}
@@ -95,7 +95,7 @@ export function TableOfContents({ items, variant }: TableOfContentsProps) {
     <aside className="h-full">
       <div className="sticky top-24 space-y-6">
         <div className="p-4 bg-secondary border border-border">
-          <h4 className="flex items-center gap-2 text-white/80 font-mono text-sm mb-4 pb-2 border-b border-border">
+          <h4 className="flex items-center gap-2 text-foreground/80 font-mono text-sm mb-4 pb-2 border-b border-border">
             <List size={16} />
             On this page
           </h4>
@@ -114,7 +114,7 @@ export function TableOfContents({ items, variant }: TableOfContentsProps) {
                     className={`block py-1.5 text-sm transition-colors border-l-2 pl-3 -ml-px ${
                       activeId === item.id
                         ? "border-primary text-primary"
-                        : "border-transparent text-white/50 hover:text-white/80 hover:border-white/20"
+                        : "border-transparent text-foreground/50 hover:text-foreground/80 hover:border-white/20"
                     }`}
                   >
                     {item.text}

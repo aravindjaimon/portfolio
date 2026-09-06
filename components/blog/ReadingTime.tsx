@@ -6,7 +6,7 @@ interface ReadingTimeProps {
 
 export function ReadingTime({ time }: ReadingTimeProps) {
   return (
-    <span className="inline-flex items-center gap-1 text-white/50 text-sm font-mono">
+    <span className="inline-flex items-center gap-1 text-foreground/50 text-sm font-mono">
       <Clock size={14} />
       {time}
     </span>

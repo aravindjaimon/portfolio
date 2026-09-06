@@ -16,9 +16,9 @@ export function TagBadge({
     md: "text-sm px-3 py-1",
   };
 
-  const baseClasses = `inline-block font-mono ${sizeClasses[size]} bg-[#1A1A1A] text-white/60 border border-[#2D2D2D] transition-colors duration-200`;
+  const baseClasses = `inline-block ${sizeClasses[size]} bg-secondary text-foreground/60 border border-border transition-colors duration-200`;
   const hoverClasses = clickable
-    ? "hover:border-[#C41E3A] hover:text-[#C41E3A]"
+    ? "hover:border-primary hover:text-primary"
     : "";
 
   if (clickable) {

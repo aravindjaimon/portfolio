@@ -68,7 +68,7 @@ export function NewsletterSignup({
             <div className="relative flex-1">
               <Mail
                 size={16}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground/60"
               />
               <input
                 type="email"
@@ -78,7 +78,7 @@ export function NewsletterSignup({
                   if (state === "error") setState("idle");
                 }}
                 placeholder="your@email.com"
-                className="w-full pl-10 pr-4 py-2 bg-secondary border border-border text-white placeholder:text-white/30 font-mono text-sm focus:outline-none focus:border-primary transition-colors"
+                className="w-full pl-10 pr-4 py-2 bg-secondary border border-border text-foreground placeholder:text-foreground/30 font-mono text-sm focus:outline-none focus:border-primary transition-colors"
                 disabled={state === "loading"}
                 required
               />
@@ -86,7 +86,7 @@ export function NewsletterSignup({
             <button
               type="submit"
               disabled={state === "loading"}
-              className="px-4 py-2 bg-primary text-white font-mono text-sm hover:bg-primary/80 transition-colors disabled:opacity-50"
+              className="px-4 py-2 bg-primary text-foreground font-mono text-sm hover:bg-primary/80 transition-colors disabled:opacity-50"
             >
               {state === "loading" ? "..." : <ArrowRight size={16} />}
             </button>
@@ -109,10 +109,10 @@ export function NewsletterSignup({
           <Mail size={20} className="text-primary" />
         </div>
         <div>
-          <h4 className="font-bebas text-lg text-white tracking-wide">
+          <h4 className="font-bebas text-lg text-foreground tracking-wide">
             Stay Updated
           </h4>
-          <p className="text-white/50 text-xs font-mono">
+          <p className="text-foreground/50 text-xs font-mono">
             No spam, unsubscribe anytime
           </p>
         </div>
@@ -125,7 +125,7 @@ export function NewsletterSignup({
         </div>
       ) : (
         <>
-          <p className="text-white/60 text-sm mb-4">
+          <p className="text-foreground/60 text-sm mb-4">
             Get notified about new blog posts on software engineering,
             architecture, and building products.
           </p>
@@ -134,7 +134,7 @@ export function NewsletterSignup({
             <div className="relative">
               <Mail
                 size={16}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground/60"
               />
               <input
                 type="email"
@@ -144,7 +144,7 @@ export function NewsletterSignup({
                   if (state === "error") setState("idle");
                 }}
                 placeholder="your@email.com"
-                className="w-full pl-10 pr-4 py-3 bg-background border border-border text-white placeholder:text-white/30 font-mono text-sm focus:outline-none focus:border-primary transition-colors"
+                className="w-full pl-10 pr-4 py-3 bg-background border border-border text-foreground placeholder:text-foreground/30 font-mono text-sm focus:outline-none focus:border-primary transition-colors"
                 disabled={state === "loading"}
                 required
               />
@@ -160,7 +160,7 @@ export function NewsletterSignup({
             <button
               type="submit"
               disabled={state === "loading"}
-              className="w-full py-3 bg-primary text-white font-mono text-sm hover:bg-primary/80 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full py-3 bg-primary text-foreground font-mono text-sm hover:bg-primary/80 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {state === "loading" ? (
                 "Subscribing..."

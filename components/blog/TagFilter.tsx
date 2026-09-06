@@ -20,10 +20,10 @@ export function TagFilter({ tags, selectedTag, onTagSelect }: TagFilterProps) {
     <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
       <button
         onClick={() => onTagSelect(null)}
-        className={`shrink-0 px-3 py-1.5 font-mono text-xs border transition-colors duration-200 ${
+        className={`shrink-0 px-3 py-1.5 text-xs border transition-colors duration-200 ${
           selectedTag === null
-            ? "bg-[#C41E3A] border-[#C41E3A] text-white"
-            : "bg-transparent border-[#2D2D2D] text-white/60 hover:border-[#C41E3A] hover:text-[#C41E3A]"
+            ? "bg-primary border-primary text-foreground"
+            : "bg-transparent border-border text-foreground/60 hover:border-primary hover:text-primary"
         }`}
       >
         All
@@ -32,10 +32,10 @@ export function TagFilter({ tags, selectedTag, onTagSelect }: TagFilterProps) {
         <button
           key={tag}
           onClick={() => handleTagClick(tag)}
-          className={`shrink-0 px-3 py-1.5 font-mono text-xs border transition-colors duration-200 ${
+          className={`shrink-0 px-3 py-1.5 text-xs border transition-colors duration-200 ${
             selectedTag === tag
-              ? "bg-[#C41E3A] border-[#C41E3A] text-white"
-              : "bg-transparent border-[#2D2D2D] text-white/60 hover:border-[#C41E3A] hover:text-[#C41E3A]"
+              ? "bg-primary border-primary text-foreground"
+              : "bg-transparent border-border text-foreground/60 hover:border-primary hover:text-primary"
           }`}
         >
           {tag}

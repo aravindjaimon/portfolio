@@ -1,6 +1,4 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import {
   BlogHeader,
   BlogContent,
@@ -8,7 +6,6 @@ import {
   TableOfContents,
   SocialShare,
   GiscusComments,
-  ReadingProgress,
   PostNavigation,
 } from "@/components/blog";
 import { getPostBySlug, getPublishedPosts, getAdjacentPosts } from "@/lib/blog";
@@ -137,23 +134,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         Skip to content
       </a>
 
-      {/* Reading progress indicator */}
-      <ReadingProgress />
-
-      <main className="min-h-screen bg-background">
-        {/* Navigation */}
-        <div className="border-b border-border">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4">
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 text-white/60 hover:text-primary font-mono text-sm transition-colors"
-            >
-              <ArrowLeft size={16} />
-              Back to Blog
-            </Link>
-          </div>
-        </div>
-
+      <main className="min-h-screen bg-background pt-16 md:pt-20">
         {/* Blog Header */}
         <BlogHeader post={post} />
 

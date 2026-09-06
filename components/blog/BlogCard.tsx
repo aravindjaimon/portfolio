@@ -13,7 +13,7 @@ interface BlogCardProps {
 export function BlogCard({ post, featured = false }: BlogCardProps) {
   return (
     <article
-      className={`group bg-[#1A1A1A] border border-[#2D2D2D] overflow-hidden transition-all duration-300 hover:border-[#C41E3A]/50 ${
+      className={`group bg-secondary border border-border overflow-hidden transition-all duration-300 hover:border-primary/50 ${
         featured ? "md:col-span-2 md:grid md:grid-cols-2" : ""
       }`}
     >
@@ -32,7 +32,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
               : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           }
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </Link>
 
       <div
@@ -45,7 +45,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
 
         <Link href={post.permalink}>
           <h2
-            className={`font-bebas tracking-wide text-white group-hover:text-[#C41E3A] transition-colors duration-300 ${
+            className={`font-bebas tracking-wide text-foreground group-hover:text-primary transition-colors duration-300 ${
               featured
                 ? "text-2xl sm:text-3xl md:text-4xl"
                 : "text-xl sm:text-2xl"
@@ -55,7 +55,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
           </h2>
         </Link>
 
-        <p className="text-white/60 text-sm sm:text-base mt-2 mb-4 line-clamp-2">
+        <p className="text-foreground/60 text-sm sm:text-base mt-2 mb-4 line-clamp-2">
           {post.description}
         </p>
 
@@ -64,13 +64,13 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
             <TagBadge key={tag} tag={tag} />
           ))}
           {post.tags.length > 3 && (
-            <span className="text-xs text-white/40 font-mono self-center">
+            <span className="text-xs text-foreground/60 font-mono self-center">
               +{post.tags.length - 3}
             </span>
           )}
         </div>
 
-        <div className="flex items-center justify-between text-xs text-white/40 font-mono pt-3 border-t border-[#2D2D2D]">
+        <div className="flex items-center justify-between text-xs text-foreground/60 font-mono pt-3 border-t border-border">
           <span>{post.author}</span>
           <time dateTime={post.publishedAt}>
             {formatDate(post.publishedAt)}

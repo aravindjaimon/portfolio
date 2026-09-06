@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import { BlogCard } from "@/components/blog";
+import { SplitHeading } from "@/components/motion/split-heading";
 import { getPostsByTag, getAllTags } from "@/lib/blog";
 import { siteConfig } from "@/lib/config";
 import type { Metadata } from "next";
@@ -54,31 +54,18 @@ export default async function TagPage({ params }: TagPageProps) {
 
   return (
     <main className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="border-b border-border">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4">
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-2 text-white/60 hover:text-primary font-mono text-sm transition-colors"
-          >
-            <ArrowLeft size={16} />
-            Back to Blog
-          </Link>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-        {/* Page Title */}
-        <div className="mb-12">
-          <p className="text-white/40 font-mono text-sm mb-2">Tagged with</p>
-          <h1 className="font-bebas text-4xl sm:text-5xl md:text-6xl text-white tracking-wide">
-            <span className="text-primary">{properTag}</span>
-          </h1>
-          <p className="text-white/60 mt-4">
-            {posts.length} article{posts.length !== 1 ? "s" : ""} found
+      <header className="bg-grid border-b border-border">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-32 pb-16">
+          <SplitHeading className="font-bebas text-6xl sm:text-7xl md:text-8xl leading-[0.9] tracking-wide text-foreground mb-4">
+            Tagged <span className="text-primary">{properTag}</span>
+          </SplitHeading>
+          <p className="text-foreground/70 text-lg font-mono">
+            {posts.length} article{posts.length !== 1 ? "s" : ""}
           </p>
         </div>
+      </header>
 
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         {/* Posts Grid */}
         {posts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -88,7 +75,7 @@ export default async function TagPage({ params }: TagPageProps) {
           </div>
         ) : (
           <div className="text-center py-16">
-            <p className="text-white/40 font-mono">
+            <p className="text-foreground/60 font-mono">
               No articles found with this tag.
             </p>
             <Link

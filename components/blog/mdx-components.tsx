@@ -37,7 +37,7 @@ function CopyButton({ code }: { code: string }) {
   return (
     <button
       onClick={handleCopy}
-      className="absolute top-3 right-3 p-2 bg-[#2D2D2D] hover:bg-[#3D3D3D] text-white/60 hover:text-white transition-colors rounded"
+      className="absolute top-3 right-3 p-2 bg-muted hover:bg-muted/70 text-foreground/60 hover:text-foreground transition-colors rounded"
       aria-label="Copy code"
     >
       {copied ? <Check size={16} /> : <Copy size={16} />}
@@ -73,11 +73,11 @@ function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
     return (
       <Tag
         id={headingId}
-        className={`font-bebas text-white tracking-wide group ${sizes[level]}`}
+        className={`font-bebas text-foreground tracking-wide group ${sizes[level]}`}
       >
         <a
           href={`#${headingId}`}
-          className="inline-flex items-center gap-2 hover:text-[#C41E3A] transition-colors"
+          className="inline-flex items-center gap-2 hover:text-primary transition-colors"
         >
           {children}
           <LinkIcon
@@ -85,6 +85,12 @@ function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
             className="opacity-0 group-hover:opacity-100 transition-opacity"
           />
         </a>
+        {level === 2 && (
+          <span
+            className="h-rule block h-px w-full bg-volt origin-left mt-3"
+            aria-hidden
+          />
+        )}
       </Tag>
     );
   };
@@ -118,7 +124,7 @@ function Pre({
     <div className="relative my-6 group">
       <pre
         {...props}
-        className="overflow-x-auto p-4 bg-[#1A1A1A] border border-[#2D2D2D] text-sm font-mono leading-relaxed"
+        className="overflow-x-auto p-4 bg-secondary border border-border text-sm font-mono leading-relaxed"
       >
         {children}
       </pre>
@@ -135,7 +141,7 @@ function Code({ children, ...props }: React.HTMLAttributes<HTMLElement>) {
   }
 
   return (
-    <code className="px-1.5 py-0.5 bg-[#1A1A1A] border border-[#2D2D2D] text-[#C41E3A] font-mono text-sm">
+    <code className="px-1.5 py-0.5 bg-secondary border border-border text-primary font-mono text-sm">
       {children}
     </code>
   );
@@ -147,7 +153,7 @@ function MDXImage({ src, alt }: { src?: string; alt?: string }) {
 
   return (
     <figure className="my-8">
-      <div className="relative aspect-video overflow-hidden border border-[#2D2D2D]">
+      <div className="relative aspect-video overflow-hidden border border-border">
         <Image
           src={src}
           alt={alt || ""}
@@ -157,7 +163,7 @@ function MDXImage({ src, alt }: { src?: string; alt?: string }) {
         />
       </div>
       {alt && (
-        <figcaption className="mt-2 text-center text-sm text-white/50 font-mono">
+        <figcaption className="mt-2 text-center text-sm text-foreground/50 font-mono">
           {alt}
         </figcaption>
       )}
@@ -168,8 +174,8 @@ function MDXImage({ src, alt }: { src?: string; alt?: string }) {
 // Blockquote styled as callout
 function Blockquote({ children }: { children: React.ReactNode }) {
   return (
-    <blockquote className="my-6 pl-4 border-l-4 border-[#C41E3A] bg-[#1A1A1A] py-4 pr-4">
-      <div className="text-white/80 italic">{children}</div>
+    <blockquote className="my-6 pl-4 border-l border-primary bg-secondary py-4 pr-4">
+      <div className="text-foreground/80 italic">{children}</div>
     </blockquote>
   );
 }
@@ -178,7 +184,7 @@ function Blockquote({ children }: { children: React.ReactNode }) {
 function Table({ children }: { children: React.ReactNode }) {
   return (
     <div className="my-6 overflow-x-auto">
-      <table className="w-full border-collapse border border-[#2D2D2D]">
+      <table className="w-full border-collapse border border-border">
         {children}
       </table>
     </div>
@@ -187,7 +193,7 @@ function Table({ children }: { children: React.ReactNode }) {
 
 function Th({ children }: { children: React.ReactNode }) {
   return (
-    <th className="border border-[#2D2D2D] bg-[#1A1A1A] px-4 py-2 text-left font-mono text-sm text-white">
+    <th className="border border-border bg-secondary px-4 py-2 text-left font-mono text-sm text-foreground">
       {children}
     </th>
   );
@@ -195,7 +201,7 @@ function Th({ children }: { children: React.ReactNode }) {
 
 function Td({ children }: { children: React.ReactNode }) {
   return (
-    <td className="border border-[#2D2D2D] px-4 py-2 text-sm text-white/70">
+    <td className="border border-border px-4 py-2 text-sm text-foreground/70">
       {children}
     </td>
   );
@@ -203,7 +209,7 @@ function Td({ children }: { children: React.ReactNode }) {
 
 // Paragraph
 function P({ children }: { children: React.ReactNode }) {
-  return <p className="my-4 text-white/70 leading-relaxed">{children}</p>;
+  return <p className="my-4 text-foreground/70 leading-relaxed">{children}</p>;
 }
 
 // Links
@@ -220,7 +226,7 @@ function A({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-[#C41E3A] hover:underline"
+        className="text-primary hover:underline"
         {...props}
       >
         {children}
@@ -229,7 +235,7 @@ function A({
   }
 
   return (
-    <Link href={href || "#"} className="text-[#C41E3A] hover:underline">
+    <Link href={href || "#"} className="text-primary hover:underline">
       {children}
     </Link>
   );
@@ -238,13 +244,15 @@ function A({
 // Lists
 function Ul({ children }: { children: React.ReactNode }) {
   return (
-    <ul className="my-4 ml-6 list-disc text-white/70 space-y-2">{children}</ul>
+    <ul className="my-4 ml-6 list-disc text-foreground/70 space-y-2">
+      {children}
+    </ul>
   );
 }
 
 function Ol({ children }: { children: React.ReactNode }) {
   return (
-    <ol className="my-4 ml-6 list-decimal text-white/70 space-y-2">
+    <ol className="my-4 ml-6 list-decimal text-foreground/70 space-y-2">
       {children}
     </ol>
   );
@@ -256,12 +264,12 @@ function Li({ children }: { children: React.ReactNode }) {
 
 // Horizontal rule
 function Hr() {
-  return <hr className="my-8 border-[#2D2D2D]" />;
+  return <hr className="my-8 border-border" />;
 }
 
 // Strong/Bold
 function Strong({ children }: { children: React.ReactNode }) {
-  return <strong className="font-semibold text-white">{children}</strong>;
+  return <strong className="font-semibold text-foreground">{children}</strong>;
 }
 
 // Export all MDX components
