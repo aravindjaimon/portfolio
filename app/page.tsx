@@ -23,7 +23,7 @@ export default function Home() {
   const [teamGrowth, usersServed] = impactMetrics;
 
   return (
-    <main className="bg-background">
+    <main id="main-content" className="bg-background">
       <Hero profile={personalInfo} callouts={[usersServed, teamGrowth]} />
       <Ticker metrics={impactMetrics} />
       <Story milestones={storyMilestones} />

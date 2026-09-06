@@ -53,7 +53,7 @@ export default async function TagPage({ params }: TagPageProps) {
     decodedTag;
 
   return (
-    <main className="min-h-screen bg-background">
+    <main id="main-content" className="min-h-screen bg-background">
       <header className="bg-grid border-b border-border">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-32 pb-16">
           <SplitHeading className="font-bebas text-6xl sm:text-7xl md:text-8xl leading-[0.9] tracking-wide text-foreground mb-4">

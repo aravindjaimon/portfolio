@@ -1,14 +1,13 @@
 ---
 title: "Building RaftStack: How a CLI Transformed Our Development Workflow"
 description: "Why I spent a week building an NPM CLI tool that reduced our project setup time from 2-3 days to 20 seconds, and how it enforces code quality across 30+ engineers."
-publishedAt: 2025-01-22
+publishedAt: 2026-01-22
 updatedAt: 2026-02-03
 coverImage: /images/blog/raftstack-cover.png
 tags:
   - CLI
   - TypeScript
   - Developer Experience
-  - Open Source
   - Engineering Culture
 author: Aravind Jaimon
 draft: false
@@ -20,7 +19,7 @@ _**Update (February 2026):** This post has been updated to reflect major feature
 
 ---
 
-Last week, I shipped something that's been brewing in my mind for months: [RaftStack](https://github.com/Raft-Labs/raftstack), an NPM CLI tool that standardizes how we initialize and maintain TypeScript projects at RaftLabs. What started as an idea to improve our development workflow turned into a full development framework that's now adopted by all 30+ engineers in our organization.
+In January 2026 I shipped something that had been brewing in my mind for months: [RaftStack](https://www.npmjs.com/package/@raftlabs/raftstack), an NPM CLI tool that standardizes how we initialize and maintain TypeScript projects at RaftLabs. What started as an idea to improve our development workflow turned into a full development framework that's now adopted by all 30+ engineers in our organization.
 
 Here's the story of why I built it, what problems it solves, and how 20 seconds of setup time now saves us days of repetitive work.
 
@@ -329,10 +328,7 @@ This workflow is now automatic. You literally can't skip it, because Git won't l
 
 ### TDD Impact
 
-Since adding TDD enforcement:
-- **Zero broken builds** pushed to main in the last 2 months
-- **Test coverage** across projects: 72% → 87% average
-- **Bug detection** shifted left—issues caught before code review
+Since adding TDD enforcement, bug detection has shifted left—issues are caught before code review, not in production. The numbers are in [The Impact](#the-impact) below.
 - **Confidence** in refactoring—comprehensive tests act as safety nets
 
 The best part? Developers aren't complaining. They're relieved. Nobody _wants_ to push broken code; they just forget to run tests sometimes. Now Git reminds them.
@@ -562,7 +558,7 @@ This isn't about policing—it's about visibility. Teams can see where they stan
 
 ## The Impact
 
-After rolling this out organization-wide (v1.0 in January 2025, v1.10 in December 2025), we've seen:
+After rolling this out organization-wide (v1.0 in January 2026, v1.10 in February 2026), we've seen:
 
 ### Efficiency Gains
 - **Project setup time**: 2-3 days → 20 seconds
@@ -587,7 +583,7 @@ But the biggest win? **Confidence**. When I look at any RaftLabs repository now,
 
 ## Try It Yourself
 
-RaftStack is open source and works with any TypeScript project:
+RaftStack is published on npm and works with any TypeScript project:
 
 ```bash
 # Full setup: Git hooks, commit standards, AI skills
@@ -603,7 +599,7 @@ pnpm dlx @raftlabs/raftstack setup-protection
 pnpm dlx @raftlabs/raftstack metrics
 ```
 
-Check out the [GitHub repository](https://github.com/Raft-Labs/raftstack) for full documentation, or install it directly from [NPM](https://www.npmjs.com/package/@raftlabs/raftstack).
+Full documentation is on the [npm package page](https://www.npmjs.com/package/@raftlabs/raftstack).
 
 ### Using Claude Code Skills
 

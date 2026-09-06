@@ -34,7 +34,12 @@ function BrandName({ name }: { name: string }) {
     <>
       {name.split(" ").map((word, i) => (
         <span key={word} className="inline-block whitespace-nowrap">
-          {i > 0 && <span className="inline-block w-[0.18em]" aria-hidden />}
+          {i > 0 && (
+            <>
+              {" "}
+              <span className="inline-block w-[0.18em]" aria-hidden />
+            </>
+          )}
           <span className="text-primary">{word[0]}</span>
           {word.slice(1)}
         </span>
@@ -52,14 +57,16 @@ const Hero = ({ profile, callouts }: HeroProps) => {
     const layer = section.querySelector<HTMLElement>(".cells")!;
     const cells = utils.$(".cell");
 
-    // Breathing 13×13 grid from the centre
-    animate(cells, {
-      scale: [0.8, 0.45, 0.8],
-      duration: 2400,
-      delay: stagger(50, { grid: [GRID, GRID], from: "center" }),
-      loop: true,
-      ease: "inOutSine",
-    });
+    // Breathing 13×13 grid from the centre — desktop only; an infinite 169-node loop is wasted battery on phones
+    if (!matches.mobile) {
+      animate(cells, {
+        scale: [0.8, 0.45, 0.8],
+        duration: 2400,
+        delay: stagger(50, { grid: [GRID, GRID], from: "center" }),
+        loop: true,
+        ease: "inOutSine",
+      });
+    }
 
     // Pointer ripple in volt from the nearest cell
     let last = 0;
@@ -90,7 +97,7 @@ const Hero = ({ profile, callouts }: HeroProps) => {
         ease: "out(2)",
       });
     };
-    section.addEventListener("pointermove", ripple);
+    if (!matches.mobile) section.addEventListener("pointermove", ripple);
 
     // Name letters spring up, then the meta column follows
     const { chars } = splitText(".hero-name", { chars: true });
@@ -228,6 +235,14 @@ const Hero = ({ profile, callouts }: HeroProps) => {
             </p>
             <p className="text-foreground/70 text-base md:text-lg leading-relaxed max-w-md">
               {profile.tagline}
+            </p>
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-volt">
+              {profile.availability}
+            </p>
+            {/* The dimension callouts are decorative and hidden below md; this is the readable copy of the same two numbers */}
+            <p className="md:hidden font-mono text-[11px] uppercase tracking-[0.2em] text-foreground/60">
+              {callouts[0].value} {callouts[0].label} · {callouts[1].value}{" "}
+              {callouts[1].label}
             </p>
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <a

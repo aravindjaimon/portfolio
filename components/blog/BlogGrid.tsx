@@ -61,10 +61,13 @@ export function BlogGrid({ posts, featured, tags }: BlogGridProps) {
 
   return (
     <div ref={root}>
-      <div className="space-y-4 mb-10">
-        <BlogSearch onSearch={onSearch} />
-        <TagFilter tags={tags} selectedTag={tag} onTagSelect={onTag} />
-      </div>
+      {/* Search and filters over a handful of posts read as an empty product */}
+      {posts.length >= 4 && (
+        <div className="space-y-4 mb-10">
+          <BlogSearch onSearch={onSearch} />
+          <TagFilter tags={tags} selectedTag={tag} onTagSelect={onTag} />
+        </div>
+      )}
 
       {showFeatured && (
         <section className="mb-12" aria-labelledby="featured-title">

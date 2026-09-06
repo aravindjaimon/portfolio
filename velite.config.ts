@@ -44,7 +44,7 @@ const posts = defineCollection({
       updatedAt: s.isodate().optional(),
       coverImage: s.string(),
       tags: s.array(s.string()),
-      author: s.string().default("Ajay"),
+      author: s.string().default("Aravind Jaimon"),
       draft: s.boolean().default(false),
       featured: s.boolean().default(false),
       difficulty: s
@@ -119,6 +119,8 @@ const profile = defineCollection({
     portfolio: s.string(),
     npm: s.string(),
     location: s.string(),
+    /** One-line hiring status shown in the hero and contact */
+    availability: s.string(),
   }),
 });
 

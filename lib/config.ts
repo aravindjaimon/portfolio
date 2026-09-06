@@ -1,7 +1,9 @@
 /**
  * Centralized site configuration
- * Single source of truth for URLs, metadata, and shared constants
+ * Contact details come from content/data/profile.yaml (via velite); only the
+ * base URL and page title live here.
  */
+import { profile } from "#site/content";
 
 export const siteConfig = {
   /** Base URL for the production site */
@@ -14,12 +16,12 @@ export const siteConfig = {
   title: "Aravind Jaimon | Lead Software Engineer",
 
   /** Contact email */
-  email: "dev@aravindjaimon.com",
+  email: profile.email,
 
   /** Social links */
   social: {
-    github: "https://github.com/aravindjaimon",
-    linkedin: "https://linkedin.com/in/aravindjaimon",
+    github: profile.github,
+    linkedin: profile.linkedin,
   },
 } as const;
 

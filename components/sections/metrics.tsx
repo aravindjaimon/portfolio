@@ -124,6 +124,13 @@ const Metrics = ({ metrics }: MetricsProps) => {
                   i % 2 === 1 ? "border-l" : ""
                 } ${i >= 2 ? "border-t" : ""} md:border-l md:first:border-l-0 md:[&:nth-child(5)]:border-l-0 md:[&:nth-child(-n+4)]:border-t-0`}
               >
+                <dt
+                  className={`order-2 font-mono uppercase tracking-[0.2em] text-foreground/60 mt-2 ${
+                    i < 4 ? "text-[11px] sm:text-xs" : "text-[10px]"
+                  }`}
+                >
+                  {metric.label}
+                </dt>
                 <dd
                   className={`order-1 font-bebas tracking-wide tabular-nums whitespace-nowrap ${
                     i < 4
@@ -133,13 +140,6 @@ const Metrics = ({ metrics }: MetricsProps) => {
                 >
                   <CountUp value={metric.value} />
                 </dd>
-                <dt
-                  className={`order-2 font-mono uppercase tracking-[0.2em] text-foreground/60 mt-2 ${
-                    i < 4 ? "text-[11px] sm:text-xs" : "text-[10px]"
-                  }`}
-                >
-                  {metric.label}
-                </dt>
               </div>
             ))}
           </dl>

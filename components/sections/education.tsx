@@ -85,7 +85,7 @@ const Education = ({
         <div className="ledger grid md:grid-cols-3 gap-12 md:gap-8">
           {columns.map((col, ci) => (
             <div key={col.title}>
-              <h3 className="font-mono text-xs uppercase tracking-[0.25em] text-foreground/50 pb-3 border-b border-border mb-2">
+              <h3 className="font-mono text-xs uppercase tracking-[0.25em] text-foreground/60 pb-3 border-b border-border mb-2">
                 {col.title}
               </h3>
               <ul>
@@ -106,7 +106,7 @@ const Education = ({
                       </p>
                       <p className="text-foreground/70 mt-1">{row.sub}</p>
                       {row.foot && (
-                        <p className="font-mono text-xs text-foreground/50 mt-2">
+                        <p className="font-mono text-xs text-foreground/60 mt-2">
                           {row.foot}
                         </p>
                       )}

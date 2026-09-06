@@ -126,15 +126,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Skip to content link for accessibility */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:font-medium"
+      <main
+        id="main-content"
+        className="min-h-screen bg-background pt-16 md:pt-20"
       >
-        Skip to content
-      </a>
-
-      <main className="min-h-screen bg-background pt-16 md:pt-20">
         {/* Blog Header */}
         <BlogHeader post={post} />
 
@@ -142,7 +137,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
           <div className="lg:grid lg:grid-cols-[1fr_250px] lg:gap-8">
             {/* Main Content */}
-            <div id="main-content" className="max-w-4xl">
+            <div className="max-w-4xl">
               {/* Mobile TOC - only shown on mobile */}
               <div className="lg:hidden">
                 <TableOfContents items={post.toc} variant="mobile" />

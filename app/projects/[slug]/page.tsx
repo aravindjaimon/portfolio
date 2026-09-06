@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowUpRight, Calendar, Users, Briefcase } from "lucide-react";
-import { getProjectBySlug, getAllProjectSlugs } from "@/lib/data";
+import { getProjectBySlug, getAllProjectSlugs, projects } from "@/lib/data";
 import { siteConfig } from "@/lib/config";
 import { BlogContent } from "@/components/blog";
 import { CountUp } from "@/components/motion/count-up";
@@ -58,12 +58,20 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
     notFound();
   }
 
+  const next = projects[(projects.indexOf(project) + 1) % projects.length];
+
   return (
-    <main className="min-h-screen bg-background">
+    <main id="main-content" className="min-h-screen bg-background">
       {/* Header */}
       <header className="bg-grid border-b border-border">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-32 pb-16 grid gap-10 md:grid-cols-[1fr_auto] items-end">
           <div>
+            <Link
+              href="/#work"
+              className="inline-block mb-8 font-mono text-[11px] uppercase tracking-[0.25em] text-foreground/60 hover:text-volt transition-colors"
+            >
+              ← Systems shipped
+            </Link>
             <h1 className="font-bebas text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-foreground leading-[0.9] tracking-wide mb-5 text-balance">
               {project.title}
             </h1>
@@ -160,10 +168,17 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
               <ArrowUpRight size={14} aria-hidden />
             </a>
             <Link
-              href="/#work"
+              href={`/projects/${next.slug}`}
               className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-border text-foreground/70 font-bebas text-xl tracking-[0.1em] hover:border-foreground hover:text-foreground transition-colors"
             >
-              More case studies
+              Next: {next.title}
+              <ArrowUpRight size={14} aria-hidden />
+            </Link>
+            <Link
+              href="/#work"
+              className="inline-flex items-center justify-center px-6 py-3 text-foreground/60 font-bebas text-xl tracking-[0.1em] hover:text-foreground transition-colors"
+            >
+              All case studies
             </Link>
           </div>
         </section>

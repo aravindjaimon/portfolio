@@ -53,7 +53,7 @@ export function BlogHeader({ post }: BlogHeaderProps) {
           </div>
 
           {/* Author and date */}
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm text-foreground/50 font-mono pb-6 border-b border-border">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm text-foreground/60 font-mono pb-6 border-b border-border">
             <span className="flex items-center gap-2">
               <User size={16} />
               {post.author}

@@ -1,13 +1,13 @@
 items:
   - phase: THE BEGINNING
     date: October 2020
-    description: Joined as the FIRST engineer at RaftLabs. Started with nothing but vision and code.
+    description: Joined RaftLabs as its first engineer. No codebase, no standards, no team.
   - phase: THE BUILDING
     date: 2020-2022
-    description: Established technical culture, coding standards, architectural roadmap. Every system, every pattern, every decision — built from scratch.
+    description: Chose the stack (React, Node, Hasura, AWS Lambda) and set the coding standards and CI that every RaftLabs project still runs on.
   - phase: THE SCALING
     date: 2022-2024
-    description: 1 → 30+ engineers. Mentored 10+ developers. Created the engineering DNA that powers the company today.
+    description: Team grew 1 → 30+. Mentored 10+ engineers and led 3–5 person teams on client systems.
   - phase: THE IMPACT
     date: 2024-Present
-    description: 1M+ users served. 10,000 events/minute processed. 97% performance improvements delivered. 50+ production systems shipped.
+    description: 1M+ users served. 10,000 events/minute processed. Sync times cut 97%. RaftStack adopted by all 30+ engineers.

@@ -1,7 +1,7 @@
 import { getPublishedPosts } from "@/lib/blog";
 import { siteConfig } from "@/lib/config";
 
-const { baseUrl } = siteConfig;
+const { baseUrl, email } = siteConfig;
 
 function escapeXml(text: string): string {
   return text
@@ -38,7 +38,7 @@ export async function GET() {
       <guid isPermaLink="true">${baseUrl}${post.permalink}</guid>
       <description>${escapeXml(post.description)}</description>
       <pubDate>${new Date(post.publishedAt).toUTCString()}</pubDate>
-      <author>aravindjaimon@gmail.com (${escapeXml(post.author)})</author>
+      <author>${email} (${escapeXml(post.author)})</author>
       ${post.tags.map((tag) => `<category>${escapeXml(tag)}</category>`).join("\n      ")}
     </item>`
       )

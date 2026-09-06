@@ -42,7 +42,7 @@ const Experience = ({ experience }: ExperienceProps) => {
 
     roles.forEach((role, i) => {
       const at = i * STEP;
-      tl.add(role, { opacity: [0.15, 1], y: [24, 0], duration: 400 }, at);
+      tl.add(role, { opacity: [0.6, 1], y: [24, 0], duration: 400 }, at);
       tl.add(
         splitText(role.querySelector(".role-highlights")!, { words: true })
           .words,

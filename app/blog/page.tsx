@@ -16,7 +16,7 @@ export default function BlogPage() {
   const tags = getAllTags();
 
   return (
-    <main className="min-h-screen bg-background">
+    <main id="main-content" className="min-h-screen bg-background">
       <header className="bg-grid border-b border-border">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-32 pb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
           <div>

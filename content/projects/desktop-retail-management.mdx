@@ -17,8 +17,8 @@ metrics:
     label: Daily Transactions
   - value: 99.9%
     label: Data Uptime
-  - value: 10%
-    label: Less Discrepancy
+  - value: 67%
+    label: Fewer Discrepancies
 stack:
   - React
   - TypeScript
@@ -36,7 +36,7 @@ glyph: terminal
 
 ## Overview
 
-Rebuilt a critical desktop application for a retail chain managing hundreds of stores. The legacy Electron-based POS client suffered from slow synchronization and high memory usage, directly impacting store operations and causing inventory discrepancies.
+As Full Stack Developer on a team of 3, I rebuilt a critical desktop application for a retail chain managing hundreds of stores. The legacy Electron-based POS client suffered from slow synchronization and high memory usage, directly impacting store operations and causing inventory discrepancies.
 
 ## The Challenge
 
@@ -49,7 +49,7 @@ Legacy sync system taking 5+ minutes, causing operational delays for retail stor
 
 ## Technical Approach
 
-- Rebuilt using Tauri with Rust backend for 10x smaller binary and better performance
+- Rebuilt using Tauri with Rust backend for an ~80% smaller binary and better performance
 - Implemented delta sync algorithm - only changed records transfer
 - Created local SQLite cache with conflict resolution for offline-first operation
 - Built background sync service that runs without blocking UI operations

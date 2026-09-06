@@ -112,7 +112,7 @@ export function NewsletterSignup({
           <h4 className="font-bebas text-lg text-foreground tracking-wide">
             Stay Updated
           </h4>
-          <p className="text-foreground/50 text-xs font-mono">
+          <p className="text-foreground/60 text-xs font-mono">
             No spam, unsubscribe anytime
           </p>
         </div>

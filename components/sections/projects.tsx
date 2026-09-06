@@ -195,10 +195,13 @@ const Projects = ({ projects }: ProjectsProps) => {
                       {metrics.map((metric) => (
                         <div
                           key={metric.label}
-                          className={`bg-background ${tier === "compact" ? "p-3" : "p-4"}`}
+                          className={`flex flex-col bg-background ${tier === "compact" ? "p-3" : "p-4"}`}
                         >
+                          <dt className="order-2 font-mono text-[11px] uppercase tracking-[0.15em] text-foreground/60 mt-1">
+                            {metric.label}
+                          </dt>
                           <dd
-                            className={`font-bebas text-foreground tracking-wide tabular-nums ${
+                            className={`order-1 font-bebas text-foreground tracking-wide tabular-nums ${
                               tier === "lead"
                                 ? "text-4xl lg:text-5xl"
                                 : tier === "wide"
@@ -208,9 +211,6 @@ const Projects = ({ projects }: ProjectsProps) => {
                           >
                             <CountUp value={metric.value} />
                           </dd>
-                          <dt className="font-mono text-[11px] uppercase tracking-[0.15em] text-foreground/60 mt-1">
-                            {metric.label}
-                          </dt>
                         </div>
                       ))}
                     </dl>

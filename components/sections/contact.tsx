@@ -111,10 +111,11 @@ const Contact = ({ profile }: ContactProps) => {
             Let&apos;s <span className="text-primary">build</span>
           </h2>
           <p className="mt-8 text-foreground/70 text-lg md:text-xl leading-relaxed max-w-xl">
-            Currently leading engineering at RaftLabs. Open to lead and staff
-            roles, and to serious conversations about architecture, AI, and
+            Currently leading engineering at RaftLabs. {profile.availability}{" "}
+            Also open to serious conversations about architecture, AI, and
             scaling teams.
           </p>
+          {/* TODO(user): add a résumé download here once a PDF exists (profile.resume) */}
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <a
               href={`mailto:${profile.email}`}

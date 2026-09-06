@@ -3,23 +3,23 @@ items:
     role: Lead Software Engineer
     company: RaftLabs
     highlights:
-      - Driving technical strategy
-      - AI-assisted development adoption
-      - Engineering culture architect
+      - Built RaftStack, the TypeScript CLI all 30+ engineers use — project setup 2–3 days → 20 s, test coverage 72% → 87%, broken main builds ~2–3/week → 0
+      - Rolled out AI-assisted development org-wide (TDD enforcement, 7 Claude Code skills, planning protocol)
+      - Own technical strategy and architecture review across client systems in iGaming, EdTech and Gaming
   - period: 2022 - 2024
     role: Senior Software Engineer
     company: RaftLabs
     highlights:
-      - System architecture leadership
-      - Performance optimization
-      - Team scaling initiatives
-  - period: 2020 - 2022
+      - Led 3–5 engineer teams shipping the affiliate platform (1M+ players, 1K → 10K events/min, 99.9% attribution accuracy)
+      - Rebuilt a retail POS client on Tauri/Rust — sync 5+ min → under 10 s, memory 800 MB → under 100 MB
+      - Mentored 10+ engineers as the team scaled toward 30
+  - period: Oct 2020 - 2022
     role: Software Engineer
     company: RaftLabs
     highlights:
-      - First engineering hire
-      - Foundation building
-      - Full-stack development
+      - First engineering hire — set up the coding standards, CI and architecture patterns still in use
+      - Shipped the first production systems on the React / Node / Hasura / Lambda stack that became the company default
+      - Delivered the RAG assistant and cross-platform suite on 2–5 person teams
   - period: "2020"
     role: Full Stack Intern
     company: Techtonic

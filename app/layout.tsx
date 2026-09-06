@@ -53,14 +53,12 @@ export const metadata: Metadata = {
     siteName: "Aravind Jaimon",
     locale: "en_US",
     type: "website",
-    images: ["/opengraph-image"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Aravind Jaimon | Lead Software Engineer",
     description:
       "First engineering hire → 30+ engineer team. Building systems for millions.",
-    images: ["/twitter-image"],
   },
   robots: {
     index: true,
@@ -117,6 +115,12 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${bebasNeue.variable} ${jetBrainsMono.variable} antialiased`}
       >
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:font-medium"
+        >
+          Skip to content
+        </a>
         <Header />
         {children}
         <Footer profile={personalInfo} />
