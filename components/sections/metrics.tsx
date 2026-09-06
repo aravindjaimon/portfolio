@@ -10,9 +10,9 @@ interface MetricsProps {
   metrics: ImpactMetric[];
 }
 
-/* Serpentine paths through the cell centres of a 4×2 (desktop) and 2×4 (mobile) grid */
-const PATH_DESKTOP = "M50 50 H350 V150 H50";
-const PATH_MOBILE = "M50 50 H150 V150 H50 V250 H150 V350 H50";
+/* Serpentine rails along the base of each row — a dimension line under the figures, never through them */
+const PATH_DESKTOP = "M12 91 H388 V191 H12";
+const PATH_MOBILE = "M12 91 H188 V191 H12 V291 H188 V391 H12";
 
 const Metrics = ({ metrics }: MetricsProps) => {
   const root = useRef<HTMLElement>(null);
