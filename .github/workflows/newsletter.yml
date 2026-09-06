@@ -1,0 +1,106 @@
+name: Send Newsletter for New Blog Posts
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "content/blog/*.mdx"
+
+  # Allow manual triggering from GitHub Actions UI
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "Specific post slug to send (leave empty for all unsent)"
+        required: false
+        type: string
+
+jobs:
+  send-newsletter:
+    runs-on: ubuntu-latest
+    env:
+      SITE_URL: ${{ vars.SITE_URL || 'https://www.aravindjaimon.com' }}
+      ADMIN_SECRET: ${{ secrets.NEWSLETTER_ADMIN_SECRET }}
+      INPUT_SLUG: ${{ github.event.inputs.slug }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect changed blog posts
+        id: changed-posts
+        run: |
+          # Get changed MDX files
+          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD -- 'content/blog/*.mdx' 2>/dev/null || echo "")
+
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "No blog posts changed"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "Changed blog posts:"
+            echo "$CHANGED_FILES"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Wait for Vercel deployment
+        if: steps.changed-posts.outputs.has_changes == 'true' || github.event_name == 'workflow_dispatch'
+        run: |
+          echo "Waiting 90 seconds for Vercel deployment to complete..."
+          sleep 90
+          echo "Proceeding with newsletter send"
+
+      - name: Send newsletter (specific post)
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.slug != ''
+        run: |
+          echo "Sending newsletter for specific post..."
+
+          # Validate slug format (alphanumeric, hyphens only)
+          if ! echo "$INPUT_SLUG" | grep -qE '^[a-zA-Z0-9-]+$'; then
+            echo "::error::Invalid slug format"
+            exit 1
+          fi
+
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            -H "Authorization: Bearer $ADMIN_SECRET" \
+            -H "Content-Type: application/json" \
+            -d "{\"slug\": \"$INPUT_SLUG\"}" \
+            "$SITE_URL/api/newsletter/send")
+
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+
+          echo "Response: $BODY"
+          echo "Status: $HTTP_CODE"
+
+          if [ "$HTTP_CODE" -ge 400 ]; then
+            echo "::error::Newsletter send failed with status $HTTP_CODE"
+            exit 1
+          fi
+
+      - name: Send newsletter (all unsent)
+        if: (steps.changed-posts.outputs.has_changes == 'true' || (github.event_name == 'workflow_dispatch' && github.event.inputs.slug == ''))
+        run: |
+          echo "Sending newsletters for all unsent posts..."
+
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            -H "Authorization: Bearer $ADMIN_SECRET" \
+            -H "Content-Type: application/json" \
+            -d '{"sendAll": true}' \
+            "$SITE_URL/api/newsletter/send")
+
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+
+          echo "Response: $BODY"
+          echo "Status: $HTTP_CODE"
+
+          if [ "$HTTP_CODE" -ge 400 ]; then
+            echo "::error::Newsletter send failed with status $HTTP_CODE"
+            exit 1
+          fi
+
+          # Parse and display results
+          echo ""
+          echo "=== Newsletter Send Summary ==="
+          echo "$BODY" | jq -r '.message // "Unknown result"' 2>/dev/null || echo "$BODY"

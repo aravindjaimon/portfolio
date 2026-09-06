@@ -1,0 +1,81 @@
+---
+id: 5
+title: Multi-Game Platform
+subtitle: High-Performance Gaming Portal
+industry: Gaming
+role: Lead Software Engineer
+challenge: Create a high-performance gaming portal hosting 2000+ games with cryptocurrency payment integration plans
+solution:
+  - Advanced caching strategies
+  - Optimized asset delivery
+  - Responsive design for all devices
+  - Scalable architecture
+metrics:
+  - value: 2K+
+    label: Games Hosted
+  - value: 50%
+    label: Faster Load
+  - value: 3x
+    label: User Capacity
+  - value: Mobile
+    label: Optimized
+stack:
+  - React
+  - TypeScript
+  - Next.js
+  - Tailwind CSS
+  - Radix UI
+  - .NET
+  - MSSQL
+  - Vercel
+timeline: 5 months
+teamSize: 3 engineers
+glyph: joystick
+---
+
+## Overview
+
+As Lead Software Engineer on a team of 3, I architected and built a high-performance gaming portal hosting over 2000 casual and HTML5 games. The platform needed to handle traffic spikes, deliver games quickly across global audiences, and provide a seamless mobile experience while preparing for future cryptocurrency payment integration.
+
+## The Challenge
+
+Create a high-performance gaming portal hosting 2000+ games with cryptocurrency payment integration plans.
+
+- Initial page loads took 4+ seconds due to unoptimized game thumbnails and metadata
+- Game iframe loading caused layout shifts and poor Core Web Vitals scores
+- Mobile users represented 60% of traffic but had poor touch controls
+- Existing architecture couldn't handle concurrent user spikes during promotions
+
+## Technical Approach
+
+- Implemented ISR (Incremental Static Regeneration) with Next.js for game catalog pages
+- Built lazy-loading system with blur placeholders for 2000+ game thumbnails
+- Created responsive game container with touch-optimized controls overlay
+- Designed edge caching strategy using Vercel's global CDN
+
+## Key Decisions
+
+### Next.js ISR over traditional SSR
+
+Static generation with revalidation balanced freshness with performance
+
+### Vercel Edge Network over custom CDN
+
+Zero-config global distribution with automatic cache invalidation
+
+### Radix UI for accessibility
+
+Gaming audience includes users with disabilities - accessibility is not optional
+
+## Results
+
+- Page load time reduced from 4s to under 2s (50% improvement)
+- Core Web Vitals scores improved to green across all metrics
+- Platform handles 3x previous concurrent user capacity
+- Mobile bounce rate decreased by 35% after touch optimization
+
+## Lessons Learned
+
+1. Image optimization is often the lowest-hanging fruit for performance
+2. ISR is powerful but requires careful cache invalidation strategy
+3. Mobile-first isn't just responsive design - it's rethinking interactions

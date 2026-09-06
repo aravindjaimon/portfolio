@@ -1,0 +1,80 @@
+---
+id: 4
+title: Cross-Platform Productivity Suite
+subtitle: Virtual Workspace & Collaboration Platform
+industry: Enterprise SaaS
+role: Lead Developer
+challenge: Build a unified productivity platform for remote teams across Web, macOS, Windows, and Linux
+solution:
+  - Monorepo architecture for code sharing
+  - 3D virtual meeting rooms (Three.js)
+  - Real-time video/audio (Agora SDK)
+  - Cross-platform builds
+metrics:
+  - value: "4"
+    label: Platforms
+  - value: 85%
+    label: Code Reuse
+  - value: 25%
+    label: Faster Load
+  - value: Real-time
+    label: Collaboration
+stack:
+  - Electron.js
+  - React
+  - Node.js
+  - Serverless
+  - Hasura
+  - Three.js
+  - Konva.js
+  - Agora SDK
+  - Fluent UI
+timeline: 10 months
+teamSize: 5 engineers
+glyph: cube
+---
+
+## Overview
+
+As Lead Developer on a team of 5, I led development of a virtual workspace platform designed for distributed teams. The product combined video conferencing, spatial 3D meeting rooms, real-time whiteboarding, and document collaboration - all accessible from web browsers and native desktop applications.
+
+## The Challenge
+
+Build a unified productivity platform for remote teams across Web, macOS, Windows, and Linux.
+
+- Teams using 5+ different tools for remote collaboration (Zoom, Miro, Slack, etc.)
+- No spatial awareness in meetings - participants felt disconnected
+- Platform-specific apps meant inconsistent experiences across teams
+
+## Technical Approach
+
+- Architected monorepo with shared React component library across web and Electron
+- Built 3D meeting rooms using Three.js with spatial audio positioning
+- Integrated Agora SDK for low-latency video with custom layout engine
+- Created real-time whiteboard using Konva.js with CRDT-based synchronization
+
+## Key Decisions
+
+### Monorepo with Nx over separate repositories
+
+Enabled 85% code sharing between web and desktop while maintaining platform-specific optimizations
+
+### Three.js for 3D over Unity WebGL
+
+Faster load times and better integration with React ecosystem
+
+### Agora over self-hosted WebRTC
+
+Global edge network provided consistent quality without infrastructure complexity
+
+## Results
+
+- 85% code reuse across web, macOS, Windows, and Linux clients
+- 25% faster initial load compared to competing Electron apps
+- Spatial audio meetings increased perceived engagement in user studies
+
+## Lessons Learned
+
+1. Monorepos require investment in tooling but pay dividends at scale
+2. 3D web experiences need aggressive LOD (level of detail) management
+3. Real-time collaboration needs conflict resolution strategy from day one
