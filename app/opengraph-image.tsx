@@ -1,18 +1,11 @@
 import { ImageResponse } from "next/og";
 import { bebasFonts } from "./fonts/bebas";
-import {
-  ARCH_PATH,
-  KEYSTONE_PATH,
-  MARK_VIEWBOX,
-  RED,
-  VOLT,
-} from "@/components/chrome/mark-geometry";
 
 export const alt = "Aravind Jaimon - Lead Software Engineer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-/** Share card: the keystone "AJ" mark top-left, the name bottom-left, on the near-black ground */
+/** Share card: the literal code mark top-left, the name bottom-left. */
 export default async function Image() {
   return new ImageResponse(
     <div
@@ -28,10 +21,22 @@ export default async function Image() {
         fontFamily: "Bebas Neue",
       }}
     >
-      <svg viewBox={MARK_VIEWBOX} width={150} height={150}>
-        <path d={ARCH_PATH} fill={RED} />
-        <path d={KEYSTONE_PATH} fill={VOLT} />
-      </svg>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          fontFamily: "monospace",
+          fontSize: 76,
+          fontWeight: 700,
+          letterSpacing: -10,
+          lineHeight: 1,
+        }}
+      >
+        <span style={{ color: "#FAFAFA" }}>{"<"}</span>
+        <span style={{ color: "#C41E3A" }}>A</span>
+        <span style={{ color: "#CCFF00" }}>J</span>
+        <span style={{ color: "#FAFAFA" }}>{"/>"}</span>
+      </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         <div
           style={{ fontSize: 132, lineHeight: 0.86, letterSpacing: "0.025em" }}

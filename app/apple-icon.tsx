@@ -1,16 +1,9 @@
 import { ImageResponse } from "next/og";
-import {
-  ARCH_PATH,
-  KEYSTONE_PATH,
-  MARK_VIEWBOX,
-  RED,
-  VOLT,
-} from "@/components/chrome/mark-geometry";
 
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
-/** Home-screen icon: the keystone "AJ" on the near-black ground */
+/** Home-screen icon: the literal code mark on the near-black brand ground. */
 export default function AppleIcon() {
   return new ImageResponse(
     <div
@@ -23,10 +16,22 @@ export default function AppleIcon() {
         justifyContent: "center",
       }}
     >
-      <svg viewBox={MARK_VIEWBOX} width={148} height={148}>
-        <path d={ARCH_PATH} fill={RED} />
-        <path d={KEYSTONE_PATH} fill={VOLT} />
-      </svg>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          fontFamily: "monospace",
+          fontSize: 54,
+          fontWeight: 700,
+          letterSpacing: -7,
+          lineHeight: 1,
+        }}
+      >
+        <span style={{ color: "#FAFAFA" }}>{"<"}</span>
+        <span style={{ color: "#C41E3A" }}>A</span>
+        <span style={{ color: "#CCFF00" }}>J</span>
+        <span style={{ color: "#FAFAFA" }}>{"/>"}</span>
+      </div>
     </div>,
     { ...size }
   );

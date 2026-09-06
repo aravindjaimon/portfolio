@@ -1,16 +1,9 @@
 import { ImageResponse } from "next/og";
-import {
-  ARCH_PATH,
-  KEYSTONE_PATH,
-  MARK_VIEWBOX,
-  RED,
-  VOLT,
-} from "@/components/chrome/mark-geometry";
 
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
-/** Favicon: the keystone "AJ" on the near-black ground. The mark is square, so it fills. */
+/** Favicon: the literal code mark on the near-black brand ground. */
 export default function Icon() {
   return new ImageResponse(
     <div
@@ -23,10 +16,22 @@ export default function Icon() {
         justifyContent: "center",
       }}
     >
-      <svg viewBox={MARK_VIEWBOX} width={32} height={32}>
-        <path d={ARCH_PATH} fill={RED} />
-        <path d={KEYSTONE_PATH} fill={VOLT} />
-      </svg>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          fontFamily: "monospace",
+          fontSize: 15,
+          fontWeight: 700,
+          letterSpacing: -3.5,
+          lineHeight: 1,
+        }}
+      >
+        <span style={{ color: "#FAFAFA" }}>{"<"}</span>
+        <span style={{ color: "#C41E3A" }}>A</span>
+        <span style={{ color: "#CCFF00" }}>J</span>
+        <span style={{ color: "#FAFAFA" }}>{"/>"}</span>
+      </div>
     </div>,
     { ...size }
   );

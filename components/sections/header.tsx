@@ -63,7 +63,7 @@ const Header = () => {
             className="flex items-center gap-3 text-foreground"
             aria-label="Aravind Jaimon — home"
           >
-            <Mark className="h-8 w-8" />
+            <Mark className="font-mono text-lg sm:text-xl font-bold leading-none tracking-[-0.12em]" />
             <span className="font-bebas text-xl md:text-2xl tracking-wider hidden sm:inline">
               ARAVIND JAIMON
             </span>

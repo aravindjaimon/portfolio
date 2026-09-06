@@ -60,6 +60,10 @@ export const metadata: Metadata = {
     description:
       "First engineering hire → 30+ engineer team. Building systems for millions.",
   },
+  icons: {
+    icon: [{ url: "/icon", sizes: "32x32", type: "image/png" }],
+    apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
+  },
   robots: {
     index: true,
     follow: true,
