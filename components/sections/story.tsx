@@ -125,7 +125,7 @@ const Story = ({ milestones }: StoryProps) => {
                   <h3 className="milestone-phase font-bebas text-4xl md:text-6xl tracking-wide text-foreground leading-none mb-5">
                     {m.phase}
                   </h3>
-                  <p className="milestone-body text-foreground/75 text-lg md:text-xl leading-relaxed max-w-2xl">
+                  <p className="milestone-body text-foreground/70 text-lg md:text-xl leading-relaxed max-w-2xl">
                     {m.description}
                   </p>
                 </article>

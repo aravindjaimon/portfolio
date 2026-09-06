@@ -37,7 +37,7 @@ function CopyButton({ code }: { code: string }) {
   return (
     <button
       onClick={handleCopy}
-      className="absolute top-3 right-3 p-2 bg-muted hover:bg-muted/70 text-foreground/60 hover:text-foreground transition-colors rounded"
+      className="absolute top-3 right-3 p-2 bg-muted hover:bg-muted/70 text-foreground/60 hover:text-foreground transition-colors"
       aria-label="Copy code"
     >
       {copied ? <Check size={16} /> : <Copy size={16} />}

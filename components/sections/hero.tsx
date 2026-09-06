@@ -16,7 +16,7 @@ import type { ImpactMetric, PersonalInfo } from "@/lib/data";
 const GRID = 13;
 const CELLS = Array.from({ length: GRID * GRID }, (_, i) => i);
 const VOLT = "#CCFF00";
-const HAIRLINE = "#2D2D2D";
+const HAIRLINE = "#2E2E2E"; // --border at 18% lightness
 /** Minimum ms between pointer ripples */
 const RIPPLE_THROTTLE = 120;
 /** Cells within this Chebyshev distance of the pointer flash volt */

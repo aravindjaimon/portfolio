@@ -97,7 +97,7 @@ const Experience = ({ experience }: ExperienceProps) => {
                 <p className="font-mono text-sm text-foreground/60 mb-5">
                   {role.company}
                 </p>
-                <ul className="role-highlights space-y-2 text-foreground/75 leading-relaxed">
+                <ul className="role-highlights space-y-2 text-foreground/70 leading-relaxed">
                   {role.highlights.map((h) => (
                     <li key={h} className="flex gap-3">
                       <span
