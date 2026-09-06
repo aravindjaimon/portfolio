@@ -119,8 +119,6 @@ const profile = defineCollection({
     portfolio: s.string(),
     npm: s.string(),
     location: s.string(),
-    /** One-line hiring status shown in the hero and contact */
-    availability: s.string(),
   }),
 });
 

@@ -236,9 +236,6 @@ const Hero = ({ profile, callouts }: HeroProps) => {
             <p className="text-foreground/70 text-base md:text-lg leading-relaxed max-w-md">
               {profile.tagline}
             </p>
-            <p className="font-mono text-xs uppercase tracking-[0.2em] text-volt">
-              {profile.availability}
-            </p>
             {/* The dimension callouts are decorative and hidden below md; this is the readable copy of the same two numbers */}
             <p className="md:hidden font-mono text-[11px] uppercase tracking-[0.2em] text-foreground/60">
               {callouts[0].value} {callouts[0].label} · {callouts[1].value}{" "}
