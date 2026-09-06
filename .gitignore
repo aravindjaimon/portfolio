@@ -47,3 +47,6 @@ next-env.d.ts
 .impeccable/review/
 .impeccable/mocks/
 .playwright-mcp/
+
+# agent worktrees
+.claude/worktrees/
