@@ -142,7 +142,7 @@ The site is an engineer's proof rendered as a running machine. The ground is a n
 
 Two accents share the sheet and never blur together. Brand red is identity: the initial letters of the name, section-heading emphasis, the pixel mark, the hard offset shadow under anything you can press. Acid lime "volt" is the machine's live signal: scroll progress, the ink line, dimension callouts, dates, the primary button. White type does the reading. There are no gradients as decoration, no soft shadows, no rounded corners, and no photography except blog covers.
 
-The build refuses the centred-hero-plus-uniform-card-grid portfolio. Layout is asymmetric and dense at the edges (dimension lines, a title-block strip in header and footer, a rotating "since 2020" badge), open in the middle. Under reduced motion or without JavaScript the complete page is in the markup; motion only adds.
+The build refuses the centred-hero-plus-uniform-card-grid portfolio. Layout is asymmetric and dense at the edges (dimension lines, a title-block strip in the footer, a rotating "since 2020" badge), open in the middle. Under reduced motion or without JavaScript the complete page is in the markup; motion only adds.
 
 **Key Characteristics:**
 
@@ -199,7 +199,7 @@ A two-accent, near-monochrome palette: white ink on a near-black sheet, red for 
 - **Lede** (400, 1.125rem → 1.25rem, 1.625, ink/70): the paragraph under each headline, max width 42–48rem.
 - **Body** (400, 1rem, 1.625, ink/70–75): highlights, descriptions, prose. Chips and stack tags are body-size Inter at 0.75–0.875rem.
 - **Label** (400, 0.75rem, uppercase, tracking 0.15–0.2em, JetBrains Mono): dates, periods, industry, metric labels, title-block entries, footer meta, table headers.
-- **Dimension** (400, 0.6875rem, uppercase, tracking 0.25em, volt): the dimension-line callouts on the hero and metrics grid, the scroll cue, the header title block at 0.625rem.
+- **Dimension** (400, 0.6875rem, uppercase, tracking 0.25em, volt): the dimension-line callouts on the hero and metrics grid, the scroll cue.
 
 ### Named Rules
 

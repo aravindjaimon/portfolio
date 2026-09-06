@@ -117,7 +117,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${bebasNeue.variable} ${jetBrainsMono.variable} antialiased`}
       >
-        <Header profile={personalInfo} />
+        <Header />
         {children}
         <Footer profile={personalInfo} />
         <Analytics />

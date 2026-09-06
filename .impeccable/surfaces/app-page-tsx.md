@@ -20,7 +20,7 @@ Audience: hiring managers / CTOs screening a lead-level engineer in ~30s. Action
 
 THESIS: An engineer's proof rendered as a running machine — every section is a live anime.js demo driven by real career data. Refuses the centred hero + uniform card grid portfolio.
 
-OWN-WORLD: Near-black ground ruled by a 48px hairline grid; brand red #C41E3A and acid lime #CCFF00 on white type. Bebas Neue for display, headings, nav and buttons; Inter body; JetBrains Mono only for data, dates, dimensions and title blocks. Zero radius, 1px rules, hard 4px offset shadows on interactive chips. Raise (drafting-sheet donor): title-block metadata strips in header/footer and dimension-line callouts annotating the hero grid.
+OWN-WORLD: Near-black ground ruled by a 48px hairline grid; brand red #C41E3A and acid lime #CCFF00 on white type. Bebas Neue for display, headings, nav and buttons; Inter body; JetBrains Mono only for data, dates, dimensions and title blocks. Zero radius, 1px rules, hard 4px offset shadows on interactive chips. Raise (drafting-sheet donor): title-block metadata strip in the footer and dimension-line callouts annotating the hero grid.
 
 STORY: Visitor sees systems moving with real numbers, believes this engineer builds and scales, emails.
 

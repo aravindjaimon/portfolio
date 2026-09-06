@@ -7,7 +7,6 @@ import { animate, onScroll } from "animejs";
 import { Mark } from "@/components/chrome/mark";
 import { useAnimeScope, useScrollPosition } from "@/hooks";
 import { siteConfig } from "@/lib/config";
-import type { PersonalInfo } from "@/lib/data";
 
 /** Pixels scrolled before the header gains its ground */
 const SCROLL_THRESHOLD = 50;
@@ -21,11 +20,7 @@ const navLinks = [
   { label: "Contact", href: "/#contact" },
 ];
 
-interface HeaderProps {
-  profile: PersonalInfo;
-}
-
-const Header = ({ profile }: HeaderProps) => {
+const Header = () => {
   const isScrolled = useScrollPosition(SCROLL_THRESHOLD);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const root = useRef<HTMLElement>(null);
@@ -74,25 +69,9 @@ const Header = ({ profile }: HeaderProps) => {
             </span>
           </Link>
 
-          {/* Drafting-sheet title block (pairs with the footer's) */}
-          <dl className="hidden xl:flex items-stretch border border-border divide-x divide-border font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/60">
-            <div className="px-3 py-1.5">
-              <dt className="sr-only">Role</dt>
-              <dd>{profile.title}</dd>
-            </div>
-            <div className="px-3 py-1.5">
-              <dt className="sr-only">Location</dt>
-              <dd>{profile.location}</dd>
-            </div>
-            <div className="px-3 py-1.5 text-volt">
-              <dt className="sr-only">Revision</dt>
-              <dd>Rev {new Date().getFullYear()}</dd>
-            </div>
-          </dl>
-
           {/* Desktop navigation */}
           <nav
-            className="hidden md:flex items-center gap-6"
+            className="hidden md:flex items-center gap-8 lg:gap-10"
             aria-label="Primary"
           >
             {navLinks.map((link) => (
@@ -106,7 +85,7 @@ const Header = ({ profile }: HeaderProps) => {
             ))}
             <a
               href={`mailto:${siteConfig.email}`}
-              className="ml-2 px-4 py-1.5 bg-volt text-volt-foreground font-bebas text-lg tracking-[0.15em] hover:bg-primary hover:text-primary-foreground transition-colors duration-200"
+              className="ml-4 lg:ml-6 px-4 py-1.5 bg-volt text-volt-foreground font-bebas text-lg tracking-[0.15em] hover:bg-primary hover:text-primary-foreground transition-colors duration-200"
             >
               Get in touch
             </a>
