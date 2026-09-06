@@ -1,8 +1,13 @@
-/** 5×5 pixel monogram states — the hero's grid at glyph scale. Plain data, safe for image routes. */
-export const MARK_PATTERNS = {
-  a: ".XXX.X...XXXXXXX...XX...X",
-  j: "XXXXX...X....X.X..X..XX..",
-  grid: "XXXXXXXXXXXXXXXXXXXXXXXXX",
+/** 10×5 pixel "AJ" lockup — the hero's grid at glyph scale. Plain data, safe for image routes. */
+export const MARK = {
+  cols: 10,
+  rows: 5,
+  cells:
+    ".XXX..XXXX" + "X...X...X." + "XXXXX...X." + "X...X.X.X." + "X...X..XX.",
 } as const;
 
-export const isOn = (pattern: string, i: number) => pattern[i] === "X";
+if (MARK.cells.length !== MARK.cols * MARK.rows) {
+  throw new Error("MARK.cells must be cols × rows characters");
+}
+
+export const isOn = (i: number) => MARK.cells[i] === "X";

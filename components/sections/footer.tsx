@@ -106,7 +106,7 @@ const Footer = ({ profile }: FooterProps) => {
             ))}
           </ul>
           <p className="flex items-center gap-3 text-foreground/60 font-mono text-xs">
-            <Mark className="w-5 h-5 shrink-0" />
+            <Mark className="h-5 w-auto shrink-0" />
             <span>
               © {year} {profile.name}. Built with Next.js and anime.js.
             </span>

@@ -1,12 +1,14 @@
 import { ImageResponse } from "next/og";
-import { MARK_PATTERNS, isOn } from "@/components/chrome/mark-patterns";
+import { MARK, isOn } from "@/components/chrome/mark-patterns";
 
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
-const CELLS = Array.from({ length: 25 }, (_, i) => i);
+const CELL = 15;
+const GAP = 3;
+const CELLS = Array.from({ length: MARK.cols * MARK.rows }, (_, i) => i);
 
-/** Home-screen icon: the pixel-grid monogram in its A state */
+/** Home-screen icon: the pixel-grid "AJ" lockup */
 export default function AppleIcon() {
   return new ImageResponse(
     <div
@@ -15,21 +17,29 @@ export default function AppleIcon() {
         height: "100%",
         background: "#0A0A0A",
         display: "flex",
-        flexWrap: "wrap",
-        padding: 30,
-        gap: 4,
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
-      {CELLS.map((i) => (
-        <div
-          key={i}
-          style={{
-            width: 20,
-            height: 20,
-            background: isOn(MARK_PATTERNS.a, i) ? "#C41E3A" : "#1F1F1F",
-          }}
-        />
-      ))}
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          width: MARK.cols * CELL + (MARK.cols - 1) * GAP,
+          gap: GAP,
+        }}
+      >
+        {CELLS.map((i) => (
+          <div
+            key={i}
+            style={{
+              width: CELL,
+              height: CELL,
+              background: isOn(i) ? "#C41E3A" : "#1F1F1F",
+            }}
+          />
+        ))}
+      </div>
     </div>,
     { ...size }
   );

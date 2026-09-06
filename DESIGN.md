@@ -237,7 +237,7 @@ Flat by default. Depth is drawn, not lit: 1px hairlines, a ruled grid ground, an
 
 ## Shapes
 
-Zero radius, everywhere: `--radius: 0`, so even shadcn's `rounded-md` resolves to a square corner. Borders are 1px hairlines; emphasis borders step to ink/70–80 (chips, business card) rather than getting thicker. Form language is the drafting sheet: rectangles, 1px rules, small filled squares as markers (8–12px, red or volt), a 45°-rotated volt square for timeline markers, nested rotating square rings for the badge, and the 5×5 pixel monogram. Case-study glyphs are closed polygons in a 100×100 box that morph on hover. Images are clipped square with a hairline border. Icons are Lucide SVG at 14–24px with `currentColor`; there are no icon fonts.
+Zero radius, everywhere: `--radius: 0`, so even shadcn's `rounded-md` resolves to a square corner. Borders are 1px hairlines; emphasis borders step to ink/70–80 (chips, business card) rather than getting thicker. Form language is the drafting sheet: rectangles, 1px rules, small filled squares as markers (8–12px, red or volt), a 45°-rotated volt square for timeline markers, nested rotating square rings for the badge, and the 10×5 pixel "AJ" monogram. Case-study glyphs are closed polygons in a 100×100 box that morph on hover. Images are clipped square with a hairline border. Icons are Lucide SVG at 14–24px with `currentColor`; there are no icon fonts.
 
 ## Components
 
@@ -277,7 +277,7 @@ There are no floating cards. Content sits in cells of a hairline table (`gap-px`
 
 ### Navigation
 
-Fixed header, transparent over the hero and gaining a 90% ground fill, blur and bottom hairline after 50px of scroll. Left: the animated pixel mark (28px) plus "ARAVIND JAIMON" in Bebas 1.25–1.5rem tracked 0.05em. Centre (from `xl`): the title-block strip. Right: Bebas 1.125rem links at ink/70, 0.15em tracking, hover to ink; then the quiet volt "Get in touch" button. A 2px volt scroll-progress hairline runs along the top edge. Mobile: a hamburger opens a stacked list at Bebas 1.5rem with hairline separators and a full-width volt button.
+Fixed header, transparent over the hero and gaining a 90% ground fill, blur and bottom hairline after 50px of scroll. Left: the animated "AJ" pixel mark (28px tall) plus "ARAVIND JAIMON" in Bebas 1.25–1.5rem tracked 0.05em. Centre (from `xl`): the title-block strip. Right: Bebas 1.125rem links at ink/70, 0.15em tracking, hover to ink; then the quiet volt "Get in touch" button. A 2px volt scroll-progress hairline runs along the top edge. Mobile: a hamburger opens a stacked list at Bebas 1.5rem with hairline separators and a full-width volt button.
 
 ### Title Block (signature)
 
@@ -289,7 +289,7 @@ A measurement line: 1px ticks at each end, a 60% volt hairline, and the value pl
 
 ### Pixel Mark (signature)
 
-A 5×5 grid of 4px squares with 1px gaps in a 24-unit box. The "A" pattern renders in brand red with off cells at 18% opacity and 55% scale. With `animate` it cycles A → J (red) → full grid (volt) → A on a 2.4s hold with a centre-out 18ms stagger. Static in the footer, favicon, apple icon and OG image.
+A 10×5 grid of 4px squares with 1px gaps in a 49×24 box, spelling "AJ" side by side with one blank column between the letters. Lit cells render in brand red; off cells sit at 18% opacity and 55% scale. The letters never change. With `animate` the lit cells ripple red → volt → red (2.4s red hold, 0.7s volt flash, 380ms tweens, centre-out 18ms stagger). Sized by height (`h-7 w-auto` in the header, `h-5` in the footer); static in the footer, favicon, apple icon and OG image.
 
 ### Motion (system-wide)
 

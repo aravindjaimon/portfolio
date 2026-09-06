@@ -4,29 +4,32 @@ import { useRef } from "react";
 import { createTimeline, stagger, utils } from "animejs";
 import { useAnimeScope } from "@/hooks";
 
-import { MARK_PATTERNS, isOn } from "./mark-patterns";
+import { MARK, isOn } from "./mark-patterns";
 
-export { MARK_PATTERNS, isOn };
+export { MARK, isOn };
 
-const SIZE = 5;
+const { cols: COLS, rows: ROWS } = MARK;
 const CELL = 4;
 const GAP = 1;
-const BOX = SIZE * CELL + (SIZE - 1) * GAP; // 24
-const CELLS = Array.from({ length: SIZE * SIZE }, (_, i) => i);
+const W = COLS * CELL + (COLS - 1) * GAP; // 49
+const H = ROWS * CELL + (ROWS - 1) * GAP; // 24
+const CELLS = Array.from({ length: COLS * ROWS }, (_, i) => i);
 const RED = "#C41E3A";
 const VOLT = "#CCFF00";
 const OFF_OPACITY = 0.18;
-/** ms each state is held before the cells re-arrange */
+/** ms the red state is held before the volt ripple */
 const HOLD = 2400;
+/** ms the volt state is held before returning to red */
+const FLASH = 700;
 
 interface MarkProps {
   className?: string;
-  /** Cycle A → J → grid; off by default so static uses (footer, icons) stay still */
+  /** Ripple the lit cells red → volt → red; off by default so static uses (footer, icons) stay still */
   animate?: boolean;
   title?: string;
 }
 
-/** Pixel-grid monogram. Renders the A state; `animate` staggers the cells through J and the full grid. */
+/** Pixel-grid "AJ" lockup. The letters never change; `animate` only ripples their colour. */
 export function Mark({ className, animate: play = false, title }: MarkProps) {
   const root = useRef<SVGSVGElement>(null);
 
@@ -34,48 +37,19 @@ export function Mark({ className, animate: play = false, title }: MarkProps) {
     root as unknown as React.RefObject<HTMLElement>,
     ({ matches }) => {
       if (!play || matches.reduceMotion) return;
-      const cells = utils.$(".px");
-      const tl = createTimeline({ loop: true });
-      const states: Array<[string, string]> = [
-        [MARK_PATTERNS.j, RED],
-        [MARK_PATTERNS.grid, VOLT],
-        [MARK_PATTERNS.a, RED],
-      ];
-      states.forEach(([pattern, color], s) => {
-        const at = (s + 1) * HOLD;
-        const on = cells.filter((_, i) => isOn(pattern, i));
-        const off = cells.filter((_, i) => !isOn(pattern, i));
-        const delay = stagger(18, { grid: [SIZE, SIZE], from: "center" });
-        // anime.js rejects empty target lists (the full grid has no "off" cells)
-        if (on.length) {
-          tl.add(
-            on,
-            {
-              opacity: 1,
-              scale: 1,
-              fill: color,
-              duration: 380,
-              delay,
-              ease: "outBack",
-            },
-            at
-          );
-        }
-        if (off.length) {
-          tl.add(
-            off,
-            {
-              opacity: OFF_OPACITY,
-              scale: 0.55,
-              fill: color,
-              duration: 380,
-              delay,
-              ease: "out(3)",
-            },
-            at
-          );
-        }
-      });
+      const lit = utils.$(".px").filter((_, i) => isOn(i));
+      const ripple = () => stagger(18, { grid: [COLS, ROWS], from: "center" });
+      const tl = createTimeline({ loop: true })
+        .add(
+          lit,
+          { fill: VOLT, duration: 380, delay: ripple(), ease: "out(3)" },
+          HOLD
+        )
+        .add(
+          lit,
+          { fill: RED, duration: 380, delay: ripple(), ease: "out(3)" },
+          HOLD + FLASH
+        );
       return () => tl.revert();
     },
     [play]
@@ -84,16 +58,16 @@ export function Mark({ className, animate: play = false, title }: MarkProps) {
   return (
     <svg
       ref={root}
-      viewBox={`0 0 ${BOX} ${BOX}`}
+      viewBox={`0 0 ${W} ${H}`}
       className={className}
       role={title ? "img" : undefined}
       aria-hidden={title ? undefined : "true"}
     >
       {title && <title>{title}</title>}
       {CELLS.map((i) => {
-        const x = (i % SIZE) * (CELL + GAP);
-        const y = Math.floor(i / SIZE) * (CELL + GAP);
-        const on = isOn(MARK_PATTERNS.a, i);
+        const x = (i % COLS) * (CELL + GAP);
+        const y = Math.floor(i / COLS) * (CELL + GAP);
+        const on = isOn(i);
         return (
           <rect
             key={i}

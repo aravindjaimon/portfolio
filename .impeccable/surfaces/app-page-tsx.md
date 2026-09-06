@@ -24,7 +24,7 @@ OWN-WORLD: Near-black ground ruled by a 48px hairline grid; brand red #C41E3A an
 
 STORY: Visitor sees systems moving with real numbers, believes this engineer builds and scales, emails.
 
-FIRST VIEWPORT: Full-bleed breathing 13×13 grid. Name split into characters, ~9rem, anchored bottom-left across two-thirds width. Right column: title, subtitle, tagline, volt primary action "Start a conversation" and socials; the header mark is a 5×5 pixel monogram cycling A → J → grid. Rotating-squares badge "SINCE 2020" top-right. Dimension callouts along grid edges read the cleared metric labels verbatim: "1M+ USERS SERVED" (top) and "1 → 30+ TEAM GROWTH" (right).
+FIRST VIEWPORT: Full-bleed breathing 13×13 grid. Name split into characters, ~9rem, anchored bottom-left across two-thirds width. Right column: title, subtitle, tagline, volt primary action "Start a conversation" and socials; the header mark is a 10×5 pixel "AJ" lockup whose lit cells ripple red → volt → red. Rotating-squares badge "SINCE 2020" top-right. Dimension callouts along grid edges read the cleared metric labels verbatim: "1M+ USERS SERVED" (top) and "1 → 30+ TEAM GROWTH" (right).
 
 FORM: Kinetic hairline grid / anime.js playground — candidate 1 of 7 on the grounded list, user-pinned. Roll (degraded, key 00b849f6) assigned candidate 6, drafting sheet; its title-block and dimension grammar is donated as the raise above.
 
