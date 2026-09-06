@@ -1,0 +1,368 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-06T00:00:00Z",
+  "title": "Design System: Aravind Jaimon Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "brand-red": {
+        "role": "primary",
+        "displayName": "Brand Red",
+        "canonical": "#C41E3A",
+        "tonalRamp": [
+          "oklch(20% 0.09 18)",
+          "oklch(30% 0.13 18)",
+          "oklch(40% 0.17 18)",
+          "oklch(50% 0.19 18)",
+          "oklch(60% 0.19 18)",
+          "oklch(72% 0.14 18)",
+          "oklch(85% 0.07 18)",
+          "oklch(95% 0.02 18)"
+        ]
+      },
+      "volt": {
+        "role": "secondary",
+        "displayName": "Volt",
+        "canonical": "#CCFF00",
+        "tonalRamp": [
+          "oklch(25% 0.07 118)",
+          "oklch(38% 0.11 118)",
+          "oklch(52% 0.15 118)",
+          "oklch(66% 0.19 118)",
+          "oklch(80% 0.22 118)",
+          "oklch(93% 0.23 118)",
+          "oklch(96% 0.12 118)",
+          "oklch(98% 0.05 118)"
+        ]
+      },
+      "ground": {
+        "role": "neutral",
+        "displayName": "Ground",
+        "canonical": "#0A0A0A",
+        "tonalRamp": [
+          "oklch(12% 0 0)",
+          "oklch(18% 0 0)",
+          "oklch(25% 0 0)",
+          "oklch(35% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(65% 0 0)",
+          "oklch(80% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#FAFAFA",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(30% 0 0)",
+          "oklch(45% 0 0)",
+          "oklch(60% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(92% 0 0)",
+          "oklch(98% 0 0)"
+        ]
+      },
+      "plate": {
+        "role": "neutral",
+        "displayName": "Plate",
+        "canonical": "#1A1A1A",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(21% 0 0)",
+          "oklch(28% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(65% 0 0)",
+          "oklch(80% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "canonical": "#242424",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(24% 0 0)",
+          "oklch(32% 0 0)",
+          "oklch(42% 0 0)",
+          "oklch(54% 0 0)",
+          "oklch(68% 0 0)",
+          "oklch(82% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#2E2E2E",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(22% 0 0)",
+          "oklch(29% 0 0)",
+          "oklch(40% 0 0)",
+          "oklch(52% 0 0)",
+          "oklch(66% 0 0)",
+          "oklch(81% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero name (split characters), contact shout, footer outline wordmark."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section h2 and page h1; one word in brand red."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Role titles, milestone phases, metric values, card titles."
+      },
+      "action": {
+        "displayName": "Action",
+        "purpose": "Nav links and every button."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "The paragraph under a headline, ink/70, max 42-48rem."
+      },
+      "body": { "displayName": "Body", "purpose": "Prose, highlights, chips." },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Dates, periods, metric labels, title-block entries, captions."
+      },
+      "dimension": {
+        "displayName": "Dimension",
+        "purpose": "Dimension-line callouts, scroll cue, header title block."
+      }
+    },
+    "shadows": [
+      {
+        "name": "raised-cta",
+        "value": "6px 6px 0 0 hsl(var(--primary))",
+        "purpose": "Hero and contact primary buttons; hover translates 3px and shrinks to 3px 3px."
+      },
+      {
+        "name": "chip",
+        "value": "4px 4px 0 0 hsl(var(--primary))",
+        "purpose": "Draggable skill chips."
+      },
+      {
+        "name": "object",
+        "value": "10px 10px 0 0 hsl(var(--primary))",
+        "purpose": "Draggable business card."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-enter",
+        "value": "out(4)",
+        "purpose": "Character and element entrances (anime.js v4 easing)."
+      },
+      {
+        "name": "ease-reveal",
+        "value": "out(3)",
+        "purpose": "Word reveals and scrubbed role entries."
+      },
+      {
+        "name": "ease-draw",
+        "value": "inOut(3)",
+        "purpose": "Drawn rules and ink lines."
+      },
+      {
+        "name": "ease-home",
+        "value": "spring({ bounce: 0.4-0.6 })",
+        "purpose": "Objects returning to their slot."
+      },
+      {
+        "name": "duration-press",
+        "value": "150ms",
+        "purpose": "CTA press toward its shadow."
+      },
+      {
+        "name": "duration-hover",
+        "value": "200ms",
+        "purpose": "Colour and border hovers."
+      },
+      {
+        "name": "duration-enter",
+        "value": "500-900ms",
+        "purpose": "Entrances; stagger 18-28ms per character, 70-150ms per element."
+      },
+      {
+        "name": "grid-cell",
+        "value": "48px",
+        "purpose": "Hairline grid ground cell."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" },
+      { "name": "mobile (anime scope)", "value": "max-width: 767px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button (raised)",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one conversation-starting action per view, with the red second-sheet shadow.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Start a conversation</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; padding: 12px 24px; background: hsl(var(--volt)); color: hsl(var(--volt-foreground)); font-family: var(--font-bebas-neue), Impact, sans-serif; font-size: 1.25rem; letter-spacing: 0.15em; text-decoration: none; border-radius: 0; box-shadow: 6px 6px 0 0 hsl(var(--primary)); transition: transform 150ms, box-shadow 150ms; } .ds-btn-primary:hover { transform: translate(3px, 3px); box-shadow: 3px 3px 0 0 hsl(var(--primary)); } .ds-btn-primary:focus-visible { outline: 2px solid hsl(var(--volt)); outline-offset: 2px; }"
+    },
+    {
+      "name": "Nav Button (quiet)",
+      "kind": "button",
+      "refersTo": "button-nav",
+      "description": "Header and closing-panel volt button; hovers to brand red.",
+      "html": "<a class=\"ds-btn-nav\" href=\"#\">Get in touch</a>",
+      "css": ".ds-btn-nav { display: inline-flex; align-items: center; padding: 6px 16px; background: hsl(var(--volt)); color: hsl(var(--volt-foreground)); font-family: var(--font-bebas-neue), Impact, sans-serif; font-size: 1.125rem; letter-spacing: 0.15em; text-decoration: none; border-radius: 0; transition: background-color 200ms, color 200ms; } .ds-btn-nav:hover { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); } .ds-btn-nav:focus-visible { outline: 2px solid hsl(var(--volt)); outline-offset: 2px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Hairline-bordered action beside a primary.",
+      "html": "<a class=\"ds-btn-secondary\" href=\"#\">More case studies</a>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; padding: 12px 24px; background: transparent; border: 1px solid hsl(var(--border)); color: hsl(var(--foreground) / 0.7); font-family: var(--font-bebas-neue), Impact, sans-serif; font-size: 1.25rem; letter-spacing: 0.15em; text-decoration: none; border-radius: 0; transition: border-color 200ms, color 200ms; } .ds-btn-secondary:hover { border-color: hsl(var(--foreground)); color: hsl(var(--foreground)); } .ds-btn-secondary:focus-visible { outline: 2px solid hsl(var(--volt)); outline-offset: 2px; }"
+    },
+    {
+      "name": "Skill Chip",
+      "kind": "chip",
+      "refersTo": "chip-skill",
+      "description": "Draggable chip on the skills table with the red offset shadow.",
+      "html": "<span class=\"ds-chip-skill\">TypeScript</span>",
+      "css": ".ds-chip-skill { display: inline-block; padding: 8px 12px; background: hsl(var(--background)); border: 1px solid hsl(var(--foreground) / 0.7); color: hsl(var(--foreground)); font-family: var(--font-inter), system-ui, sans-serif; font-size: 0.875rem; border-radius: 0; box-shadow: 4px 4px 0 0 hsl(var(--primary)); cursor: grab; user-select: none; }"
+    },
+    {
+      "name": "Tag Chip",
+      "kind": "chip",
+      "refersTo": "chip-tag",
+      "description": "Blog tag link; hovers to brand red.",
+      "html": "<a class=\"ds-chip-tag\" href=\"#\">architecture</a>",
+      "css": ".ds-chip-tag { display: inline-block; padding: 2px 8px; background: hsl(var(--secondary)); border: 1px solid hsl(var(--border)); color: hsl(var(--foreground) / 0.6); font-family: var(--font-inter), system-ui, sans-serif; font-size: 0.75rem; text-decoration: none; border-radius: 0; transition: border-color 200ms, color 200ms; } .ds-chip-tag:hover { border-color: hsl(var(--primary)); color: hsl(var(--primary)); } .ds-chip-tag:focus-visible { outline: 2px solid hsl(var(--volt)); outline-offset: 2px; }"
+    },
+    {
+      "name": "Search Input",
+      "kind": "input",
+      "refersTo": "input-search",
+      "description": "Blog search field; plate fill, border turns red on focus.",
+      "html": "<div class=\"ds-search\"><svg class=\"ds-search-icon\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/></svg><input class=\"ds-input-search\" type=\"text\" placeholder=\"Search articles...\"></div>",
+      "css": ".ds-search { position: relative; } .ds-search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: hsl(var(--foreground) / 0.6); } .ds-input-search { width: 100%; padding: 12px 40px; background: hsl(var(--secondary)); border: 1px solid hsl(var(--border)); color: hsl(var(--foreground)); font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 0.875rem; border-radius: 0; transition: border-color 200ms; } .ds-input-search::placeholder { color: hsl(var(--foreground) / 0.6); } .ds-input-search:focus { outline: none; border-color: hsl(var(--primary)); }"
+    },
+    {
+      "name": "Header Navigation",
+      "kind": "nav",
+      "refersTo": "button-nav",
+      "description": "Fixed header: mark, wordmark, title block, Bebas links, quiet volt button, volt progress hairline.",
+      "html": "<header class=\"ds-header\"><span class=\"ds-progress\"></span><a class=\"ds-brand\" href=\"#\"><svg width=\"28\" height=\"28\" viewBox=\"0 0 24 24\" fill=\"#C41E3A\"><rect x=\"5\" y=\"0\" width=\"4\" height=\"4\"/><rect x=\"10\" y=\"0\" width=\"4\" height=\"4\"/><rect x=\"15\" y=\"0\" width=\"4\" height=\"4\"/><rect x=\"0\" y=\"5\" width=\"4\" height=\"4\"/><rect x=\"20\" y=\"5\" width=\"4\" height=\"4\"/><rect x=\"0\" y=\"10\" width=\"4\" height=\"4\"/><rect x=\"5\" y=\"10\" width=\"4\" height=\"4\"/><rect x=\"10\" y=\"10\" width=\"4\" height=\"4\"/><rect x=\"15\" y=\"10\" width=\"4\" height=\"4\"/><rect x=\"20\" y=\"10\" width=\"4\" height=\"4\"/><rect x=\"0\" y=\"15\" width=\"4\" height=\"4\"/><rect x=\"20\" y=\"15\" width=\"4\" height=\"4\"/><rect x=\"0\" y=\"20\" width=\"4\" height=\"4\"/><rect x=\"20\" y=\"20\" width=\"4\" height=\"4\"/></svg><span>ARAVIND JAIMON</span></a><dl class=\"ds-title-block\"><div><dd>Lead Software Engineer</dd></div><div><dd>Kerala, India</dd></div><div class=\"ds-rev\"><dd>Rev 2026</dd></div></dl><nav class=\"ds-nav\"><a href=\"#\">Story</a><a href=\"#\">Work</a><a href=\"#\">Blog</a><a class=\"ds-nav-cta\" href=\"#\">Get in touch</a></nav></header>",
+      "css": ".ds-header { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 80px; padding: 0 24px; background: hsl(var(--background) / 0.9); border-bottom: 1px solid hsl(var(--border)); } .ds-progress { position: absolute; top: 0; left: 0; height: 2px; width: 40%; background: hsl(var(--volt)); } .ds-brand { display: flex; align-items: center; gap: 12px; color: hsl(var(--foreground)); font-family: var(--font-bebas-neue), Impact, sans-serif; font-size: 1.5rem; letter-spacing: 0.05em; text-decoration: none; } .ds-title-block { display: flex; margin: 0; border: 1px solid hsl(var(--border)); font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; color: hsl(var(--foreground) / 0.6); } .ds-title-block > div { padding: 6px 12px; } .ds-title-block > div + div { border-left: 1px solid hsl(var(--border)); } .ds-title-block dd { margin: 0; } .ds-rev { color: hsl(var(--volt)); } .ds-nav { display: flex; align-items: center; gap: 24px; } .ds-nav a { font-family: var(--font-bebas-neue), Impact, sans-serif; font-size: 1.125rem; letter-spacing: 0.15em; color: hsl(var(--foreground) / 0.7); text-decoration: none; transition: color 200ms; } .ds-nav a:hover { color: hsl(var(--foreground)); } .ds-nav-cta { padding: 6px 16px; background: hsl(var(--volt)); color: hsl(var(--volt-foreground)) !important; transition: background-color 200ms, color 200ms; } .ds-nav-cta:hover { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)) !important; }"
+    },
+    {
+      "name": "Metric Cell",
+      "kind": "card",
+      "refersTo": "card-cell",
+      "description": "A cell in a hairline table: Bebas value, mono label. Tables are gap-px on the hairline colour.",
+      "html": "<dl class=\"ds-cells\"><div class=\"ds-cell\"><dd>1M+</dd><dt>Users served</dt></div><div class=\"ds-cell\"><dd>10K</dd><dt>Events / minute</dt></div><div class=\"ds-cell\"><dd>97%</dd><dt>Sync time cut</dt></div></dl>",
+      "css": ".ds-cells { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin: 0; background: hsl(var(--border)); border: 1px solid hsl(var(--border)); } .ds-cell { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 24px 16px; background: hsl(var(--background)); } .ds-cell dd { margin: 0; font-family: var(--font-bebas-neue), Impact, sans-serif; font-size: 3rem; letter-spacing: 0.025em; line-height: 1; color: hsl(var(--foreground)); font-variant-numeric: tabular-nums; } .ds-cell dt { margin-top: 8px; font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: hsl(var(--foreground) / 0.6); }"
+    },
+    {
+      "name": "Dimension Callout",
+      "kind": "custom",
+      "refersTo": "title-block",
+      "description": "Drafting-sheet measurement line annotating a grid edge with a cleared metric.",
+      "html": "<div class=\"ds-callout\" aria-hidden=\"true\"><span class=\"ds-tick\"></span><span class=\"ds-line\"></span><span class=\"ds-dim\">1M+ Users served</span><span class=\"ds-line\"></span><span class=\"ds-tick\"></span></div>",
+      "css": ".ds-callout { display: flex; align-items: center; gap: 12px; color: hsl(var(--volt)); font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.25em; } .ds-tick { width: 1px; height: 12px; background: hsl(var(--volt)); } .ds-line { flex: 1; height: 1px; background: hsl(var(--volt) / 0.6); } .ds-dim { padding: 0 8px; }"
+    },
+    {
+      "name": "Footer Title Block",
+      "kind": "custom",
+      "refersTo": "title-block",
+      "description": "Four-cell provenance strip above the footer.",
+      "html": "<dl class=\"ds-tb\"><div><dt>Drawn by</dt><dd>Aravind Jaimon</dd></div><div><dt>Role</dt><dd>Lead Software Engineer</dd></div><div><dt>Location</dt><dd>Kerala, India</dd></div><div><dt>Revision</dt><dd class=\"ds-tb-rev\">2026</dd></div></dl>",
+      "css": ".ds-tb { display: grid; grid-template-columns: repeat(4, 1fr); margin: 0; border: 1px solid hsl(var(--border)); background: hsl(var(--background) / 0.8); font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; } .ds-tb > div { padding: 16px; } .ds-tb > div + div { border-left: 1px solid hsl(var(--border)); } .ds-tb dt { color: hsl(var(--foreground) / 0.6); margin-bottom: 4px; } .ds-tb dd { margin: 0; color: hsl(var(--foreground)); } .ds-tb-rev { color: hsl(var(--volt)) !important; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Drafting Sheet That Runs",
+    "overview": "The site is an engineer's proof rendered as a running machine. The ground is a near-black drafting sheet ruled by a 48px hairline grid; on it, every landing section is a live anime.js demonstration driven by the real career data in content/: a breathing 13×13 grid under the name, an ink line scrubbed by scroll through the story, skills chips loose on a table, a metric rail with a moving dot, a draggable business card. The interface recedes so the numbers and the motion do the persuading; copy is direct and numbers-first, and every call to action invites a conversation rather than asking for the job.\n\nTwo accents share the sheet and never blur together. Brand red is identity: the initial letters of the name, section-heading emphasis, the pixel mark, the hard offset shadow under anything you can press. Acid lime \"volt\" is the machine's live signal: scroll progress, the ink line, dimension callouts, dates, the primary button. White type does the reading. There are no gradients as decoration, no soft shadows, no rounded corners, and no photography except blog covers.\n\nThe build refuses the centred-hero-plus-uniform-card-grid portfolio. Layout is asymmetric and dense at the edges (dimension lines, a title-block strip in header and footer, a rotating \"since 2020\" badge), open in the middle. Under reduced motion or without JavaScript the complete page is in the markup; motion only adds.",
+    "keyCharacteristics": [
+      "Near-black ground with a 48px hairline grid; 1px rules and gap-px cell tables instead of cards",
+      "Bebas Neue for everything that shouts (display, headings, nav, buttons); Inter reads; JetBrains Mono measures (dates, dimensions, title blocks, metadata)",
+      "Brand red for identity and pressure; volt for live signal and the primary action",
+      "Hard 4–10px red offset shadows on interactive chips, raised CTAs and the business card; nothing else casts a shadow",
+      "Zero radius everywhere, including icons, inputs and images",
+      "Drafting-sheet grammar as the signature: title-block metadata strips, dimension-line callouts, revision numbers",
+      "All motion through one hook (useAnimeScope), one ScrollObserver per animation, final state in the markup"
+    ],
+    "rules": [
+      {
+        "name": "The Two Signals Rule",
+        "body": "Red means identity and pressure (initials, heading emphasis, offset shadows, hover-to-red). Volt means the machine is live (progress, ink, playheads, callouts, dates, the primary action). A single element never carries both except the pressed CTA (volt face, red shadow) and the badge rings (alternating).",
+        "section": "colors"
+      },
+      {
+        "name": "The Literal Colour Rule",
+        "body": "Colours handed to anime.js are literal hex (#C41E3A, #CCFF00, #2D2D2D); classes use tokens only (text-primary, text-volt, border-border). No hex in class names.",
+        "section": "colors"
+      },
+      {
+        "name": "The Legible Ink Rule",
+        "body": "Readable text on the ground sits at ink/60 or higher; ink/50 and below is reserved for icons, hairline markers and decorative wordmarks.",
+        "section": "colors"
+      },
+      {
+        "name": "The Three Voices Rule",
+        "body": "Bebas Neue shouts (display, headings, nav, buttons, metric values). Inter reads (ledes, body, chips). JetBrains Mono measures (dates, dimensions, title blocks, captions, code). A string set in mono is data; if it is prose, it is Inter.",
+        "section": "typography"
+      },
+      {
+        "name": "The Red Word Rule",
+        "body": "Every section headline carries exactly one word in brand red. Headings are never bold, never all-lowercase, never split across colours more than once.",
+        "section": "typography"
+      },
+      {
+        "name": "The Split Heading Rule",
+        "body": "Display and page-level headings may split into characters (splitText chars, y: 110% → 0, stagger(22–28), out(4)); body reveals split into words. The container is overflow-hidden so the rise is clipped, and the plain text is what renders without JS.",
+        "section": "typography"
+      },
+      {
+        "name": "The Second Sheet Rule",
+        "body": "A hard red offset shadow means \"you can pick this up\": it belongs only to pressable or draggable objects (raised CTAs, skill chips, the business card). Static cells, cards, images and text never cast it.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Press Rule",
+        "body": "Hover on a raised object moves it toward its shadow by half the offset and halves the shadow; it never lifts, scales or glows.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do set every heading, nav link and button in Bebas Neue with open tracking (0.025em display, 0.15em actions) and one brand-red word per section headline.",
+      "Do reach for JetBrains Mono only for data: dates, periods, dimensions, metadata strips, captions, code.",
+      "Do build tables of data from hairlines: gap-px on the hairline colour with ground-coloured cells, 1px rules, 48px grid ground.",
+      "Do give pressable and draggable objects a hard brand-red offset shadow (4px chips, 6px CTAs, 10px objects) and press them toward it on hover.",
+      "Do render the complete page in markup and add motion only inside useAnimeScope with a reduced-motion early return and one ScrollObserver per animation.",
+      "Do phrase every call to action as an invitation (\"Get in touch\", \"Start a conversation\", \"Email me\") pointing at the mailto.",
+      "Do keep readable text at ink/60 or higher; ink/50 is for icons and decoration.",
+      "Do pass literal hex to anime.js and tokens to classes."
+    ],
+    "donts": [
+      "Don't round any corner, including images, inputs, badges and icons; --radius is 0 and stays 0.",
+      "Don't use soft shadows, glows, gradients as decoration or as elevation. The single permitted gradient is the hero's radial ground plate.",
+      "Don't put volt on white or red on volt text; volt carries ground-coloured text, red carries ink.",
+      "Don't set body prose in Bebas or in mono, and don't set data labels in Inter.",
+      "Don't introduce bold weights; emphasis is size, tracking and the red word.",
+      "Don't build floating cards with padding and shadow; use hairline cells or a hairline panel on the grid.",
+      "Don't ship a shared ScrollObserver, a colour token string inside an anime call, or an animation without its reduced-motion return.",
+      "Don't add headshots, logos, testimonials, a booking link or a kicker/eyebrow line above headings; none exist in the world."
+    ]
+  }
+}
