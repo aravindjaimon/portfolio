@@ -12,10 +12,8 @@ export function Mark({ className, title }: MarkProps) {
       aria-hidden={title ? undefined : "true"}
       aria-label={title}
     >
-      <span className="text-foreground">{"<"}</span>
-      <span className="text-primary">A</span>
-      <span className="text-volt">J</span>
-      <span className="text-foreground">{"/>"}</span>
+      {"<"}
+      <span className="text-primary">A</span>J{"/>"}
     </span>
   );
 }

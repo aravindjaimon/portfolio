@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { Inter, Bebas_Neue, JetBrains_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Archivo, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { siteConfig } from "@/lib/config";
 import { personalInfo } from "@/lib/data";
@@ -7,16 +7,10 @@ import Header from "@/components/sections/header";
 import Footer from "@/components/sections/footer";
 import "./globals.css";
 
-const inter = Inter({
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const bebasNeue = Bebas_Neue({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-bebas-neue",
+  axes: ["wdth"],
+  variable: "--font-archivo",
   display: "swap",
 });
 
@@ -80,6 +74,10 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#f3f0e8",
+};
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -116,12 +114,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body
-        className={`${inter.variable} ${bebasNeue.variable} ${jetBrainsMono.variable} antialiased`}
-      >
+      <body className={`${archivo.variable} ${jetBrainsMono.variable}`}>
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:font-medium"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] focus:px-4 focus:py-2 focus:bg-highlight focus:border-2 focus:font-bold"
         >
           Skip to content
         </a>

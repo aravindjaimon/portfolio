@@ -11,19 +11,20 @@ const Ticker = ({ metrics }: TickerProps) => {
       className="flex items-center shrink-0"
       aria-hidden={hidden || undefined}
     >
-      {metrics.map((metric, i) => (
+      {metrics.map((metric) => (
         <li
           key={metric.label}
-          className="flex items-center gap-4 px-6 font-mono text-sm uppercase tracking-[0.2em] whitespace-nowrap"
+          className="flex items-center gap-3 px-6 whitespace-nowrap"
         >
-          <span className="font-bebas text-3xl tracking-wide text-foreground tabular-nums">
+          <span className="display normal-case text-3xl tabular-nums">
             {metric.value}
           </span>
-          <span className="text-foreground/60">{metric.label}</span>
-          <span
-            className={`ml-2 w-2 h-2 ${i % 2 === 0 ? "bg-primary" : "bg-volt"}`}
-            aria-hidden
-          />
+          <span className="font-mono text-xs uppercase tracking-[0.2em] opacity-70">
+            {metric.label}
+          </span>
+          <span className="ml-6 text-highlight text-2xl" aria-hidden>
+            ✱
+          </span>
         </li>
       ))}
     </ul>
@@ -32,7 +33,7 @@ const Ticker = ({ metrics }: TickerProps) => {
   return (
     <section
       aria-label="Impact at a glance"
-      className="border-y border-border bg-background overflow-hidden py-4"
+      className="bg-foreground text-background overflow-hidden py-5 border-y-2"
     >
       <div
         className="marquee"

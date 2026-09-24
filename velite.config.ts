@@ -222,7 +222,7 @@ export default defineConfig({
       [
         rehypePrettyCode,
         {
-          theme: "github-dark",
+          theme: "github-light",
           keepBackground: true,
           defaultLang: "plaintext",
         },

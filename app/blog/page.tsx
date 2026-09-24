@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Rss } from "lucide-react";
 import { BlogGrid } from "@/components/blog/BlogGrid";
-import { SplitHeading } from "@/components/motion/split-heading";
 import { getPublishedPosts, getFeaturedPosts, getAllTags } from "@/lib/blog";
 
 export const metadata: Metadata = {
@@ -16,14 +15,17 @@ export default function BlogPage() {
   const tags = getAllTags();
 
   return (
-    <main id="main-content" className="min-h-screen bg-background">
-      <header className="bg-grid border-b border-border">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-32 pb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+    <main id="main-content" className="min-h-screen">
+      <header>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-32 md:pt-40 pb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
           <div>
-            <SplitHeading className="font-bebas text-6xl sm:text-7xl md:text-8xl leading-[0.9] tracking-wide text-foreground mb-5">
-              Notes from <span className="text-primary">production</span>
-            </SplitHeading>
-            <p className="text-foreground/70 text-lg md:text-xl max-w-2xl leading-relaxed">
+            <h1 className="display text-[clamp(3rem,9vw,7rem)] mb-6">
+              Notes from{" "}
+              <span className="inline-block bg-highlight border-2 shadow-hard px-[0.1em]">
+                production
+              </span>
+            </h1>
+            <p className="text-muted-foreground text-lg md:text-xl max-w-2xl leading-relaxed">
               Architecture patterns, tooling, and the trade-offs behind systems
               that scale — written down while they were still fresh.
             </p>
@@ -32,7 +34,7 @@ export default function BlogPage() {
             href="/feed.xml"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 border border-border text-foreground/70 hover:text-volt hover:border-volt font-mono text-xs uppercase tracking-[0.2em] transition-colors w-fit"
+            className="card press inline-flex items-center gap-2 px-4 py-2 font-mono text-xs uppercase tracking-[0.2em] w-fit"
           >
             <Rss size={14} aria-hidden />
             RSS
@@ -40,7 +42,7 @@ export default function BlogPage() {
         </div>
       </header>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <BlogGrid posts={posts} featured={featured} tags={tags} />
       </div>
     </main>

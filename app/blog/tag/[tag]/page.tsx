@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { BlogCard } from "@/components/blog";
-import { SplitHeading } from "@/components/motion/split-heading";
 import { getPostsByTag, getAllTags } from "@/lib/blog";
 import { siteConfig } from "@/lib/config";
 import type { Metadata } from "next";
@@ -53,35 +52,35 @@ export default async function TagPage({ params }: TagPageProps) {
     decodedTag;
 
   return (
-    <main id="main-content" className="min-h-screen bg-background">
-      <header className="bg-grid border-b border-border">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-32 pb-16">
-          <SplitHeading className="font-bebas text-6xl sm:text-7xl md:text-8xl leading-[0.9] tracking-wide text-foreground mb-4">
-            Tagged <span className="text-primary">{properTag}</span>
-          </SplitHeading>
-          <p className="text-foreground/70 text-lg font-mono">
+    <main id="main-content" className="min-h-screen">
+      <header>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-32 md:pt-40 pb-12">
+          <h1 className="display text-[clamp(3rem,9vw,7rem)] mb-6">
+            Tagged{" "}
+            <span className="inline-block bg-highlight border-2 shadow-hard px-[0.1em]">
+              {properTag}
+            </span>
+          </h1>
+          <p className="text-muted-foreground text-lg font-mono">
             {posts.length} article{posts.length !== 1 ? "s" : ""}
           </p>
         </div>
       </header>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         {/* Posts Grid */}
         {posts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post) => (
               <BlogCard key={post.slug} post={post} />
             ))}
           </div>
         ) : (
           <div className="text-center py-16">
-            <p className="text-foreground/60 font-mono">
+            <p className="text-muted-foreground font-mono">
               No articles found with this tag.
             </p>
-            <Link
-              href="/blog"
-              className="mt-4 inline-block text-primary hover:underline font-mono text-sm"
-            >
+            <Link href="/blog" className="btn press bg-highlight mt-6">
               View all articles
             </Link>
           </div>
