@@ -40,13 +40,15 @@ export function SocialShare({ title, url }: SocialShareProps) {
 
   return (
     <div className="flex items-center gap-2">
-      <span className="text-foreground/60 font-mono text-sm mr-2">Share:</span>
+      <span className="text-muted-foreground font-mono text-sm mr-2">
+        Share:
+      </span>
 
       <a
         href={shareLinks.twitter}
         target="_blank"
         rel="noopener noreferrer"
-        className="p-2 bg-secondary border border-border text-foreground/60 hover:text-foreground hover:border-primary transition-colors"
+        className="p-2 bg-card border-2 text-muted-foreground hover:text-foreground hover:border-primary transition-colors"
         title="Share on Twitter/X"
         aria-label="Share on Twitter/X"
       >
@@ -57,7 +59,7 @@ export function SocialShare({ title, url }: SocialShareProps) {
         href={shareLinks.linkedin}
         target="_blank"
         rel="noopener noreferrer"
-        className="p-2 bg-secondary border border-border text-foreground/60 hover:text-foreground hover:border-primary transition-colors"
+        className="p-2 bg-card border-2 text-muted-foreground hover:text-foreground hover:border-primary transition-colors"
         title="Share on LinkedIn"
         aria-label="Share on LinkedIn"
       >
@@ -66,12 +68,12 @@ export function SocialShare({ title, url }: SocialShareProps) {
 
       <button
         onClick={handleCopyLink}
-        className="p-2 bg-secondary border border-border text-foreground/60 hover:text-foreground hover:border-primary transition-colors"
+        className="p-2 bg-card border-2 text-muted-foreground hover:text-foreground hover:border-primary transition-colors"
         title={copied ? "Copied!" : "Copy link"}
         aria-label="Copy link to clipboard"
       >
         {copied ? (
-          <Check size={18} className="text-green-500" />
+          <Check size={18} className="text-green-800" />
         ) : (
           <Link2 size={18} />
         )}

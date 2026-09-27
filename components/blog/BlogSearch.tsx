@@ -30,21 +30,19 @@ export function BlogSearch({
 
   return (
     <div className="relative">
-      <Search
-        className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground/60"
-        size={18}
-      />
+      <Search className="absolute left-4 top-1/2 -translate-y-1/2" size={18} />
       <input
-        type="text"
+        type="search"
+        aria-label="Search articles"
         value={query}
         onChange={handleChange}
         placeholder={placeholder}
-        className="w-full pl-10 pr-10 py-3 bg-secondary border border-border text-foreground placeholder:text-foreground/60 font-mono text-sm focus:outline-none focus:border-primary transition-colors duration-200"
+        className="card w-full pl-12 pr-12 py-4 placeholder:text-muted-foreground font-mono text-sm [&::-webkit-search-cancel-button]:hidden"
       />
       {query && (
         <button
           onClick={handleClear}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground/60 hover:text-foreground transition-colors"
+          className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-highlight"
           aria-label="Clear search"
         >
           <X size={18} />

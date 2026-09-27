@@ -3,7 +3,6 @@ import Ticker from "@/components/sections/ticker";
 import Story from "@/components/sections/story";
 import Skills from "@/components/sections/skills";
 import Projects from "@/components/sections/projects";
-import Metrics from "@/components/sections/metrics";
 import Experience from "@/components/sections/experience";
 import Education from "@/components/sections/education";
 import Contact from "@/components/sections/contact";
@@ -23,13 +22,12 @@ export default function Home() {
   const [teamGrowth, usersServed] = impactMetrics;
 
   return (
-    <main id="main-content" className="bg-background">
-      <Hero profile={personalInfo} callouts={[usersServed, teamGrowth]} />
+    <main id="main-content">
+      <Hero profile={personalInfo} callouts={[teamGrowth, usersServed]} />
       <Ticker metrics={impactMetrics} />
       <Story milestones={storyMilestones} />
-      <Skills groups={skillGroups} />
       <Projects projects={projects} />
-      <Metrics metrics={impactMetrics} />
+      <Skills groups={skillGroups} />
       <Experience experience={experience} />
       <Education
         education={education}

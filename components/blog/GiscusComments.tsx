@@ -30,11 +30,11 @@ export function GiscusComments({
   // Show setup instructions if not configured
   if (!repoId || !categoryId) {
     return (
-      <div className="mt-16 pt-8 border-t border-border">
-        <h3 className="font-bebas text-2xl text-foreground tracking-wide mb-4">
+      <div className="mt-16 pt-8 border-t-2">
+        <h3 className="font-extrabold uppercase tracking-tight text-2xl mb-4">
           Comments
         </h3>
-        <div className="p-6 bg-secondary border border-border text-foreground/60 text-sm font-mono">
+        <div className="p-6 bg-card border-2 text-muted-foreground text-sm font-mono">
           <p className="mb-4">
             Comments are powered by Giscus (GitHub Discussions).
           </p>
@@ -61,8 +61,8 @@ export function GiscusComments({
   }
 
   return (
-    <div className="mt-16 pt-8 border-t border-border">
-      <h3 className="font-bebas text-2xl text-foreground tracking-wide mb-6">
+    <div className="mt-16 pt-8 border-t-2">
+      <h3 className="font-extrabold uppercase tracking-tight text-2xl mb-6">
         Comments
       </h3>
       <Giscus
@@ -75,7 +75,7 @@ export function GiscusComments({
         reactionsEnabled="1"
         emitMetadata="0"
         inputPosition="top"
-        theme="dark_dimmed"
+        theme="light"
         lang="en"
         loading="lazy"
       />

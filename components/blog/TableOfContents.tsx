@@ -53,7 +53,7 @@ export function TableOfContents({ items, variant }: TableOfContentsProps) {
     <div className="mb-8">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between px-4 py-3 bg-secondary border border-border text-foreground/80 font-mono text-sm"
+        className="w-full flex items-center justify-between px-4 py-3 bg-card border-2 text-foreground font-mono text-sm"
       >
         <span className="flex items-center gap-2">
           <List size={16} />
@@ -62,7 +62,7 @@ export function TableOfContents({ items, variant }: TableOfContentsProps) {
         {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
       </button>
       {isExpanded && (
-        <nav className="px-4 py-3 bg-secondary border border-t-0 border-border">
+        <nav className="px-4 py-3 bg-card border-2 border-t-0">
           <ul className="space-y-2">
             {items.map((item) => (
               <li
@@ -76,8 +76,8 @@ export function TableOfContents({ items, variant }: TableOfContentsProps) {
                   onClick={(e) => handleClick(e, item.id)}
                   className={`block py-1 text-sm transition-colors ${
                     activeId === item.id
-                      ? "text-primary font-medium"
-                      : "text-foreground/60 hover:text-foreground/80"
+                      ? "bg-highlight font-semibold"
+                      : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   {item.text}
@@ -94,8 +94,8 @@ export function TableOfContents({ items, variant }: TableOfContentsProps) {
   const desktopContent = (
     <aside className="h-full">
       <div className="sticky top-24 space-y-6">
-        <div className="p-4 bg-secondary border border-border">
-          <h4 className="flex items-center gap-2 text-foreground/80 font-mono text-sm mb-4 pb-2 border-b border-border">
+        <div className="card p-4">
+          <h4 className="flex items-center gap-2 text-foreground font-mono text-sm mb-4 pb-2 border-b-2">
             <List size={16} />
             On this page
           </h4>
@@ -113,8 +113,8 @@ export function TableOfContents({ items, variant }: TableOfContentsProps) {
                     onClick={(e) => handleClick(e, item.id)}
                     className={`block py-1.5 text-sm transition-colors border-l-2 pl-3 -ml-px ${
                       activeId === item.id
-                        ? "border-primary text-primary"
-                        : "border-transparent text-foreground/50 hover:text-foreground/80 hover:border-white/20"
+                        ? "border-primary bg-highlight font-semibold"
+                        : "border-transparent text-muted-foreground hover:text-foreground hover:border-foreground/40"
                     }`}
                   >
                     {item.text}

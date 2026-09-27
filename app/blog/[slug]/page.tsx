@@ -126,15 +126,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <main
-        id="main-content"
-        className="min-h-screen bg-background pt-16 md:pt-20"
-      >
+      <main id="main-content" className="min-h-screen pt-24 md:pt-28">
         {/* Blog Header */}
         <BlogHeader post={post} />
 
         {/* Content with TOC */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
           <div className="lg:grid lg:grid-cols-[1fr_250px] lg:gap-8">
             {/* Main Content */}
             <div className="max-w-4xl">
@@ -146,7 +143,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <BlogContent code={post.content} />
 
               {/* Share Section */}
-              <div className="mt-12 pt-8 border-t border-border">
+              <div className="mt-12 pt-8 border-t-2">
                 <SocialShare
                   title={post.title}
                   url={`${baseUrl}${post.permalink}`}

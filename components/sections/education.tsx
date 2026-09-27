@@ -1,8 +1,4 @@
-"use client";
-
-import { useRef } from "react";
-import { animate, onScroll, spring, stagger } from "animejs";
-import { useAnimeScope } from "@/hooks";
+import SectionHead from "./section-head";
 import type { Achievement, Education as Degree } from "@/lib/data";
 
 interface EducationProps {
@@ -11,35 +7,11 @@ interface EducationProps {
   achievements: Achievement[];
 }
 
-/** Deliberately the quiet section: one entrance, nothing loops. */
 const Education = ({
   education,
   certifications,
   achievements,
 }: EducationProps) => {
-  const root = useRef<HTMLElement>(null);
-
-  useAnimeScope(root, ({ matches }) => {
-    if (matches.reduceMotion) return;
-    const enter = () =>
-      onScroll({ target: ".ledger", enter: "bottom-=10% top" });
-    animate(".ledger-row", {
-      opacity: [0, 1],
-      x: [-16, 0],
-      delay: stagger(70),
-      duration: 600,
-      ease: "out(3)",
-      autoplay: enter(),
-    });
-    animate(".ledger-mark", {
-      scale: [0, 1],
-      delay: stagger(70, { start: 120 }),
-      ease: spring({ bounce: 0.5 }),
-      duration: 700,
-      autoplay: enter(),
-    });
-  });
-
   const columns: Array<{
     title: string;
     rows: Array<{ head: string; sub: string; foot?: string }>;
@@ -70,47 +42,34 @@ const Education = ({
 
   return (
     <section
-      ref={root}
-      className="bg-grid border-t border-border py-20 md:py-24 px-4 sm:px-6"
+      className="px-4 sm:px-6 py-20 md:py-28"
       aria-labelledby="education-title"
     >
       <div className="max-w-7xl mx-auto">
-        <h2
-          id="education-title"
-          className="font-bebas text-5xl md:text-7xl leading-[0.9] tracking-wide text-foreground mb-14"
-        >
-          On <span className="text-primary">record</span>
-        </h2>
+        <SectionHead id="education-title" index="05" title="On record" />
 
-        <div className="ledger grid md:grid-cols-3 gap-12 md:gap-8">
+        <div className="grid gap-6 md:grid-cols-3">
           {columns.map((col, ci) => (
-            <div key={col.title}>
-              <h3 className="font-mono text-xs uppercase tracking-[0.25em] text-foreground/60 pb-3 border-b border-border mb-2">
+            <div
+              key={col.title}
+              className={`card ${ci === 2 ? "bg-highlight" : ""}`}
+            >
+              <h3 className="px-5 py-3 border-b-2 font-mono text-xs uppercase tracking-[0.2em]">
                 {col.title}
               </h3>
               <ul>
-                {col.rows.map((row, ri) => (
+                {col.rows.map((row) => (
                   <li
                     key={row.head}
-                    className="ledger-row flex gap-4 py-5 border-b border-border/60 last:border-b-0"
+                    className="px-5 py-4 border-b-2 last:border-b-0"
                   >
-                    <span
-                      className={`ledger-mark mt-2 w-2.5 h-2.5 shrink-0 ${
-                        (ci + ri) % 2 ? "bg-volt" : "bg-primary"
-                      }`}
-                      aria-hidden
-                    />
-                    <div>
-                      <p className="font-bebas text-2xl tracking-wide text-foreground leading-tight">
-                        {row.head}
+                    <p className="font-bold leading-snug">{row.head}</p>
+                    <p className="mt-1 text-sm opacity-75">{row.sub}</p>
+                    {row.foot && (
+                      <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.1em]">
+                        {row.foot}
                       </p>
-                      <p className="text-foreground/70 mt-1">{row.sub}</p>
-                      {row.foot && (
-                        <p className="font-mono text-xs text-foreground/60 mt-2">
-                          {row.foot}
-                        </p>
-                      )}
-                    </div>
+                    )}
                   </li>
                 ))}
               </ul>

@@ -19,23 +19,27 @@ export function TagFilter({ tags, selectedTag, onTagSelect }: TagFilterProps) {
   return (
     <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
       <button
+        type="button"
+        aria-pressed={selectedTag === null}
         onClick={() => onTagSelect(null)}
-        className={`shrink-0 px-3 py-1.5 text-xs border transition-colors duration-200 ${
+        className={`chip shrink-0 ${
           selectedTag === null
-            ? "bg-primary border-primary text-foreground"
-            : "bg-transparent border-border text-foreground/60 hover:border-primary hover:text-primary"
+            ? "bg-foreground text-background"
+            : "bg-card hover:bg-highlight"
         }`}
       >
         All
       </button>
       {tags.map((tag) => (
         <button
+          type="button"
+          aria-pressed={selectedTag === tag}
           key={tag}
           onClick={() => handleTagClick(tag)}
-          className={`shrink-0 px-3 py-1.5 text-xs border transition-colors duration-200 ${
+          className={`chip shrink-0 ${
             selectedTag === tag
-              ? "bg-primary border-primary text-foreground"
-              : "bg-transparent border-border text-foreground/60 hover:border-primary hover:text-primary"
+              ? "bg-foreground text-background"
+              : "bg-card hover:bg-highlight"
           }`}
         >
           {tag}

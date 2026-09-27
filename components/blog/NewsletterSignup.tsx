@@ -59,7 +59,7 @@ export function NewsletterSignup({
     return (
       <div className={className}>
         {state === "success" ? (
-          <div className="flex items-center gap-2 text-green-500 font-mono text-sm">
+          <div className="flex items-center gap-2 text-green-800 font-mono text-sm">
             <Check size={16} />
             Thanks for subscribing!
           </div>
@@ -68,7 +68,7 @@ export function NewsletterSignup({
             <div className="relative flex-1">
               <Mail
                 size={16}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground/60"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
               />
               <input
                 type="email"
@@ -78,7 +78,7 @@ export function NewsletterSignup({
                   if (state === "error") setState("idle");
                 }}
                 placeholder="your@email.com"
-                className="w-full pl-10 pr-4 py-2 bg-secondary border border-border text-foreground placeholder:text-foreground/30 font-mono text-sm focus:outline-none focus:border-primary transition-colors"
+                className="w-full pl-10 pr-4 py-2 bg-card border-2 text-foreground placeholder:text-muted-foreground font-mono text-sm focus:outline-none focus:border-primary transition-colors"
                 disabled={state === "loading"}
                 required
               />
@@ -86,14 +86,14 @@ export function NewsletterSignup({
             <button
               type="submit"
               disabled={state === "loading"}
-              className="px-4 py-2 bg-primary text-foreground font-mono text-sm hover:bg-primary/80 transition-colors disabled:opacity-50"
+              className="px-4 py-2 bg-primary text-primary-foreground font-mono text-sm hover:bg-foreground transition-colors disabled:opacity-50"
             >
               {state === "loading" ? "..." : <ArrowRight size={16} />}
             </button>
           </form>
         )}
         {state === "error" && (
-          <p className="mt-2 text-red-500 text-xs font-mono flex items-center gap-1">
+          <p className="mt-2 text-red-700 text-xs font-mono flex items-center gap-1">
             <AlertCircle size={12} />
             {errorMessage}
           </p>
@@ -103,29 +103,29 @@ export function NewsletterSignup({
   }
 
   return (
-    <div className={`p-6 bg-secondary border border-border ${className}`}>
+    <div className={`p-6 bg-card border-2 ${className}`}>
       <div className="flex items-center gap-3 mb-4">
         <div className="p-2 bg-primary/10 border border-primary/20">
           <Mail size={20} className="text-primary" />
         </div>
         <div>
-          <h4 className="font-bebas text-lg text-foreground tracking-wide">
+          <h4 className="font-extrabold uppercase tracking-tight text-lg">
             Stay Updated
           </h4>
-          <p className="text-foreground/60 text-xs font-mono">
+          <p className="text-muted-foreground text-xs font-mono">
             No spam, unsubscribe anytime
           </p>
         </div>
       </div>
 
       {state === "success" ? (
-        <div className="flex items-center gap-2 p-3 bg-green-500/10 border border-green-500/20 text-green-500 font-mono text-sm">
+        <div className="flex items-center gap-2 p-3 bg-green-500/10 border border-green-500/20 text-green-800 font-mono text-sm">
           <Check size={16} />
           Thanks for subscribing! Check your inbox.
         </div>
       ) : (
         <>
-          <p className="text-foreground/60 text-sm mb-4">
+          <p className="text-muted-foreground text-sm mb-4">
             Get notified about new blog posts on software engineering,
             architecture, and building products.
           </p>
@@ -134,7 +134,7 @@ export function NewsletterSignup({
             <div className="relative">
               <Mail
                 size={16}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground/60"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
               />
               <input
                 type="email"
@@ -144,14 +144,14 @@ export function NewsletterSignup({
                   if (state === "error") setState("idle");
                 }}
                 placeholder="your@email.com"
-                className="w-full pl-10 pr-4 py-3 bg-background border border-border text-foreground placeholder:text-foreground/30 font-mono text-sm focus:outline-none focus:border-primary transition-colors"
+                className="w-full pl-10 pr-4 py-3 bg-background border-2 text-foreground placeholder:text-muted-foreground font-mono text-sm focus:outline-none focus:border-primary transition-colors"
                 disabled={state === "loading"}
                 required
               />
             </div>
 
             {state === "error" && (
-              <p className="text-red-500 text-xs font-mono flex items-center gap-1">
+              <p className="text-red-700 text-xs font-mono flex items-center gap-1">
                 <AlertCircle size={12} />
                 {errorMessage}
               </p>
@@ -160,7 +160,7 @@ export function NewsletterSignup({
             <button
               type="submit"
               disabled={state === "loading"}
-              className="w-full py-3 bg-primary text-foreground font-mono text-sm hover:bg-primary/80 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full py-3 bg-primary text-primary-foreground font-mono text-sm hover:bg-foreground transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {state === "loading" ? (
                 "Subscribing..."

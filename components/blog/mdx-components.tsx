@@ -36,9 +36,10 @@ function CopyButton({ code }: { code: string }) {
 
   return (
     <button
+      type="button"
       onClick={handleCopy}
-      className="absolute top-3 right-3 p-2 bg-muted hover:bg-muted/70 text-foreground/60 hover:text-foreground transition-colors"
-      aria-label="Copy code"
+      className="absolute top-3 right-3 p-2 bg-card border-2 hover:bg-highlight"
+      aria-label={copied ? "Copied" : "Copy code"}
     >
       {copied ? <Check size={16} /> : <Copy size={16} />}
     </button>
@@ -49,12 +50,12 @@ function CopyButton({ code }: { code: string }) {
 function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
   const Tag = `h${level}` as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   const sizes = {
-    1: "text-3xl sm:text-4xl mt-12 mb-6",
-    2: "text-2xl sm:text-3xl mt-10 mb-4",
-    3: "text-xl sm:text-2xl mt-8 mb-3",
-    4: "text-lg sm:text-xl mt-6 mb-2",
-    5: "text-base sm:text-lg mt-4 mb-2",
-    6: "text-sm sm:text-base mt-4 mb-2",
+    1: "display text-3xl sm:text-4xl mt-14 mb-6",
+    2: "display text-2xl sm:text-3xl mt-14 mb-5",
+    3: "text-xl sm:text-2xl font-extrabold tracking-tight mt-10 mb-3",
+    4: "text-lg sm:text-xl font-bold mt-6 mb-2",
+    5: "text-base sm:text-lg font-bold mt-4 mb-2",
+    6: "text-sm sm:text-base font-bold mt-4 mb-2",
   };
 
   return function Heading({
@@ -71,26 +72,15 @@ function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
         : undefined);
 
     return (
-      <Tag
-        id={headingId}
-        className={`font-bebas text-foreground tracking-wide group ${sizes[level]}`}
-      >
-        <a
-          href={`#${headingId}`}
-          className="inline-flex items-center gap-2 hover:text-primary transition-colors"
-        >
+      <Tag id={headingId} className={`group scroll-mt-24 ${sizes[level]}`}>
+        <a href={`#${headingId}`} className="inline-flex items-center gap-2">
           {children}
           <LinkIcon
             size={level <= 2 ? 20 : 16}
-            className="opacity-0 group-hover:opacity-100 transition-opacity"
-          />
-        </a>
-        {level === 2 && (
-          <span
-            className="h-rule block h-px w-full bg-volt origin-left mt-3"
+            className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
             aria-hidden
           />
-        )}
+        </a>
       </Tag>
     );
   };
@@ -121,10 +111,10 @@ function Pre({
   const codeContent = props.raw || extractTextContent(children);
 
   return (
-    <div className="relative my-6 group">
+    <div className="relative my-8 group">
       <pre
         {...props}
-        className="overflow-x-auto p-4 bg-secondary border border-border text-sm font-mono leading-relaxed"
+        className="card overflow-x-auto p-5 text-sm font-mono leading-relaxed"
       >
         {children}
       </pre>
@@ -141,7 +131,7 @@ function Code({ children, ...props }: React.HTMLAttributes<HTMLElement>) {
   }
 
   return (
-    <code className="px-1.5 py-0.5 bg-secondary border border-border text-primary font-mono text-sm">
+    <code className="px-1 py-0.5 bg-highlight/60 border border-foreground/20 font-mono text-[0.875em]">
       {children}
     </code>
   );
@@ -153,7 +143,7 @@ function MDXImage({ src, alt }: { src?: string; alt?: string }) {
 
   return (
     <figure className="my-8">
-      <div className="relative aspect-video overflow-hidden border border-border">
+      <div className="card relative aspect-video overflow-hidden">
         <Image
           src={src}
           alt={alt || ""}
@@ -163,7 +153,7 @@ function MDXImage({ src, alt }: { src?: string; alt?: string }) {
         />
       </div>
       {alt && (
-        <figcaption className="mt-2 text-center text-sm text-foreground/50 font-mono">
+        <figcaption className="mt-4 text-sm text-muted-foreground font-mono">
           {alt}
         </figcaption>
       )}
@@ -174,8 +164,8 @@ function MDXImage({ src, alt }: { src?: string; alt?: string }) {
 // Blockquote styled as callout
 function Blockquote({ children }: { children: React.ReactNode }) {
   return (
-    <blockquote className="my-6 pl-4 border-l border-primary bg-secondary py-4 pr-4">
-      <div className="text-foreground/80 italic">{children}</div>
+    <blockquote className="my-8 p-5 border-2 border-l-[6px] bg-card">
+      <div className="font-medium [&_p]:my-0">{children}</div>
     </blockquote>
   );
 }
@@ -184,7 +174,7 @@ function Blockquote({ children }: { children: React.ReactNode }) {
 function Table({ children }: { children: React.ReactNode }) {
   return (
     <div className="my-6 overflow-x-auto">
-      <table className="w-full border-collapse border border-border">
+      <table className="w-full border-collapse border-2 bg-card">
         {children}
       </table>
     </div>
@@ -193,23 +183,19 @@ function Table({ children }: { children: React.ReactNode }) {
 
 function Th({ children }: { children: React.ReactNode }) {
   return (
-    <th className="border border-border bg-secondary px-4 py-2 text-left font-mono text-sm text-foreground">
+    <th className="border-2 bg-highlight px-4 py-2 text-left font-mono text-xs uppercase tracking-wider">
       {children}
     </th>
   );
 }
 
 function Td({ children }: { children: React.ReactNode }) {
-  return (
-    <td className="border border-border px-4 py-2 text-sm text-foreground/70">
-      {children}
-    </td>
-  );
+  return <td className="border-2 px-4 py-2 text-sm">{children}</td>;
 }
 
 // Paragraph
 function P({ children }: { children: React.ReactNode }) {
-  return <p className="my-4 text-foreground/70 leading-relaxed">{children}</p>;
+  return <p className="my-5 text-[1.075rem] leading-[1.75]">{children}</p>;
 }
 
 // Links
@@ -226,7 +212,7 @@ function A({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-primary hover:underline"
+        className="font-semibold underline decoration-primary decoration-2 underline-offset-4 hover:bg-highlight"
         {...props}
       >
         {children}
@@ -235,7 +221,10 @@ function A({
   }
 
   return (
-    <Link href={href || "#"} className="text-primary hover:underline">
+    <Link
+      href={href || "#"}
+      className="font-semibold underline decoration-primary decoration-2 underline-offset-4 hover:bg-highlight"
+    >
       {children}
     </Link>
   );
@@ -244,7 +233,7 @@ function A({
 // Lists
 function Ul({ children }: { children: React.ReactNode }) {
   return (
-    <ul className="my-4 ml-6 list-disc text-foreground/70 space-y-2">
+    <ul className="my-5 ml-6 list-[square] marker:text-primary space-y-2 text-[1.075rem]">
       {children}
     </ul>
   );
@@ -252,7 +241,7 @@ function Ul({ children }: { children: React.ReactNode }) {
 
 function Ol({ children }: { children: React.ReactNode }) {
   return (
-    <ol className="my-4 ml-6 list-decimal text-foreground/70 space-y-2">
+    <ol className="my-5 ml-6 list-decimal marker:font-mono marker:font-bold space-y-2 text-[1.075rem]">
       {children}
     </ol>
   );
@@ -264,12 +253,12 @@ function Li({ children }: { children: React.ReactNode }) {
 
 // Horizontal rule
 function Hr() {
-  return <hr className="my-8 border-border" />;
+  return <hr className="my-12 border-t-2" />;
 }
 
 // Strong/Bold
 function Strong({ children }: { children: React.ReactNode }) {
-  return <strong className="font-semibold text-foreground">{children}</strong>;
+  return <strong className="font-bold">{children}</strong>;
 }
 
 // Export all MDX components
