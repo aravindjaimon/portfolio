@@ -21,7 +21,7 @@ export function BlogHeader({ post }: BlogHeaderProps) {
           </div>
 
           {/* Title */}
-          <h1 className="display text-[clamp(2.25rem,5.5vw,4.5rem)] mb-6 text-balance">
+          <h1 className="display text-[clamp(1.75rem,7vw,4.5rem)] mb-6 text-balance">
             {post.title}
           </h1>
 

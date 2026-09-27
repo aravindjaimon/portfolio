@@ -131,7 +131,7 @@ function Code({ children, ...props }: React.HTMLAttributes<HTMLElement>) {
   }
 
   return (
-    <code className="px-1 py-0.5 bg-highlight/60 border border-foreground/20 font-mono text-[0.875em]">
+    <code className="px-1 py-0.5 bg-highlight/60 border border-foreground/20 font-mono text-[0.875em] [overflow-wrap:anywhere]">
       {children}
     </code>
   );

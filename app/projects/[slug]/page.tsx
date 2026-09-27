@@ -73,16 +73,16 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         </Link>
 
         {/* Header card */}
-        <header className="card grid md:grid-cols-[1fr_auto]">
-          <div className="p-6 sm:p-10">
+        <header className="card grid md:grid-cols-[minmax(0,1fr)_auto]">
+          <div className="p-5 sm:p-10 min-w-0">
             <span className="chip mb-6">{project.industry}</span>
-            <h1 className="display text-[clamp(2.25rem,6vw,4.5rem)] text-balance">
+            <h1 className="display text-[clamp(1.75rem,7vw,4.5rem)] text-balance">
               {project.title}
             </h1>
             <p className="mt-5 text-lg sm:text-xl text-muted-foreground max-w-2xl">
               {project.subtitle}
             </p>
-            <dl className="mt-8 flex flex-wrap gap-3">
+            <dl className="mt-8 flex flex-wrap gap-3 [&_.chip]:whitespace-normal">
               <div className="chip">
                 <Briefcase size={12} aria-hidden />
                 <dt className="sr-only">Role</dt>
@@ -112,19 +112,17 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         {/* Metrics */}
         <dl
           aria-label="Key metrics"
-          className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4"
+          className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4"
         >
           {project.metrics.map((metric, i) => (
             <div
               key={metric.label}
-              className={`card flex flex-col-reverse p-5 sm:p-6 ${i === 0 ? "bg-primary text-primary-foreground" : ""}`}
+              className={`@container card flex flex-col-reverse p-4 sm:p-6 min-w-0 ${i === 0 ? "bg-primary text-primary-foreground" : ""}`}
             >
-              <dt className="mt-2 font-mono text-[11px] uppercase tracking-[0.12em]">
+              <dt className="mt-2 font-mono text-[11px] uppercase tracking-[0.12em] break-words">
                 {metric.label}
               </dt>
-              <dd className="display normal-case text-3xl sm:text-4xl tabular-nums">
-                {metric.value}
-              </dd>
+              <dd className="stat">{metric.value}</dd>
             </div>
           ))}
         </dl>
@@ -150,8 +148,8 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
           </section>
         </div>
 
-        <section className="mt-20 card bg-highlight p-8 sm:p-12">
-          <h2 className="display text-[clamp(2rem,5vw,3.5rem)] text-balance">
+        <section className="mt-20 card bg-highlight p-6 sm:p-12">
+          <h2 className="display text-[clamp(1.5rem,6vw,3.5rem)] text-balance">
             Working on something like this?
           </h2>
           <p className="mt-5 mb-8 max-w-xl text-lg">

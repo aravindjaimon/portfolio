@@ -42,6 +42,10 @@
   button {
     text-underline-offset: 0.2em;
   }
+  /* Long inline paths/identifiers wrap instead of running off narrow screens */
+  :not(pre) > code {
+    overflow-wrap: anywhere;
+  }
 }
 
 @layer components {
@@ -53,6 +57,19 @@
     text-transform: uppercase;
     line-height: 0.88;
     letter-spacing: -0.02em;
+    /* Safety net: only breaks a word that cannot fit on a line by itself */
+    overflow-wrap: break-word;
+  }
+  /* Metric value sized to its card; the card must be an `@container` */
+  .stat {
+    font-weight: 900;
+    font-stretch: 125%;
+    font-variation-settings: "wdth" 125;
+    font-size: clamp(1.125rem, 12cqi, 2.5rem);
+    line-height: 1;
+    overflow-wrap: anywhere;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
   }
   .card {
     background: var(--color-card);
