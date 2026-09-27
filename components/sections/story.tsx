@@ -28,14 +28,14 @@ const Story = ({ milestones }: StoryProps) => (
         intro="No codebase, no standards, no team — then a company default stack, a CI every project runs on, and thirty engineers shipping on it."
       />
 
-      <ol className="grid gap-6 md:grid-cols-4 md:items-end">
+      <ol className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 lg:items-end">
         {milestones.map((m, i) => (
           <li
             key={m.phase}
-            className={`card p-6 flex flex-col md:min-h-72 md:mb-[var(--lift)] ${i === milestones.length - 1 ? "bg-primary text-primary-foreground" : ""}`}
+            className={`card p-6 flex flex-col lg:min-h-72 lg:mb-[var(--lift)] ${i === milestones.length - 1 ? "bg-primary text-primary-foreground" : ""}`}
             style={{ "--lift": `${STEP * i}rem` } as React.CSSProperties}
           >
-            <div className="flex items-center justify-between mb-10">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 mb-10">
               <span className="display text-5xl">
                 {String(i + 1).padStart(2, "0")}
               </span>

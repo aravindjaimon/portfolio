@@ -50,7 +50,7 @@ const Contact = ({ profile }: ContactProps) => {
           </span>
         </h2>
 
-        <div className="mt-16 grid gap-10 lg:grid-cols-12 items-end">
+        <div className="mt-16 grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-12 items-end">
           <p className="lg:col-span-5 text-lg md:text-xl leading-relaxed text-muted-foreground">
             First hire at RaftLabs, now a 30+ engineer team and systems serving
             over a million users. If you&apos;re working at that scale —
@@ -58,18 +58,18 @@ const Contact = ({ profile }: ContactProps) => {
             about it.
           </p>
 
-          <div className="lg:col-span-6 lg:col-start-7 flex flex-col gap-5">
+          <div className="lg:col-span-6 lg:col-start-7 min-w-0 flex flex-col gap-5">
             <div className="flex">
               <a
                 href={`mailto:${profile.email}`}
-                className="card press flex-1 min-w-0 px-5 py-5 md:px-7 md:py-6 text-lg sm:text-2xl md:text-3xl font-extrabold tracking-tight truncate hover:bg-highlight"
+                className="card press flex-1 min-w-0 px-4 py-4 sm:px-5 sm:py-5 md:px-7 md:py-6 text-base sm:text-2xl md:text-3xl font-extrabold tracking-tight truncate hover:bg-highlight"
               >
                 {profile.email}
               </a>
               <button
                 type="button"
                 onClick={copyEmail}
-                className="card press -ml-[2px] px-5 grid place-items-center"
+                className="card press -ml-[2px] px-4 sm:px-5 grid place-items-center shrink-0"
                 aria-label={copied ? "Email copied" : "Copy email address"}
               >
                 {copied ? (
@@ -96,7 +96,7 @@ const Contact = ({ profile }: ContactProps) => {
                   {label}
                 </a>
               ))}
-              <span className="chip ml-auto">{profile.location}</span>
+              <span className="chip sm:ml-auto">{profile.location}</span>
             </div>
           </div>
         </div>

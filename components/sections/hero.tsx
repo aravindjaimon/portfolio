@@ -63,14 +63,12 @@ const Hero = ({ profile, callouts }: HeroProps) => {
               {callouts.map((metric, i) => (
                 <div
                   key={metric.label}
-                  className={`card flex flex-col-reverse p-4 sm:p-6 ${i ? "-ml-[2px]" : "bg-highlight"}`}
+                  className={`@container card flex flex-col-reverse p-4 sm:p-6 ${i ? "-ml-[2px]" : "bg-highlight"}`}
                 >
                   <dt className="mt-3 font-mono text-xs uppercase tracking-[0.15em]">
                     {metric.label}
                   </dt>
-                  <dd className="display normal-case text-2xl sm:text-4xl whitespace-nowrap tabular-nums">
-                    {metric.value}
-                  </dd>
+                  <dd className="stat whitespace-nowrap">{metric.value}</dd>
                 </div>
               ))}
             </dl>

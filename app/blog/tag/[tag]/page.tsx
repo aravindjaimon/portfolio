@@ -55,9 +55,9 @@ export default async function TagPage({ params }: TagPageProps) {
     <main id="main-content" className="min-h-screen">
       <header>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-32 md:pt-40 pb-12">
-          <h1 className="display text-[clamp(3rem,9vw,7rem)] mb-6">
+          <h1 className="display text-[clamp(2rem,10vw,7rem)] mb-6">
             Tagged{" "}
-            <span className="inline-block bg-highlight border-2 shadow-hard px-[0.1em]">
+            <span className="inline-block max-w-full bg-highlight border-2 shadow-hard px-[0.1em]">
               {properTag}
             </span>
           </h1>

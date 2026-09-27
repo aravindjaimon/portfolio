@@ -19,9 +19,9 @@ export default function BlogPage() {
       <header>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-32 md:pt-40 pb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
           <div>
-            <h1 className="display text-[clamp(3rem,9vw,7rem)] mb-6">
+            <h1 className="display text-[clamp(2rem,10vw,7rem)] mb-6">
               Notes from{" "}
-              <span className="inline-block bg-highlight border-2 shadow-hard px-[0.1em]">
+              <span className="inline-block max-w-full bg-highlight border-2 shadow-hard px-[0.1em]">
                 production
               </span>
             </h1>
