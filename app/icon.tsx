@@ -1,29 +1,24 @@
 import { ImageResponse } from "next/og";
-import { archivoFonts } from "./fonts/archivo";
 
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
-/** Favicon: "AJ" on a highlighter tile with an ink rule. */
-export default async function Icon() {
+/** Favicon: a split disc, rose | air either side of a porcelain axis. Font-free. */
+export default function Icon() {
   return new ImageResponse(
     <div
       style={{
         width: "100%",
         height: "100%",
-        background: "#F5E642",
-        border: "3px solid #111111",
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontFamily: "Archivo Black",
-        fontSize: 15,
-        letterSpacing: -1,
-        color: "#111111",
+        background: "#FAF6F1",
       }}
     >
-      <span style={{ color: "#2B2BFF" }}>A</span>J
+      <svg width="32" height="32" viewBox="0 0 32 32">
+        <path d="M15 3a13 13 0 0 0 0 26z" fill="#A3324F" />
+        <path d="M17 3a13 13 0 0 1 0 26z" fill="#306083" />
+      </svg>
     </div>,
-    { ...size, fonts: await archivoFonts() }
+    size
   );
 }

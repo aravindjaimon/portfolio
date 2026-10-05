@@ -1,28 +1,24 @@
 import { ImageResponse } from "next/og";
-import { archivoFonts } from "./fonts/archivo";
 
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
-/** Home-screen icon: the favicon tile at full size. */
-export default async function AppleIcon() {
+/** Home-screen icon: the favicon disc, padded for the iOS mask on a porcelain tile. Font-free. */
+export default function AppleIcon() {
   return new ImageResponse(
     <div
       style={{
         width: "100%",
         height: "100%",
-        background: "#F5E642",
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontFamily: "Archivo Black",
-        fontSize: 84,
-        letterSpacing: -4,
-        color: "#111111",
+        background: "#FAF6F1",
       }}
     >
-      <span style={{ color: "#2B2BFF" }}>A</span>J
+      <svg width="180" height="180" viewBox="-5 -5 42 42">
+        <path d="M15 3a13 13 0 0 0 0 26z" fill="#A3324F" />
+        <path d="M17 3a13 13 0 0 1 0 26z" fill="#306083" />
+      </svg>
     </div>,
-    { ...size, fonts: await archivoFonts() }
+    size
   );
 }

@@ -23,7 +23,7 @@ interface ButtondownEmailsResponse {
 }
 
 /**
- * Generate HTML email template matching site's dark theme
+ * Generate HTML email template matching the site's light Equinox palette
  */
 export function generateEmailTemplate(post: Post, siteUrl: string): string {
   const postUrl = `${siteUrl}/blog/${post.slug}`;
@@ -32,7 +32,7 @@ export function generateEmailTemplate(post: Post, siteUrl: string): string {
   const tagsHtml = post.tags
     .map(
       (tag) =>
-        `<span style="display: inline-block; padding: 4px 12px; background-color: #2D2D2D; color: #888; font-size: 12px; font-family: monospace; margin-right: 8px; margin-bottom: 8px;">${tag}</span>`
+        `<span style="display: inline-block; padding: 4px 12px; background-color: #F4DFE2; color: #231C27; font-size: 12px; font-family: monospace; margin-right: 8px; margin-bottom: 8px;">${tag}</span>`
     )
     .join("");
 
@@ -58,11 +58,11 @@ export function generateEmailTemplate(post: Post, siteUrl: string): string {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${post.title}</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #0A0A0A; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #0A0A0A; padding: 40px 20px;">
+<body style="margin: 0; padding: 0; background-color: #FAF6F1; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #FAF6F1; padding: 40px 20px;">
     <tr>
       <td align="center">
-        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #1A1A1A; border: 1px solid #2D2D2D;">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #FFFFFF; border: 1px solid #E3D9D2;">
           ${
             coverImageUrl
               ? `
@@ -79,24 +79,24 @@ export function generateEmailTemplate(post: Post, siteUrl: string): string {
               <!-- Header -->
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td style="padding-bottom: 24px; border-bottom: 1px solid #2D2D2D;">
-                    <span style="color: #C41E3A; font-size: 12px; font-family: monospace; text-transform: uppercase; letter-spacing: 2px;">NEW POST</span>
+                  <td style="padding-bottom: 24px; border-bottom: 1px solid #E3D9D2;">
+                    <span style="color: #A3324F; font-size: 12px; font-family: monospace; text-transform: uppercase; letter-spacing: 2px;">NEW POST</span>
                   </td>
                 </tr>
               </table>
 
               <!-- Title -->
-              <h1 style="color: #FFFFFF; font-size: 28px; font-weight: bold; margin: 24px 0 16px 0; line-height: 1.3;">
+              <h1 style="color: #231C27; font-family: Didot, 'Bodoni 72', Georgia, serif; font-size: 28px; font-weight: bold; margin: 24px 0 16px 0; line-height: 1.3;">
                 ${post.title}
               </h1>
 
               <!-- Meta -->
-              <p style="color: #888; font-size: 14px; font-family: monospace; margin: 0 0 20px 0;">
+              <p style="color: #5F5562; font-size: 14px; font-family: monospace; margin: 0 0 20px 0;">
                 ${dateText}${readingTimeText ? ` • ${readingTimeText}` : ""}
               </p>
 
               <!-- Description -->
-              <p style="color: #CCCCCC; font-size: 16px; line-height: 1.6; margin: 0 0 24px 0;">
+              <p style="color: #231C27; font-size: 16px; line-height: 1.6; margin: 0 0 24px 0;">
                 ${post.description}
               </p>
 
@@ -109,7 +109,7 @@ export function generateEmailTemplate(post: Post, siteUrl: string): string {
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td>
-                    <a href="${postUrl}" style="display: inline-block; padding: 16px 32px; background-color: #C41E3A; color: #FFFFFF; text-decoration: none; font-size: 14px; font-family: monospace; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">
+                    <a href="${postUrl}" style="display: inline-block; padding: 16px 32px; background-color: #A3324F; color: #FFFFFF; text-decoration: none; font-size: 14px; font-family: monospace; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">
                       READ FULL POST →
                     </a>
                   </td>
@@ -120,17 +120,17 @@ export function generateEmailTemplate(post: Post, siteUrl: string): string {
 
           <!-- Footer -->
           <tr>
-            <td style="padding: 24px 32px; background-color: #0A0A0A; border-top: 1px solid #2D2D2D;">
+            <td style="padding: 24px 32px; background-color: #FAF6F1; border-top: 1px solid #E3D9D2;">
               <!--
                 Buttondown template variable: {{ unsubscribe_url }}
                 This is replaced by Buttondown's email processor with a unique
                 unsubscribe URL for each subscriber. Do not modify the syntax.
                 See: https://docs.buttondown.email/advanced-features/template-variables
               -->
-              <p style="color: #666; font-size: 12px; font-family: monospace; margin: 0; text-align: center;">
+              <p style="color: #5F5562; font-size: 12px; font-family: monospace; margin: 0; text-align: center;">
                 You're receiving this because you subscribed to updates from Aravind Jaimon's blog.
                 <br><br>
-                <a href="{{ unsubscribe_url }}" style="color: #888; text-decoration: underline;">Unsubscribe</a>
+                <a href="{{ unsubscribe_url }}" style="color: #5F5562; text-decoration: underline;">Unsubscribe</a>
               </p>
             </td>
           </tr>

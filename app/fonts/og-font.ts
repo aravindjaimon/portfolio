@@ -1,16 +1,16 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
-/** Archivo Black for `ImageResponse` routes (satori cannot use next/font). OFL, vendored. */
-export async function archivoFonts() {
+/** Bodoni Moda SemiBold (static opsz 28) for `ImageResponse` routes (satori cannot use next/font). OFL, vendored. */
+export async function ogFonts() {
   const data = await readFile(
-    join(process.cwd(), "app/fonts/ArchivoBlack-Regular.ttf")
+    join(process.cwd(), "app/fonts/BodoniModa-SemiBold.ttf")
   );
   return [
     {
-      name: "Archivo Black",
+      name: "Bodoni Moda",
       data,
-      weight: 400 as const,
+      weight: 600 as const,
       style: "normal" as const,
     },
   ];
