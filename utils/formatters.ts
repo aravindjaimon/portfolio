@@ -17,3 +17,7 @@ export function formatNameLetters(
     className: highlightIndices.includes(index) ? highlightColor : "",
   }));
 }
+
+/** "ARAVIND JAIMON" → "Aravind Jaimon" (content YAML stores display strings upper case) */
+export const titleCase = (text: string) =>
+  text.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
