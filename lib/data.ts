@@ -46,3 +46,9 @@ export function getProjectBySlug(slug: string): Project | undefined {
 export function getAllProjectSlugs(): string[] {
   return projects.map((p) => p.slug);
 }
+
+/** First "### X over Y" Key Decision in a case study (6/6 have one). */
+export function decision(p: Project) {
+  const m = p.raw.match(/^###\s+(?:Chose\s+)?(.+?)\s+over\s+(.+)$/m);
+  return m ? { chosen: m[1], over: m[2] } : undefined;
+}

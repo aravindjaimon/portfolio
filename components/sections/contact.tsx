@@ -3,11 +3,13 @@
 import { useState } from "react";
 import { Check, Copy, Github, Linkedin, Package } from "lucide-react";
 import type { PersonalInfo } from "@/lib/data";
+import { Flank } from "./section-head";
 
 interface ContactProps {
   profile: PersonalInfo;
 }
 
+/** Partnership close: the ask, the address, the ways in. */
 const Contact = ({ profile }: ContactProps) => {
   const [copied, setCopied] = useState(false);
 
@@ -30,76 +32,87 @@ const Contact = ({ profile }: ContactProps) => {
   return (
     <section
       id="contact"
-      className="px-4 sm:px-6 py-20 md:py-32 scroll-mt-24"
+      className="px-4 sm:px-8 py-24 md:py-36 scroll-mt-24 text-center"
       aria-labelledby="contact-title"
     >
-      <div className="max-w-7xl mx-auto">
-        <div className="flex items-center gap-4 mb-10">
-          <span className="font-mono text-xs tracking-[0.2em]">06 /</span>
-          <span className="flex-1 h-[2px] bg-foreground" aria-hidden />
-        </div>
+      <div className="max-w-6xl mx-auto">
+        <Flank>No. 06</Flank>
 
         <h2
           id="contact-title"
-          className="display text-[clamp(2rem,9.5vw,10rem)]"
+          className="display mt-6 text-[clamp(2.75rem,11vw,7rem)] leading-[0.95]"
         >
           Let&apos;s build
           <br />
-          <span className="inline-block bg-primary text-primary-foreground border-2 shadow-hard px-[0.12em] mt-[0.08em]">
-            something.
-          </span>
+          <i className="text-primary">it together.</i>
         </h2>
 
-        <div className="mt-16 grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-12 items-end">
-          <p className="lg:col-span-5 text-lg md:text-xl leading-relaxed text-muted-foreground">
-            First hire at RaftLabs, now a 30+ engineer team and systems serving
-            over a million users. If you&apos;re working at that scale —
-            architecture, AI, or the team that ships it — I&apos;d like to hear
-            about it.
-          </p>
+        <p className="mt-10 mx-auto max-w-[46ch] text-left text-lg leading-relaxed text-muted-foreground">
+          First hire at RaftLabs, now a 30+ engineer team and systems serving
+          over a million users. If you&apos;re working at that scale —
+          architecture, AI, or the team that ships it — I&apos;d like to hear
+          about{" "}
+          <span className="whitespace-nowrap">
+            it.
+            {/* End-mark drawn as SVG: the U+264E code point renders as an emoji tile */}
+            <svg
+              viewBox="0 0 24 24"
+              width="0.9em"
+              height="0.9em"
+              role="img"
+              aria-label="Libra"
+              className="ml-1.5 inline-block align-baseline text-copper"
+            >
+              <title>Libra</title>
+              <path
+                d="M3 15.5h5.25a4.75 4.75 0 1 1 7.5 0H21M3 19.5h18"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1.5}
+                strokeLinecap="round"
+              />
+            </svg>
+          </span>
+        </p>
 
-          <div className="lg:col-span-6 lg:col-start-7 min-w-0 flex flex-col gap-5">
-            <div className="flex">
-              <a
-                href={`mailto:${profile.email}`}
-                className="card press flex-1 min-w-0 px-4 py-4 sm:px-5 sm:py-5 md:px-7 md:py-6 text-base sm:text-2xl md:text-3xl font-extrabold tracking-tight truncate hover:bg-highlight"
-              >
-                {profile.email}
-              </a>
-              <button
-                type="button"
-                onClick={copyEmail}
-                className="card press -ml-[2px] px-4 sm:px-5 grid place-items-center shrink-0"
-                aria-label={copied ? "Email copied" : "Copy email address"}
-              >
-                {copied ? (
-                  <Check size={22} aria-hidden />
-                ) : (
-                  <Copy size={22} aria-hidden />
-                )}
-              </button>
-            </div>
-            <span className="sr-only" aria-live="polite">
-              {copied ? "Copied to clipboard" : ""}
-            </span>
+        <a
+          href={`mailto:${profile.email}`}
+          className="mt-12 mx-auto block w-fit max-w-full truncate font-serif italic text-[clamp(1.25rem,5vw,2.5rem)] underline decoration-primary decoration-1 underline-offset-[0.2em] hover:text-primary transition-colors"
+        >
+          {profile.email}
+        </a>
+        <button
+          type="button"
+          onClick={copyEmail}
+          className="btn btn-ghost mt-6"
+        >
+          {copied ? (
+            <Check size={16} aria-hidden />
+          ) : (
+            <Copy size={16} aria-hidden />
+          )}
+          {copied ? "Copied" : "Copy address"}
+        </button>
+        <span className="sr-only" aria-live="polite">
+          {copied ? "Copied to clipboard" : ""}
+        </span>
 
-            <div className="flex flex-wrap items-center gap-4">
-              {socials.map(({ href, label, Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="card press flex items-center gap-2 px-4 py-3 font-bold uppercase text-sm tracking-wide"
-                >
-                  <Icon size={18} aria-hidden />
-                  {label}
-                </a>
-              ))}
-              <span className="chip sm:ml-auto">{profile.location}</span>
-            </div>
-          </div>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          {socials.map(({ href, label, Icon }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-ghost"
+            >
+              <Icon size={16} aria-hidden />
+              {label}
+            </a>
+          ))}
         </div>
+
+        <p className="mt-8 eyebrow text-muted-foreground">{profile.location}</p>
       </div>
     </section>
   );
