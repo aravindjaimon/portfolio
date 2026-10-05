@@ -38,7 +38,7 @@ function CopyButton({ code }: { code: string }) {
     <button
       type="button"
       onClick={handleCopy}
-      className="absolute top-3 right-3 p-2 bg-card border-2 hover:bg-highlight"
+      className="absolute top-3 right-3 p-2 rounded-full border border-rule bg-background hover:bg-card transition-colors"
       aria-label={copied ? "Copied" : "Copy code"}
     >
       {copied ? <Check size={16} /> : <Copy size={16} />}
@@ -52,7 +52,7 @@ function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
   const sizes = {
     1: "display text-3xl sm:text-4xl mt-14 mb-6",
     2: "display text-2xl sm:text-3xl mt-14 mb-5",
-    3: "text-xl sm:text-2xl font-extrabold tracking-tight mt-10 mb-3",
+    3: "text-xl sm:text-2xl font-semibold mt-10 mb-3",
     4: "text-lg sm:text-xl font-bold mt-6 mb-2",
     5: "text-base sm:text-lg font-bold mt-4 mb-2",
     6: "text-sm sm:text-base font-bold mt-4 mb-2",
@@ -77,7 +77,7 @@ function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
           {children}
           <LinkIcon
             size={level <= 2 ? 20 : 16}
-            className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+            className="opacity-0 group-hover:opacity-100 group-hover:text-copper transition-opacity shrink-0"
             aria-hidden
           />
         </a>
@@ -114,7 +114,7 @@ function Pre({
     <div className="relative my-8 group">
       <pre
         {...props}
-        className="card overflow-x-auto p-5 text-sm font-mono leading-relaxed"
+        className="border overflow-x-auto p-5 text-sm font-mono leading-relaxed"
       >
         {children}
       </pre>
@@ -131,7 +131,7 @@ function Code({ children, ...props }: React.HTMLAttributes<HTMLElement>) {
   }
 
   return (
-    <code className="px-1 py-0.5 bg-highlight/60 border border-foreground/20 font-mono text-[0.875em] [overflow-wrap:anywhere]">
+    <code className="px-1 py-0.5 rounded-sm bg-air-tint font-mono text-[0.875em] [overflow-wrap:anywhere]">
       {children}
     </code>
   );
@@ -164,8 +164,8 @@ function MDXImage({ src, alt }: { src?: string; alt?: string }) {
 // Blockquote styled as callout
 function Blockquote({ children }: { children: React.ReactNode }) {
   return (
-    <blockquote className="my-8 p-5 border-2 border-l-[6px] bg-card">
-      <div className="font-medium [&_p]:my-0">{children}</div>
+    <blockquote className="my-8 border-l border-copper pl-5 font-serif italic text-xl">
+      <div className="[&_p]:my-0 [&_p]:text-xl">{children}</div>
     </blockquote>
   );
 }
@@ -174,23 +174,19 @@ function Blockquote({ children }: { children: React.ReactNode }) {
 function Table({ children }: { children: React.ReactNode }) {
   return (
     <div className="my-6 overflow-x-auto">
-      <table className="w-full border-collapse border-2 bg-card">
-        {children}
-      </table>
+      <table className="w-full border-collapse border">{children}</table>
     </div>
   );
 }
 
 function Th({ children }: { children: React.ReactNode }) {
   return (
-    <th className="border-2 bg-highlight px-4 py-2 text-left font-mono text-xs uppercase tracking-wider">
-      {children}
-    </th>
+    <th className="border bg-card eyebrow px-4 py-2 text-left">{children}</th>
   );
 }
 
 function Td({ children }: { children: React.ReactNode }) {
-  return <td className="border-2 px-4 py-2 text-sm">{children}</td>;
+  return <td className="border px-4 py-2 text-sm">{children}</td>;
 }
 
 // Paragraph
@@ -212,7 +208,7 @@ function A({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="font-semibold underline decoration-primary decoration-2 underline-offset-4 hover:bg-highlight"
+        className="font-medium text-air underline decoration-air/40 decoration-1 underline-offset-4 hover:decoration-air"
         {...props}
       >
         {children}
@@ -223,7 +219,7 @@ function A({
   return (
     <Link
       href={href || "#"}
-      className="font-semibold underline decoration-primary decoration-2 underline-offset-4 hover:bg-highlight"
+      className="font-medium text-air underline decoration-air/40 decoration-1 underline-offset-4 hover:decoration-air"
     >
       {children}
     </Link>
@@ -233,7 +229,7 @@ function A({
 // Lists
 function Ul({ children }: { children: React.ReactNode }) {
   return (
-    <ul className="my-5 ml-6 list-[square] marker:text-primary space-y-2 text-[1.075rem]">
+    <ul className="my-5 ml-6 list-[square] marker:text-copper space-y-2 text-[1.075rem]">
       {children}
     </ul>
   );
@@ -253,7 +249,7 @@ function Li({ children }: { children: React.ReactNode }) {
 
 // Horizontal rule
 function Hr() {
-  return <hr className="my-12 border-t-2" />;
+  return <hr className="my-12 border-t" />;
 }
 
 // Strong/Bold

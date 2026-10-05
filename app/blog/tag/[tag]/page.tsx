@@ -54,20 +54,17 @@ export default async function TagPage({ params }: TagPageProps) {
   return (
     <main id="main-content" className="min-h-screen">
       <header>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-32 md:pt-40 pb-12">
-          <h1 className="display text-[clamp(2rem,10vw,7rem)] mb-6">
-            Tagged{" "}
-            <span className="inline-block max-w-full bg-highlight border-2 shadow-hard px-[0.1em]">
-              {properTag}
-            </span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-32 md:pt-40 pb-12 text-center">
+          <h1 className="display text-[clamp(2.5rem,10vw,6rem)] leading-[0.95]">
+            Tagged <i className="text-air">{properTag}</i>
           </h1>
-          <p className="text-muted-foreground text-lg font-mono">
+          <p className="eyebrow mt-6 text-muted-foreground">
             {posts.length} article{posts.length !== 1 ? "s" : ""}
           </p>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-12 sm:py-16">
         {/* Posts Grid */}
         {posts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -80,7 +77,7 @@ export default async function TagPage({ params }: TagPageProps) {
             <p className="text-muted-foreground font-mono">
               No articles found with this tag.
             </p>
-            <Link href="/blog" className="btn press bg-highlight mt-6">
+            <Link href="/blog" className="btn btn-ghost mt-6">
               View all articles
             </Link>
           </div>

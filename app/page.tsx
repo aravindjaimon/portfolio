@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <main id="main-content">
       <Hero profile={personalInfo} callouts={[teamGrowth, usersServed]} />
-      <Ticker metrics={impactMetrics} />
+      <Ticker metrics={impactMetrics.slice(2)} />
       <Story milestones={storyMilestones} />
       <Projects projects={projects} />
       <Skills groups={skillGroups} />

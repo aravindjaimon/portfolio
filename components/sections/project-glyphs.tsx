@@ -1,5 +1,5 @@
 /**
- * Brutalist glyphs for the six case studies, one per `glyph` key in content/projects/*.mdx.
+ * Fine-line plates for the six case studies, one per `glyph` key in content/projects/*.mdx.
  * Each entry is a path in a 0 0 100 100 box.
  */
 export type GlyphName =
@@ -42,8 +42,9 @@ export function ProjectGlyph({ name, className }: ProjectGlyphProps) {
         d={PROJECT_GLYPHS[name]}
         fill="none"
         stroke="currentColor"
-        strokeWidth={2.5}
-        strokeLinejoin="miter"
+        strokeWidth={1.25}
+        strokeLinejoin="round"
+        strokeLinecap="round"
         vectorEffect="non-scaling-stroke"
       />
     </svg>

@@ -1,3 +1,21 @@
+interface FlankProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+/** Centred copper eyebrow held between two equal hairlines. */
+export function Flank({ children, className = "" }: FlankProps) {
+  return (
+    <p
+      className={`eyebrow flex items-center justify-center gap-4 text-copper ${className}`}
+    >
+      <span className="h-px w-6 sm:w-12 bg-copper" aria-hidden />
+      {children}
+      <span className="h-px w-6 sm:w-12 bg-copper" aria-hidden />
+    </p>
+  );
+}
+
 interface SectionHeadProps {
   id: string;
   index: string;
@@ -5,7 +23,7 @@ interface SectionHeadProps {
   intro?: string;
 }
 
-/** Spec-sheet section header: mono index, expanded title, ink rule. */
+/** Centred section header on the page axis: flanked index, Didone title, balanced intro. */
 export default function SectionHead({
   id,
   index,
@@ -13,16 +31,13 @@ export default function SectionHead({
   intro,
 }: SectionHeadProps) {
   return (
-    <header className="mb-12 md:mb-16">
-      <div className="flex items-center gap-4 mb-6">
-        <span className="font-mono text-xs tracking-[0.2em]">{index} /</span>
-        <span className="flex-1 h-[2px] bg-foreground" aria-hidden />
-      </div>
-      <h2 id={id} className="display text-[clamp(2.5rem,7vw,5.5rem)]">
+    <header className="mb-14 md:mb-20 text-center">
+      <Flank>No. {index}</Flank>
+      <h2 id={id} className="display mt-6 text-[clamp(2.25rem,6vw,4.5rem)]">
         {title}
       </h2>
       {intro && (
-        <p className="mt-6 max-w-2xl text-lg text-muted-foreground leading-relaxed">
+        <p className="mt-6 mx-auto max-w-[52ch] text-lg text-muted-foreground leading-relaxed text-balance">
           {intro}
         </p>
       )}

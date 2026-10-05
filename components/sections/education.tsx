@@ -42,31 +42,29 @@ const Education = ({
 
   return (
     <section
-      className="px-4 sm:px-6 py-20 md:py-28"
+      className="px-4 sm:px-8 py-24 md:py-36"
       aria-labelledby="education-title"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <SectionHead id="education-title" index="05" title="On record" />
 
-        <div className="grid gap-6 md:grid-cols-3">
-          {columns.map((col, ci) => (
+        {/* Three equal ledger columns; the middle one sits on the page axis */}
+        <div className="grid gap-12 md:grid-cols-3 md:gap-10">
+          {columns.map((col) => (
             <div
               key={col.title}
-              className={`card ${ci === 2 ? "bg-highlight" : ""}`}
+              className="min-w-0 border-t-[3px] border-double border-foreground text-center"
             >
-              <h3 className="px-5 py-3 border-b-2 font-mono text-xs uppercase tracking-[0.2em]">
-                {col.title}
-              </h3>
-              <ul>
+              <h3 className="eyebrow py-4 text-copper">{col.title}</h3>
+              <ul className="divide-y">
                 {col.rows.map((row) => (
-                  <li
-                    key={row.head}
-                    className="px-5 py-4 border-b-2 last:border-b-0"
-                  >
-                    <p className="font-bold leading-snug">{row.head}</p>
-                    <p className="mt-1 text-sm opacity-75">{row.sub}</p>
+                  <li key={row.head} className="py-5 break-words">
+                    <p className="font-semibold leading-snug">{row.head}</p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {row.sub}
+                    </p>
                     {row.foot && (
-                      <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.1em]">
+                      <p className="mt-2 eyebrow text-muted-foreground">
                         {row.foot}
                       </p>
                     )}

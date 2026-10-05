@@ -13,12 +13,12 @@ interface BlogCardProps {
 export function BlogCard({ post, featured = false }: BlogCardProps) {
   return (
     <article
-      className={`card press group relative h-full flex flex-col ${
+      className={`card group relative h-full flex flex-col hover:border-primary ${
         featured ? "md:col-span-2 md:grid md:grid-cols-2" : ""
       }`}
     >
       <div
-        className={`relative aspect-video overflow-hidden border-b-2 ${featured ? "md:border-b-0 md:border-r-2 md:aspect-auto" : ""}`}
+        className={`relative aspect-video overflow-hidden border-b ${featured ? "md:border-b-0 md:border-r md:aspect-auto" : ""}`}
       >
         <Image
           src={post.coverImage}
@@ -42,7 +42,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
         </div>
 
         <h2
-          className={`font-extrabold tracking-tight leading-tight ${
+          className={`font-serif font-medium leading-tight break-words ${
             featured
               ? "text-2xl sm:text-3xl md:text-4xl"
               : "text-xl sm:text-2xl"
@@ -51,7 +51,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
           {/* Stretched link: the whole card is the target, tags stay clickable above it */}
           <Link
             href={post.permalink}
-            className="after:absolute after:inset-0 group-hover:underline decoration-2 underline-offset-4"
+            className="after:absolute after:inset-0 group-hover:underline decoration-primary decoration-1 underline-offset-4"
           >
             {post.title}
           </Link>
@@ -72,8 +72,8 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
           )}
         </div>
 
-        <div className="flex items-center justify-between text-xs font-mono uppercase tracking-wider pt-4 border-t-2">
-          <span>{post.author}</span>
+        <div className="eyebrow flex items-center justify-between gap-4 pt-4 border-t">
+          <span className="min-w-0 truncate">{post.author}</span>
           <time dateTime={post.publishedAt}>
             {formatDate(post.publishedAt)}
           </time>

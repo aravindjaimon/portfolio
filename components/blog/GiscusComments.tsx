@@ -30,11 +30,9 @@ export function GiscusComments({
   // Show setup instructions if not configured
   if (!repoId || !categoryId) {
     return (
-      <div className="mt-16 pt-8 border-t-2">
-        <h3 className="font-extrabold uppercase tracking-tight text-2xl mb-4">
-          Comments
-        </h3>
-        <div className="p-6 bg-card border-2 text-muted-foreground text-sm font-mono">
+      <div className="mt-16 pt-8 border-t">
+        <h3 className="font-serif font-medium text-2xl mb-4">Comments</h3>
+        <div className="p-6 bg-card border text-muted-foreground text-sm font-mono">
           <p className="mb-4">
             Comments are powered by Giscus (GitHub Discussions).
           </p>
@@ -46,7 +44,7 @@ export function GiscusComments({
                 href="https://giscus.app"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary hover:underline"
+                className="text-air underline decoration-air/40 underline-offset-4 hover:decoration-air"
               >
                 giscus.app
               </a>
@@ -61,10 +59,8 @@ export function GiscusComments({
   }
 
   return (
-    <div className="mt-16 pt-8 border-t-2">
-      <h3 className="font-extrabold uppercase tracking-tight text-2xl mb-6">
-        Comments
-      </h3>
+    <div className="mt-16 pt-8 border-t">
+      <h3 className="font-serif font-medium text-2xl mb-6">Comments</h3>
       <Giscus
         repo={repo}
         repoId={repoId}

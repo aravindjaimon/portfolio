@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
       "Portfolio of Aravind Jaimon - Lead Software Engineer building systems for millions",
     start_url: "/",
     display: "standalone",
-    background_color: "#F3F0E8",
-    theme_color: "#F3F0E8",
+    background_color: "#FAF6F1",
+    theme_color: "#FAF6F1",
     icons: [
       { src: "/icon", sizes: "32x32", type: "image/png" },
       { src: "/apple-icon", sizes: "180x180", type: "image/png" },

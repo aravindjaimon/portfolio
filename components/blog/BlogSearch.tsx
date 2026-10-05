@@ -37,12 +37,12 @@ export function BlogSearch({
         value={query}
         onChange={handleChange}
         placeholder={placeholder}
-        className="card w-full pl-12 pr-12 py-4 placeholder:text-muted-foreground font-mono text-sm [&::-webkit-search-cancel-button]:hidden"
+        className="w-full rounded-full border border-rule bg-background pl-12 pr-12 py-4 placeholder:text-muted-foreground font-mono text-sm [&::-webkit-search-cancel-button]:hidden"
       />
       {query && (
         <button
           onClick={handleClear}
-          className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-highlight"
+          className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-card"
           aria-label="Clear search"
         >
           <X size={18} />

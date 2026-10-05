@@ -1,21 +1,24 @@
 @import "tailwindcss";
 
-/* Spec Sheet — paper, ink, one cobalt accent, one highlighter. */
+/* Equinox: porcelain, aubergine ink, Venus rose & air blue (equal luminance), copper hairlines. */
 @theme {
-  --color-background: #f3f0e8;
-  --color-foreground: #111111;
-  --color-card: #ffffff;
-  --color-primary: #2b2bff;
-  --color-primary-foreground: #ffffff;
-  --color-highlight: #f5e642;
-  --color-border: #111111;
-  --color-muted-foreground: #4a4a46;
+  --color-background: #faf6f1; /* porcelain */
+  --color-card: #f3ece6; /* vellum: code, tables, panels, hover fill */
+  --color-foreground: #231c27; /* aubergine ink */
+  --color-muted-foreground: #5f5562;
+  --color-primary: #a3324f; /* Venus rose: the ask, people */
+  --color-primary-hover: #8a2742;
+  --color-primary-foreground: #faf6f1;
+  --color-air: #306083; /* air blue: systems, reading, focus; same luminance as rose */
+  --color-copper: #94562f; /* Venus's metal: ornaments + eyebrows only */
+  --color-rose-tint: #f4dfe2; /* surface only, never text */
+  --color-air-tint: #dfeaf2; /* surface only, never text */
+  --color-border: #e3d9d2; /* decorative hairlines */
+  --color-rule: #7e737b; /* boundaries of inputs/controls, ≥3:1 on every surface */
 
-  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-bodoni), "Bodoni 72", Didot, Georgia, serif;
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
-
-  --shadow-hard: 6px 6px 0 0 #111111;
-  --shadow-hard-sm: 3px 3px 0 0 #111111;
 }
 
 @layer base {
@@ -24,19 +27,24 @@
   }
   html {
     overflow-x: hidden;
-    scrollbar-color: #111111 #f3f0e8;
+    scrollbar-color: var(--color-copper) var(--color-background);
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
     overflow-x: hidden;
   }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
   ::selection {
-    background: var(--color-highlight);
+    background: var(--color-rose-tint);
     color: var(--color-foreground);
   }
   :focus-visible {
-    outline: 3px solid var(--color-primary);
-    outline-offset: 2px;
+    outline: 2px solid var(--color-air);
+    outline-offset: 3px;
   }
   a,
   button {
@@ -49,106 +57,323 @@
 }
 
 @layer components {
-  /* Expanded, heavy display type */
+  /* Didone display type; never below 20px */
   .display {
-    font-weight: 900;
-    font-stretch: 125%;
-    font-variation-settings: "wdth" 125;
-    text-transform: uppercase;
-    line-height: 0.88;
-    letter-spacing: -0.02em;
+    font-family: var(--font-serif);
+    font-weight: 500;
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
     /* Safety net: only breaks a word that cannot fit on a line by itself */
     overflow-wrap: break-word;
   }
   /* Metric value sized to its card; the card must be an `@container` */
   .stat {
-    font-weight: 900;
-    font-stretch: 125%;
-    font-variation-settings: "wdth" 125;
-    font-size: clamp(1.125rem, 12cqi, 2.5rem);
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(1.25rem, 13cqi, 2.5rem);
     line-height: 1;
+    letter-spacing: -0.01em;
+    font-variant-numeric: lining-nums tabular-nums;
+    /* Text optical size: sturdier hairlines so numerals and "+" read as data, not ornament */
+    font-variation-settings: "opsz" 6;
     overflow-wrap: anywhere;
-    letter-spacing: -0.02em;
-    font-variant-numeric: tabular-nums;
   }
+  /* Mono label: dates, indices, data captions */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+  /* Things you read are square */
   .card {
-    background: var(--color-card);
-    border: 2px solid var(--color-border);
-    box-shadow: var(--shadow-hard);
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    transition: border-color 200ms;
   }
-  /* Presses into its own shadow */
-  .press {
-    transition:
-      transform 120ms ease-out,
-      box-shadow 120ms ease-out,
-      background-color 120ms ease-out;
-  }
-  .press:hover {
-    transform: translate(3px, 3px);
-    box-shadow: var(--shadow-hard-sm);
-  }
-  .press:active {
-    transform: translate(6px, 6px);
-    box-shadow: none;
-  }
+  /* Things you tap or filter are round */
   .chip {
     display: inline-flex;
     align-items: center;
     gap: 0.4em;
-    padding: 0.2rem 0.5rem;
-    border: 2px solid var(--color-border);
+    padding: 0.25rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 0.75rem;
     line-height: 1.4;
     text-transform: uppercase;
     letter-spacing: 0.12em;
     white-space: nowrap;
   }
-  .sticker {
-    background: var(--color-highlight);
-    border: 2px solid var(--color-border);
-    box-shadow: var(--shadow-hard-sm);
-    transform: rotate(-3deg);
-  }
   .btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
-    padding: 0.8rem 1.4rem;
-    border: 2px solid var(--color-border);
-    box-shadow: var(--shadow-hard);
-    font-weight: 800;
-    font-size: 0.95rem;
+    min-height: 3rem;
+    padding-inline: 1.5rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-weight: 500;
+    font-size: 0.875rem;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.14em;
+    transition:
+      background-color 150ms,
+      color 150ms;
   }
-}
-
-@layer utilities {
-  /* Infinite horizontal ticker; children duplicated once for a seamless loop */
-  .marquee {
+  .btn-primary {
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+  .btn-primary:hover {
+    background: var(--color-primary-hover);
+  }
+  .btn-ghost {
+    border-color: var(--color-foreground);
+  }
+  .btn-ghost:hover {
+    background: var(--color-foreground);
+    color: var(--color-background);
+  }
+  /* Copper axis at 50% with a diamond at its centre: pairs of equal weight */
+  .fulcrum {
+    position: relative;
+  }
+  .fulcrum::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--color-copper);
+  }
+  .fulcrum::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    translate: -50% -50%;
+    rotate: 45deg;
+    background: var(--color-copper);
+  }
+  /* Magazine credits line: centred list with copper middots */
+  .credits {
     display: flex;
-    width: max-content;
-    animation: marquee var(--marquee-duration, 40s) linear infinite;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.25rem 0.75rem;
   }
-  .marquee:hover {
-    animation-play-state: paused;
+  .credits > li:not(:last-child)::after {
+    content: "·";
+    content: "·" / "";
+    margin-left: 0.75rem;
+    color: var(--color-copper);
   }
 }
 
-@keyframes marquee {
+/* The weighing: hero balance scale. Level at rest; tips only toward the pan you hover or focus. */
+@property --tilt {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
+.scale {
+  --arm: 25cqi; /* beam half-length: beam is 50% wide, ends over the pan column centres */
+  container-type: inline-size;
+  max-width: 44rem;
+  margin-inline: auto;
+  padding-top: 1.75rem;
+}
+.scale-beam {
+  position: relative;
+  width: 50%;
+  height: 1px;
+  margin-inline: auto;
+  background: var(--color-copper);
+  rotate: var(--tilt);
+}
+/* Sun over the horizon: the upper stroke of the sign */
+.scale-arch {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 2.5rem;
+  height: 1.25rem;
+  translate: -50% 0;
+  border: 1px solid var(--color-copper);
+  border-bottom: 0;
+  border-radius: 999px 999px 0 0;
+}
+.scale-opal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: conic-gradient(from 210deg, #f4dfe2, #dfeaf2, #eed9c6, #f4dfe2);
+  box-shadow: 0 0 0 1px var(--color-copper);
+}
+.scale-pans {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-bottom: 4cqi; /* swing slack ≥ arm·sin(7°) */
+}
+/* Pillar: pivot to base */
+.scale-pans::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-copper);
+}
+/* The li is the static hover target; only the inner link moves, so the hover never flickers */
+.scale-pan {
+  display: flex;
+  justify-content: center;
+}
+.scale-pan > a {
+  --side: -1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: clamp(2rem, 8cqi, 3.5rem) 0.75rem 0.5rem;
+  border-radius: 0.5rem;
+  translate: 0 calc(sin(var(--tilt)) * var(--arm) * var(--side));
+}
+.scale-pan:last-child > a {
+  --side: 1;
+}
+/* String: rides with the pan so it stays attached to the beam end */
+.scale-pan > a::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: clamp(2rem, 8cqi, 3.5rem);
+  background: var(--color-copper);
+}
+.scale .stat {
+  font-size: clamp(1.75rem, 10cqi, 3.5rem);
+  white-space: nowrap;
+}
+.scale-dish {
+  width: min(80%, 12rem);
+  height: 0.6rem;
+  border: 1px solid var(--color-copper);
+  border-top: 0;
+  border-radius: 0 0 999px 999px;
+  transition: border-color 200ms;
+}
+.scale-pan:first-child > a:is(:hover, :focus-visible) .scale-dish {
+  border-color: var(--color-primary); /* people = rose */
+}
+.scale-pan:last-child > a:is(:hover, :focus-visible) .scale-dish {
+  border-color: var(--color-air); /* systems = air */
+}
+.scale-pan > a:is(:hover, :focus-visible) .eyebrow {
+  text-decoration: underline;
+}
+.scale-base {
+  position: relative;
+  padding-top: 0.75rem;
+}
+/* Base line: the lower stroke of the sign */
+.scale-base::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 22%;
+  height: 1px;
+  translate: -50% 0;
+  background: var(--color-copper);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .scale {
+    transition: --tilt 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* `backwards`, not `both`: a filled end value would outrank the :has() tilt rules */
+    animation: weigh 2.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s backwards;
+  }
+  /* Damped spring (ζ = 0.3): 7° → −2.6° → +0.6° → level */
+  @supports (transition-timing-function: linear(0, 1)) {
+    .scale {
+      --spring: linear(
+        0,
+        0.264 4.2%,
+        0.785 8.3%,
+        1.212 12.5%,
+        1.371 16.7%,
+        1.289 20.8%,
+        1.097 25%,
+        0.932 29.2%,
+        0.863 33.3%,
+        0.887 37.5%,
+        0.957 41.7%,
+        1.021 45.8%,
+        1.05 50%,
+        1.044 54.2%,
+        1.018 58.3%,
+        0.994 62.5%,
+        0.982 66.7%,
+        0.983 70.8%,
+        0.992 75%,
+        1.002 79.2%,
+        1.007 83.3%,
+        1.007 87.5%,
+        1.003 91.7%,
+        1 95.8%,
+        1
+      );
+      transition-timing-function: var(--spring);
+      animation-timing-function: var(--spring);
+    }
+  }
+  .scale:has(.scale-pan:first-child :focus-visible) {
+    --tilt: -6deg;
+  }
+  .scale:has(.scale-pan:last-child :focus-visible) {
+    --tilt: 6deg;
+  }
+  @media (hover: hover) {
+    .scale:has(.scale-pan:first-child:hover) {
+      --tilt: -6deg;
+    }
+    .scale:has(.scale-pan:last-child:hover) {
+      --tilt: 6deg;
+    }
+  }
+}
+
+@keyframes weigh {
+  from {
+    --tilt: 7deg;
+  }
   to {
-    transform: translateX(-50%);
+    --tilt: 0deg;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .marquee {
-    animation: none;
-  }
-  .press,
-  .press:hover,
-  .press:active {
+  .card,
+  .btn,
+  .scale-dish {
     transition: none;
   }
 }

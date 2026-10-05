@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, JetBrains_Mono } from "next/font/google";
+import { Bodoni_Moda, Jost, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { siteConfig } from "@/lib/config";
 import { personalInfo } from "@/lib/data";
@@ -7,10 +7,17 @@ import Header from "@/components/sections/header";
 import Footer from "@/components/sections/footer";
 import "./globals.css";
 
-const archivo = Archivo({
+const bodoni = Bodoni_Moda({
   subsets: ["latin"],
-  axes: ["wdth"],
-  variable: "--font-archivo",
+  axes: ["opsz"],
+  style: ["normal", "italic"],
+  variable: "--font-bodoni",
+  display: "swap",
+});
+
+const jost = Jost({
+  subsets: ["latin"],
+  variable: "--font-jost",
   display: "swap",
 });
 
@@ -75,7 +82,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f3f0e8",
+  themeColor: "#faf6f1",
 };
 
 const jsonLd = {
@@ -107,17 +114,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    // Font variables live on <html> so the :root theme tokens (--font-serif etc.) can resolve them
+    <html
+      lang="en"
+      className={`${bodoni.variable} ${jost.variable} ${jetBrainsMono.variable}`}
+    >
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${archivo.variable} ${jetBrainsMono.variable}`}>
+      <body>
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] focus:px-4 focus:py-2 focus:bg-highlight focus:border-2 focus:font-bold"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] focus:px-5 focus:py-2 focus:bg-background focus:border focus:border-foreground focus:rounded-full focus:font-medium"
         >
           Skip to content
         </a>

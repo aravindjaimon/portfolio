@@ -50,7 +50,7 @@ export function BlogGrid({ posts, featured, tags }: BlogGridProps) {
         <section className="mb-12" aria-labelledby="featured-title">
           <h2
             id="featured-title"
-            className="flex items-baseline gap-2 mb-6 font-mono text-xs uppercase tracking-[0.2em]"
+            className="eyebrow flex items-baseline gap-2 mb-6"
           >
             Featured
           </h2>
@@ -65,10 +65,7 @@ export function BlogGrid({ posts, featured, tags }: BlogGridProps) {
       )}
 
       <section aria-labelledby="all-title">
-        <h2
-          id="all-title"
-          className="flex items-baseline gap-2 mb-6 font-mono text-xs uppercase tracking-[0.2em]"
-        >
+        <h2 id="all-title" className="eyebrow flex items-baseline gap-2 mb-6">
           {tag ? `Tagged: ${tag}` : query ? "Search results" : "All articles"}
           <span>({filtered.length})</span>
         </h2>
@@ -83,14 +80,16 @@ export function BlogGrid({ posts, featured, tags }: BlogGridProps) {
           </div>
         ) : (
           <div className="card text-center py-16">
-            <p className="font-mono">Nothing matches “{query || tag}”.</p>
+            <p className="px-4 font-mono break-words">
+              Nothing matches “{query || tag}”.
+            </p>
             <button
               type="button"
               onClick={() => {
                 setQuery("");
                 setTag(null);
               }}
-              className="btn press bg-highlight mt-6"
+              className="btn btn-ghost mt-6"
             >
               Clear filters
             </button>

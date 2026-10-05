@@ -4,46 +4,23 @@ interface TickerProps {
   metrics: ImpactMetric[];
 }
 
-/** Infinite metrics marquee — pure CSS (`.marquee`), pauses on hover and under reduced motion. */
-const Ticker = ({ metrics }: TickerProps) => {
-  const row = (hidden: boolean) => (
-    <ul
-      className="flex items-center shrink-0"
-      aria-hidden={hidden || undefined}
-    >
+/** Static balance sheet: metrics weighed 1|1 / 3|3 on a copper fulcrum between ledger double rules. */
+const Ticker = ({ metrics }: TickerProps) => (
+  <section aria-label="Impact at a glance" className="px-4 sm:px-8">
+    <dl className="fulcrum max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-6 gap-y-10 py-10 border-y-[3px] border-double border-foreground">
       {metrics.map((metric) => (
-        <li
+        <div
           key={metric.label}
-          className="flex items-center gap-3 px-6 whitespace-nowrap"
+          className="@container flex flex-col-reverse justify-end items-center text-center px-3 min-w-0"
         >
-          <span className="display normal-case text-3xl tabular-nums">
+          <dt className="eyebrow mt-2 text-muted-foreground">{metric.label}</dt>
+          <dd className="stat text-[clamp(1.75rem,22cqi,2.75rem)]">
             {metric.value}
-          </span>
-          <span className="font-mono text-xs uppercase tracking-[0.2em] opacity-70">
-            {metric.label}
-          </span>
-          <span className="ml-6 text-highlight text-2xl" aria-hidden>
-            ✱
-          </span>
-        </li>
+          </dd>
+        </div>
       ))}
-    </ul>
-  );
-
-  return (
-    <section
-      aria-label="Impact at a glance"
-      className="bg-foreground text-background overflow-hidden py-5 border-y-2"
-    >
-      <div
-        className="marquee"
-        style={{ "--marquee-duration": "45s" } as React.CSSProperties}
-      >
-        {row(false)}
-        {row(true)}
-      </div>
-    </section>
-  );
-};
+    </dl>
+  </section>
+);
 
 export default Ticker;
