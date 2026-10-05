@@ -22,10 +22,10 @@ export function TagFilter({ tags, selectedTag, onTagSelect }: TagFilterProps) {
         type="button"
         aria-pressed={selectedTag === null}
         onClick={() => onTagSelect(null)}
-        className={`chip shrink-0 ${
+        className={`chip shrink-0 transition-colors ${
           selectedTag === null
-            ? "bg-foreground text-background"
-            : "bg-card hover:bg-highlight"
+            ? "bg-foreground text-background border-foreground"
+            : "hover:border-primary"
         }`}
       >
         All
@@ -36,10 +36,10 @@ export function TagFilter({ tags, selectedTag, onTagSelect }: TagFilterProps) {
           aria-pressed={selectedTag === tag}
           key={tag}
           onClick={() => handleTagClick(tag)}
-          className={`chip shrink-0 ${
+          className={`chip shrink-0 transition-colors ${
             selectedTag === tag
-              ? "bg-foreground text-background"
-              : "bg-card hover:bg-highlight"
+              ? "bg-foreground text-background border-foreground"
+              : "hover:border-primary"
           }`}
         >
           {tag}

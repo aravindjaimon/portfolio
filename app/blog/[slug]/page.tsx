@@ -131,7 +131,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <BlogHeader post={post} />
 
         {/* Content with TOC */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-12">
           <div className="lg:grid lg:grid-cols-[1fr_250px] lg:gap-8">
             {/* Main Content */}
             <div className="max-w-4xl">
@@ -143,7 +143,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <BlogContent code={post.content} />
 
               {/* Share Section */}
-              <div className="mt-12 pt-8 border-t-2">
+              <div className="mt-12 pt-8 border-t">
                 <SocialShare
                   title={post.title}
                   url={`${baseUrl}${post.permalink}`}

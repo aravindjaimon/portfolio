@@ -11,13 +11,16 @@ export function TagBadge({
   clickable = true,
   size = "sm",
 }: TagBadgeProps) {
+  // Mono floor is 12px, so sizes differ by padding only
   const sizeClasses = {
-    sm: "text-[11px] px-2 py-0.5",
-    md: "text-xs px-2.5 py-1",
+    sm: "px-2.5 py-1",
+    md: "px-3 py-1.5",
   };
 
-  const baseClasses = `inline-block ${sizeClasses[size]} bg-card border-2 font-mono uppercase tracking-wider`;
-  const hoverClasses = clickable ? "hover:bg-highlight" : "";
+  const baseClasses = `chip ${sizeClasses[size]}`;
+  const hoverClasses = clickable
+    ? "transition-colors hover:border-primary"
+    : "";
 
   if (clickable) {
     return (

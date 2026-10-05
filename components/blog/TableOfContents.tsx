@@ -53,7 +53,7 @@ export function TableOfContents({ items, variant }: TableOfContentsProps) {
     <div className="mb-8">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between px-4 py-3 bg-card border-2 text-foreground font-mono text-sm"
+        className="w-full flex items-center justify-between px-5 py-3 rounded-full border border-rule bg-background hover:bg-card text-foreground font-mono text-sm transition-colors"
       >
         <span className="flex items-center gap-2">
           <List size={16} />
@@ -62,7 +62,7 @@ export function TableOfContents({ items, variant }: TableOfContentsProps) {
         {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
       </button>
       {isExpanded && (
-        <nav className="px-4 py-3 bg-card border-2 border-t-0">
+        <nav className="mt-2 px-4 py-3 border border-rule bg-background">
           <ul className="space-y-2">
             {items.map((item) => (
               <li
@@ -74,10 +74,10 @@ export function TableOfContents({ items, variant }: TableOfContentsProps) {
                 <a
                   href={`#${item.id}`}
                   onClick={(e) => handleClick(e, item.id)}
-                  className={`block py-1 text-sm transition-colors ${
+                  className={`block py-1 pl-3 border-l text-sm transition-colors ${
                     activeId === item.id
-                      ? "bg-highlight font-semibold"
-                      : "text-muted-foreground hover:text-foreground"
+                      ? "border-air text-air font-medium"
+                      : "border-transparent text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   {item.text}
@@ -95,7 +95,7 @@ export function TableOfContents({ items, variant }: TableOfContentsProps) {
     <aside className="h-full">
       <div className="sticky top-24 space-y-6">
         <div className="card p-4">
-          <h4 className="flex items-center gap-2 text-foreground font-mono text-sm mb-4 pb-2 border-b-2">
+          <h4 className="eyebrow flex items-center gap-2 text-foreground mb-4 pb-2 border-b">
             <List size={16} />
             On this page
           </h4>
@@ -111,10 +111,10 @@ export function TableOfContents({ items, variant }: TableOfContentsProps) {
                   <a
                     href={`#${item.id}`}
                     onClick={(e) => handleClick(e, item.id)}
-                    className={`block py-1.5 text-sm transition-colors border-l-2 pl-3 -ml-px ${
+                    className={`block py-1.5 text-sm transition-colors border-l pl-3 -ml-px break-words ${
                       activeId === item.id
-                        ? "border-primary bg-highlight font-semibold"
-                        : "border-transparent text-muted-foreground hover:text-foreground hover:border-foreground/40"
+                        ? "border-air text-air font-medium"
+                        : "border-transparent text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     {item.text}

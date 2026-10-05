@@ -78,7 +78,7 @@ export function NewsletterSignup({
                   if (state === "error") setState("idle");
                 }}
                 placeholder="your@email.com"
-                className="w-full pl-10 pr-4 py-2 bg-card border-2 text-foreground placeholder:text-muted-foreground font-mono text-sm focus:outline-none focus:border-primary transition-colors"
+                className="w-full min-w-0 pl-10 pr-4 py-2 rounded-full bg-background border border-rule text-foreground placeholder:text-muted-foreground font-mono text-sm focus:border-air transition-colors"
                 disabled={state === "loading"}
                 required
               />
@@ -86,7 +86,8 @@ export function NewsletterSignup({
             <button
               type="submit"
               disabled={state === "loading"}
-              className="px-4 py-2 bg-primary text-primary-foreground font-mono text-sm hover:bg-foreground transition-colors disabled:opacity-50"
+              aria-label="Subscribe"
+              className="btn btn-primary px-4 disabled:opacity-50"
             >
               {state === "loading" ? "..." : <ArrowRight size={16} />}
             </button>
@@ -103,15 +104,13 @@ export function NewsletterSignup({
   }
 
   return (
-    <div className={`p-6 bg-card border-2 ${className}`}>
+    <div className={`p-6 bg-card border ${className}`}>
       <div className="flex items-center gap-3 mb-4">
-        <div className="p-2 bg-primary/10 border border-primary/20">
+        <div className="p-2 rounded-full bg-rose-tint">
           <Mail size={20} className="text-primary" />
         </div>
         <div>
-          <h4 className="font-extrabold uppercase tracking-tight text-lg">
-            Stay Updated
-          </h4>
+          <h4 className="font-serif font-medium text-xl">Stay Updated</h4>
           <p className="text-muted-foreground text-xs font-mono">
             No spam, unsubscribe anytime
           </p>
@@ -144,7 +143,7 @@ export function NewsletterSignup({
                   if (state === "error") setState("idle");
                 }}
                 placeholder="your@email.com"
-                className="w-full pl-10 pr-4 py-3 bg-background border-2 text-foreground placeholder:text-muted-foreground font-mono text-sm focus:outline-none focus:border-primary transition-colors"
+                className="w-full min-w-0 pl-10 pr-4 py-3 rounded-full bg-background border border-rule text-foreground placeholder:text-muted-foreground font-mono text-sm focus:border-air transition-colors"
                 disabled={state === "loading"}
                 required
               />
@@ -160,7 +159,7 @@ export function NewsletterSignup({
             <button
               type="submit"
               disabled={state === "loading"}
-              className="w-full py-3 bg-primary text-primary-foreground font-mono text-sm hover:bg-foreground transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+              className="btn btn-primary w-full disabled:opacity-50"
             >
               {state === "loading" ? (
                 "Subscribing..."
